@@ -1,0 +1,18 @@
+CMAKE_MINIMUM_REQUIRED (VERSION 2.8)
+PROJECT(ellerre)
+FIND_PACKAGE(FLEX REQUIRED)
+FIND_PACKAGE(BISON REQUIRED)
+FLEX_TARGET(scanner src/scanner.l ${CMAKE_CURRENT_BINARY_DIR}/scanner.cc)
+BISON_TARGET(parser src/parser.y ${CMAKE_CURRENT_BINARY_DIR}/parser.cc VERBOSE parser.output)
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR})
+INCLUDE_DIRECTORIES(${ellerre_SOURCE_DIR}/src/)
+ADD_EXECUTABLE(ellerre
+  src/main.cc
+  src/symbol.cc
+  src/rule.cc
+  src/grammar.cc
+  ${FLEX_scanner_OUTPUTS}
+  ${BISON_parser_OUTPUTS}
+  
+)
+TARGET_LINK_LIBRARIES(ellerre ${FLEX_LIBRARIES})
