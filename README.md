@@ -18,4 +18,4 @@ It is current in development.
 
 ### Execution
 
-     ./ellerre ../examples/g1.ee
+     ./ellerre < ../examples/g1.ee
