@@ -22,7 +22,19 @@ Grammar::Grammar()
 
 Grammar::~Grammar()
 {
-  rules.clear();
+  //delete all rules
+  while (rules.size() != 0){
+    Rule *r = rules.back();
+    rules.pop_back();
+    delete r;
+  }
+
+  //delete all symbols
+  while (symbols.size() != 0){
+    Symbol *s = (symbols.begin())->second;
+    symbols.erase(symbols.begin());
+    delete s;
+  }
 }
 
 void Grammar::addRule(Rule *rule)

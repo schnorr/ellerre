@@ -36,10 +36,6 @@ Rule::Rule(Symbol *head, std::vector<Symbol*> body)
 
 Rule::~Rule()
 {
-  std::vector<Symbol*>::iterator it;
-  for (it = body.begin(); it != body.end(); it++){
-    delete *it;
-  }
   body.clear();
 }
 
