@@ -22,24 +22,6 @@ int main (int argc, char **argv)
 {
   int ret = yyparse();
 
-  // std::vector<Symbol*>::iterator it;
-  // for (it = tokens.begin(); it != tokens.end(); it++){
-  //   std::cout << (*it)->str << std::endl;
-  // }
-
-  // std::vector<Rule*>::iterator it;
-  // for (it = rules.begin(); it != rules.end(); it++){
-  //   std::cout << (*it)->head->str << " => ";
-  //   std::vector<Symbol*>::iterator it2;
-  //   for (it2 = (*it)->body.begin(); it2 != (*it)->body.end(); it2++){
-  //     std::cout << (*it2)->str << " ";
-  //     if ((*it2)->terminal){
-  // 	std::cout << "t ";
-  //     }
-  //   }
-  //   std::cout << std::endl;
-  // }
-
   std::cout << grammar << std::endl;
   
   return ret;
