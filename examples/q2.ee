@@ -1,0 +1,4 @@
+S => A a;
+A => B C | B C f;
+B => b;
+C => c;

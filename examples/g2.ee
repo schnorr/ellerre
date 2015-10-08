@@ -1,0 +1,5 @@
+S => u B D z;
+B => B v | w;
+D => E F;
+E => y | ;
+F => x | ;
