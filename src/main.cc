@@ -16,13 +16,17 @@
 */
 #include "main.h"
 
-Grammar grammar;
+Grammar *grammar = NULL;
 
 int main (int argc, char **argv)
 {
+  grammar = new Grammar();
+
   int ret = yyparse();
 
-  std::cout << grammar << std::endl;
-  
+  std::cout << *grammar << std::endl;
+
+  delete grammar;
+  grammar = NULL;
   return ret;
 }

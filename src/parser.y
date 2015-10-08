@@ -45,24 +45,24 @@ regras: lista_regras;
 lista_regras: regra | lista_regras regra;
 regra: cabeca TK_FLECHA lista_corpos TK_SEP { current_head = NULL; };
 cabeca: TK_LIT_STRING {
-                       current_head = grammar.getSymbol(yytext);
+                       current_head = grammar->getSymbol(yytext);
                        current_corpo.clear();
                       };
 lista_corpos: corpo;
 lista_corpos: lista_corpos TK_DIVISOR corpo;
 corpo: /*empty*/ { Rule *rule = new Rule(current_head);
-                   grammar.addRule (rule);
+                   grammar->addRule (rule);
                    rule = NULL;
                    current_corpo.clear();
                  };
 corpo: lista_palavras {
                        Rule *rule = new Rule(current_head, current_corpo);
-                       grammar.addRule(rule);
+                       grammar->addRule(rule);
                        rule = NULL;
                        current_corpo.clear();
                       };
 lista_palavras: palavra | lista_palavras palavra;
-palavra: TK_LIT_STRING { current_corpo.push_back(grammar.getSymbol(yytext)); };
+palavra: TK_LIT_STRING { current_corpo.push_back(grammar->getSymbol(yytext)); };
 
 %%
 

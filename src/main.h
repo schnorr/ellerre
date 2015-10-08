@@ -23,6 +23,6 @@
 #include "grammar.h"
 
 extern int yyparse(void);
-extern Grammar grammar;
+extern Grammar *grammar;
 
 #endif
