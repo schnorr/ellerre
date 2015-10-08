@@ -45,8 +45,6 @@ void Grammar::addRule(Rule *rule)
 
 Symbol *Grammar::getSymbol(char *str)
 {
-//  std::cout << "Trying to get symbol [" << std::string(str) << "] from grammar." << std::endl;
-  
   std::map<std::string,Symbol*>::iterator it = symbols.find(std::string(str));
   if (it != symbols.end()){
     return (*it).second;
