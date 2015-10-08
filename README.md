@@ -1,13 +1,13 @@
-EllErre - An LR parser generator
+EllErre - An LR automata generator
 ================================
 
-EllErre is an LR parser generator. It implements the following algorithms:
+EllErre is an LR automata generator. It implements the following algorithms:
 
 + First Set
 + Follow Set
-+ LR(0) parser
-+ SLR(1) parser
-+ LR(1) parser
++ LR(0) automata
++ SLR(1)
++ LR(1)
 
 It is current in development.
 
