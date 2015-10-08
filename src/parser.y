@@ -36,21 +36,10 @@
 %token TK_SEP
 %token TK_DIVISOR
 %error-verbose
-%union {
-  Symbol *symbol;
-  Rule *rule;
-}
-/* %type<symbol> terminal; */
 %start gr
 %%
 
 gr: regras | ;
-
-/* terminais: lista_terminais TK_SEP; */
-/* terminais: ; */
-/* lista_terminais: terminal; */
-/* lista_terminais: lista_terminais terminal; */
-/* terminal: TK_LIT_STRING { tokens.push_back(new Symbol(yytext, true)); }; */
 
 regras: lista_regras;
 lista_regras: regra | lista_regras regra;
