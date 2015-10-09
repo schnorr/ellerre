@@ -50,7 +50,9 @@ cabeca: TK_LIT_STRING {
                       };
 lista_corpos: corpo;
 lista_corpos: lista_corpos TK_DIVISOR corpo;
-corpo: /*empty*/ { Rule *rule = new Rule(current_head);
+corpo: /*empty*/ {
+                   current_corpo.push_back(grammar->getEmptySymbol());
+                   Rule *rule = new Rule(current_head, current_corpo);
                    grammar->addRule (rule);
                    rule = NULL;
                    current_corpo.clear();
