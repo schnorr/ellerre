@@ -87,6 +87,12 @@ std::vector<Symbol*> Grammar::nonterminals (void)
   }
   return nonterminals;
 }
+
+bool Grammar::deriveToEmpty (Symbol *symbol)
+{
+  if (symbol->terminal) return false;
+  //TODO
+}
 std::ostream &operator<< (std::ostream &output, const Grammar &grammar)
 {
   //count number of non-terminals
