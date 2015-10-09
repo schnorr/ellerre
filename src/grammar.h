@@ -38,6 +38,8 @@ public:
   void addRule(Rule *rule);
   Symbol *getSymbol(char *str);
   Symbol *getEmptySymbol ();
+  std::vector<Symbol*> terminals (void);
+  std::vector<Symbol*> nonterminals (void);
 };
 
 std::ostream &operator<< (std::ostream &output, const Grammar &grammar);

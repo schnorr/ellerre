@@ -63,6 +63,30 @@ Symbol *Grammar::getEmptySymbol ()
   return empty;  
 }
 
+std::vector<Symbol*> Grammar::terminals (void)
+{
+  //find all non-terminals
+  std::vector<Symbol*> terminals;
+  std::map<std::string,Symbol*>::iterator itmap;
+  for (itmap = symbols.begin(); itmap != symbols.end(); itmap++){
+    if ((*itmap).second->terminal == true){
+      terminals.push_back ((*itmap).second);
+    }
+  }
+  return terminals;
+}
+
+std::vector<Symbol*> Grammar::nonterminals (void)
+{
+  std::vector<Symbol*> nonterminals;
+  std::map<std::string,Symbol*>::iterator itmap;
+  for (itmap = symbols.begin(); itmap != symbols.end(); itmap++){
+    if ((*itmap).second->terminal == false){
+      nonterminals.push_back ((*itmap).second);
+    }
+  }
+  return nonterminals;
+}
 std::ostream &operator<< (std::ostream &output, const Grammar &grammar)
 {
   //count number of non-terminals
