@@ -26,6 +26,10 @@ int main (int argc, char **argv)
 
   std::cout << *grammar << std::endl;
 
+  std::cout << std::endl << "First sets:" << std::endl;
+  
+  grammar->first();
+  
   delete grammar;
   grammar = NULL;
   return ret;
