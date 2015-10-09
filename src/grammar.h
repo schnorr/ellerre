@@ -17,6 +17,7 @@
 #ifndef __GRAMAR_H
 #define __GRAMAR_H
 #include <map>
+#include <set>
 #include <iostream>
 #include <ostream>
 #include <vector>
@@ -39,6 +40,8 @@ public:
   Symbol *getSymbol(char *str);
   Symbol *getEmptySymbol ();
   void first (void);
+
+private:
   std::vector<Rule*> rulesForNonterminal(Symbol*);
   bool deriveToEmpty(Symbol*);
   std::vector<Symbol*> terminals (void);
