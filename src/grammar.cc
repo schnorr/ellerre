@@ -157,8 +157,6 @@ void Grammar::first (void)
     }
     std::cout << std::endl;
   }
-
-  
   return;
 }
 
