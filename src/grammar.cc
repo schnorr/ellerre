@@ -108,6 +108,60 @@ std::vector<Rule*> Grammar::rulesForNonterminal (Symbol *symbol)
   }
   return ret;
 }
+
+static int count_map (std::map<Symbol*,std::set<Symbol*> > map){
+  int ret = map.size();
+  for (auto &entry : map){
+    ret += entry.second.size();
+  }
+  return ret;
+}
+
+
+void Grammar::first (void)
+{
+  std::map<Symbol*,std::set<Symbol*> > firsts;
+ 
+  bool keep_going = true;
+  
+  while (keep_going){
+
+    //count
+    int count = count_map (firsts);
+  
+    //for each rule
+    for (Rule *rule : rules){
+
+      //for each first symbol of rule's body
+      for (Symbol *s : rule->body){
+	if (s->terminal){
+	  firsts[rule->head].insert (s);
+	}else{
+	  std::set<Symbol*> nts = firsts[s];
+	  firsts[rule->head].insert (nts.begin(), nts.end());
+	}
+	break;
+      }
+    }
+
+    if ((count_map (firsts) - count) == 0){
+      keep_going = false;
+    }
+    
+  }
+
+  for (auto& entry : firsts){
+    std::cout << *(entry.first) << " -- ";
+    for (Symbol *s : entry.second){
+      std::cout << *s << " ";
+    }
+    std::cout << std::endl;
+  }
+
+  
+  return;
+}
+
 std::ostream &operator<< (std::ostream &output, const Grammar &grammar)
 {
   //count number of non-terminals

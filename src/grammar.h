@@ -38,6 +38,7 @@ public:
   void addRule(Rule *rule);
   Symbol *getSymbol(char *str);
   Symbol *getEmptySymbol ();
+  void first (void);
   std::vector<Rule*> rulesForNonterminal(Symbol*);
   bool deriveToEmpty(Symbol*);
   std::vector<Symbol*> terminals (void);
