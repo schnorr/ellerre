@@ -18,6 +18,7 @@
 
 Grammar::Grammar()
 {
+  empty = new Symbol(true);
 }
 
 Grammar::~Grammar()
@@ -35,6 +36,8 @@ Grammar::~Grammar()
     symbols.erase(symbols.begin());
     delete s;
   }
+
+  delete empty;
 }
 
 void Grammar::addRule(Rule *rule)
@@ -53,6 +56,11 @@ Symbol *Grammar::getSymbol(char *str)
     symbols[str] = newSymbol;
     return newSymbol;
   }
+}
+
+Symbol *Grammar::getEmptySymbol ()
+{
+  return empty;  
 }
 
 std::ostream &operator<< (std::ostream &output, const Grammar &grammar)

@@ -25,6 +25,9 @@
 
 class Grammar
 {
+private:
+  Symbol *empty;
+  
 public:
   std::vector<Rule*> rules;
   std::map<std::string,Symbol*> symbols;
@@ -34,6 +37,7 @@ public:
   ~Grammar();
   void addRule(Rule *rule);
   Symbol *getSymbol(char *str);
+  Symbol *getEmptySymbol ();
 };
 
 std::ostream &operator<< (std::ostream &output, const Grammar &grammar);
