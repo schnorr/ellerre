@@ -93,6 +93,21 @@ bool Grammar::deriveToEmpty (Symbol *symbol)
   if (symbol->terminal) return false;
   //TODO
 }
+
+std::vector<Rule*> Grammar::rulesForNonterminal (Symbol *symbol)
+{ 
+  std::vector<Rule*> ret;
+  if (symbol->terminal){
+    throw "Error";
+  }
+  
+  for (Rule *r : rules){
+    if (r->head == symbol){
+      ret.push_back (r);
+    }
+  }
+  return ret;
+}
 std::ostream &operator<< (std::ostream &output, const Grammar &grammar)
 {
   //count number of non-terminals
