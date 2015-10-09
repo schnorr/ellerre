@@ -23,9 +23,11 @@
 class Symbol
 {
 public:
+  bool empty;
   bool terminal;
   char *str;
 public:
+  Symbol (bool empty);
   Symbol (char *str);
   Symbol (char *str, bool terminal);
   ~Symbol ();

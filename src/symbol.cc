@@ -16,15 +16,24 @@
 */
 #include "symbol.h"
 
+Symbol::Symbol(bool empty)
+{
+  this->str = strdup("\u03B5");
+  this->empty = empty;
+  terminal = true;
+}
+
 Symbol::Symbol(char *str)
 {
   this->str = strdup(str);
+  empty = false;
 }
 
 Symbol::Symbol(char *str, bool terminal)
 {
   this->str = strdup(str);
   this->terminal = terminal;
+  empty = false;
 }
 
 Symbol::~Symbol()
