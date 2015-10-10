@@ -218,7 +218,6 @@ void Grammar::first (void)
             to empty. That means that the rule's head symbol cannot
             derive to empty either. Mark this and stop analyzing this
             rule's body. */
-          }else{
             body_derives_empty = false;
             break; 
           }
