@@ -27,10 +27,17 @@ public:
   bool terminal;
   char *str;
 public:
+  Symbol ();
   Symbol (bool empty);
   Symbol (char *str);
   Symbol (char *str, bool terminal);
   ~Symbol ();
+};
+
+class DollarSymbol : public Symbol
+{
+public:
+  DollarSymbol ();
 };
 
 std::ostream &operator<< (std::ostream &output, const Symbol &symbol);

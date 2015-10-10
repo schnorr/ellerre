@@ -16,6 +16,10 @@
 */
 #include "symbol.h"
 
+Symbol::Symbol()
+{
+}
+
 Symbol::Symbol(bool empty)
 {
   this->str = strdup("\u03B5");
@@ -39,6 +43,13 @@ Symbol::Symbol(char *str, bool terminal)
 Symbol::~Symbol()
 {
   free(str);
+}
+
+DollarSymbol::DollarSymbol ()
+{
+  this->str = strdup("$");
+  empty = false;
+  terminal = true;
 }
 
 std::ostream &operator<< (std::ostream &output, const Symbol &symbol)

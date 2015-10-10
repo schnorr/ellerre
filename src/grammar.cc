@@ -19,6 +19,7 @@
 Grammar::Grammar()
 {
   empty = new Symbol(true);
+  dollar = new DollarSymbol ();
 }
 
 Grammar::~Grammar()
@@ -61,6 +62,11 @@ Symbol *Grammar::getSymbol(char *str)
 Symbol *Grammar::getEmptySymbol ()
 {
   return empty;  
+}
+
+Symbol *Grammar::getDollarSymbol ()
+{
+  return dollar;
 }
 
 std::vector<Symbol*> Grammar::terminals (void)

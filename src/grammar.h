@@ -28,6 +28,7 @@ class Grammar
 {
 private:
   Symbol *empty;
+  Symbol *dollar;
   
 public:
   std::vector<Rule*> rules;
@@ -39,6 +40,7 @@ public:
   void addRule(Rule *rule);
   Symbol *getSymbol(char *str);
   Symbol *getEmptySymbol ();
+  Symbol *getDollarSymbol ();
   std::map<Symbol*,std::set<Symbol*> > first (void);
   std::map<Symbol*,std::set<Symbol*> > follow (void);
 
