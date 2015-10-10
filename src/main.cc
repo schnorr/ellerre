@@ -27,8 +27,24 @@ int main (int argc, char **argv)
   std::cout << *grammar << std::endl;
 
   std::cout << std::endl << "First sets:" << std::endl;
-  
-  grammar->first();
+  std::map<Symbol*,std::set<Symbol*> > firsts = grammar->first();
+  for (auto& entry : firsts){
+    std::cout << *(entry.first) << " -- ";
+    for (Symbol *s : entry.second){
+      std::cout << *s << " ";
+    }
+    std::cout << std::endl;
+  }
+
+  std::cout << std::endl << "Follow sets:" << std::endl;
+  std::map<Symbol*,std::set<Symbol*> > follows = grammar->follow();
+  for (auto& entry : follows){
+    std::cout << *(entry.first) << " -- ";
+    for (Symbol *s : entry.second){
+      std::cout << *s << " ";
+    }
+    std::cout << std::endl;
+  }
   
   delete grammar;
   grammar = NULL;
