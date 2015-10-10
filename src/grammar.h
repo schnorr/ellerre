@@ -39,7 +39,7 @@ public:
   void addRule(Rule *rule);
   Symbol *getSymbol(char *str);
   Symbol *getEmptySymbol ();
-  void first (void);
+  std::map<Symbol*,std::set<Symbol*> > first (void);
 
 private:
   std::vector<Rule*> rulesForNonterminal(Symbol*);

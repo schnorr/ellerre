@@ -128,7 +128,7 @@ static void print_set (std::set<Symbol*> set)
 }
 
 
-void Grammar::first (void)
+std::map<Symbol*,std::set<Symbol*> > Grammar::first (void)
 {
   std::map<Symbol*,std::set<Symbol*> > firsts;
  
@@ -234,15 +234,10 @@ void Grammar::first (void)
     }
     
   }
+  return firsts;
 
-  for (auto& entry : firsts){
-    std::cout << *(entry.first) << " -- ";
-    for (Symbol *s : entry.second){
-      std::cout << *s << " ";
     }
-    std::cout << std::endl;
   }
-  return;
 }
 
 std::ostream &operator<< (std::ostream &output, const Grammar &grammar)
