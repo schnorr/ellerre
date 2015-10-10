@@ -117,30 +117,116 @@ static int count_map (std::map<Symbol*,std::set<Symbol*> > map){
   return ret;
 }
 
+static void print_set (std::set<Symbol*> set)
+{
+  std::cout << "Printing set " << std::endl;//set << std::endl;
+  for (Symbol *s : set){
+    std::cout << *s << std::endl;
+  }
+  std::cout << "End Printing set " << std::endl;//set << std::endl;
+
+}
+
 
 void Grammar::first (void)
 {
   std::map<Symbol*,std::set<Symbol*> > firsts;
  
   bool keep_going = true;
+
+  bool DEBUG = false;
   
   while (keep_going){
-
+    if (DEBUG){
+      std::cout << "====================" << std::endl;
+    }
     //count
     int count = count_map (firsts);
   
     //for each rule
     for (Rule *rule : rules){
 
-      //for each first symbol of rule's body
+      if (DEBUG){
+        std::cout << "=> Head: " << *(rule->head) << std::endl;
+      }
+
+      /* Let's check if all the rule's body derives to empty. It that
+       * is the case, we can safely add the empty symbol to the first
+       * set of the current rule's head symbol. */
+      
+      /* Other checks: for each first symbol of rule's body */
+      bool body_derives_empty = true;
       for (Symbol *s : rule->body){
+        
 	if (s->terminal){
-	  firsts[rule->head].insert (s);
+          /* Body member is a terminal */
+          firsts[rule->head].insert (s);
+          body_derives_empty = false;
+	  break;
 	}else{
+          /* Body member is a non-terminal */
+          
+          /* I will add to the rule's head the first set of the
+           * current body member, since it is part of the body that is
+           * being currently considered. */
+
+          if(DEBUG){
+            std::cout << "==> Analyze body member: " << *s << std::endl;
+          }
+
 	  std::set<Symbol*> nts = firsts[s];
-	  firsts[rule->head].insert (nts.begin(), nts.end());
+
+          //add everyone except empty symbol
+          std::set<Symbol*> copy = nts;
+
+          if(DEBUG){ //these are debug messages
+            print_set (copy);
+            std::set<Symbol*>::iterator emptyPresent = nts.find(getEmptySymbol());
+            std::cout << "==> emptyPresent is " << (emptyPresent != nts.end()) << std::endl;
+          }
+
+          /* I have to add all the symbols of the first set of the
+          current body member which is non-terminal, except the empty
+          symbol (this last one should be added to the rule's head
+          symbol only if the whole body derives to empty (checked
+          above). */
+          copy.erase (getEmptySymbol());
+
+          if(DEBUG){ //these are debug messages
+            std::cout << "==> Adding only:" << std::endl;
+            print_set (copy);
+          }
+
+          /* Do the union */
+	  firsts[rule->head].insert (copy.begin(), copy.end());
+
+          /* Now, let's check wether the current body member derives
+          to empty. I can very easily know that simply by looking to
+          the current first set of this body member. */
+          bool deriveToEmpty = nts.find(getEmptySymbol()) != nts.end();
+
+          if(DEBUG){ //these are debug messages
+            if (deriveToEmpty == true){
+              std::cout << "==> Body member " << *s << " derive to empty, will continue." << std::endl;
+            }else{
+              std::cout << "==> Body member " << *s << " DOES NOT derive to empty, will NOT continue." << std::endl;
+            }
+          }
+          
+          if (deriveToEmpty == false){
+            /* This body member which is a nonterminal does not derive
+            to empty. That means that the rule's head symbol cannot
+            derive to empty either. Mark this and stop analyzing this
+            rule's body. */
+          }else{
+            body_derives_empty = false;
+            break; 
+          }
 	}
-	break;
+      }
+
+      if (body_derives_empty == true){
+        firsts[rule->head].insert (getEmptySymbol());
       }
     }
 
