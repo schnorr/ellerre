@@ -40,6 +40,7 @@ public:
   Symbol *getSymbol(char *str);
   Symbol *getEmptySymbol ();
   std::map<Symbol*,std::set<Symbol*> > first (void);
+  std::map<Symbol*,std::set<Symbol*> > follow (void);
 
 private:
   std::vector<Rule*> rulesForNonterminal(Symbol*);

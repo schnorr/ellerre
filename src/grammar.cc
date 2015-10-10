@@ -235,9 +235,34 @@ std::map<Symbol*,std::set<Symbol*> > Grammar::first (void)
     
   }
   return firsts;
+}
+
+std::map<Symbol*,std::set<Symbol*> > Grammar::follow ()
+{
+  std::map<Symbol*,std::set<Symbol*> > follows;
+ 
+  bool keep_going = true;
+
+  bool DEBUG = false;
+  
+  while (keep_going){
+    if (DEBUG){
+      std::cout << "====================" << std::endl;
+    }
+    //count
+    int count = count_map (follows);
+  
+    //for each rule
+    for (Rule *rule : rules){
+
+      if (DEBUG){
+        std::cout << "=> Head: " << *(rule->head) << std::endl;
+      }
 
     }
   }
+
+  return follows;
 }
 
 std::ostream &operator<< (std::ostream &output, const Grammar &grammar)
