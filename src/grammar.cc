@@ -39,6 +39,7 @@ Grammar::~Grammar()
   }
 
   delete empty;
+  delete dollar;
 }
 
 void Grammar::addRule(Rule *rule)
