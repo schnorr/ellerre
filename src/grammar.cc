@@ -124,7 +124,7 @@ static int count_map (std::map<Symbol*,std::set<Symbol*> > map){
   return ret;
 }
 
-static void print_set (std::set<Symbol*> set)
+static void debug_print_set (std::set<Symbol*> set)
 {
   std::cout << "Printing set " << std::endl;//set << std::endl;
   for (Symbol *s : set){
@@ -187,7 +187,7 @@ std::map<Symbol*,std::set<Symbol*> > Grammar::first (void)
           std::set<Symbol*> copy = nts;
 
           if(DEBUG){ //these are debug messages
-            print_set (copy);
+            debug_print_set (copy);
             std::set<Symbol*>::iterator emptyPresent = nts.find(getEmptySymbol());
             std::cout << "==> emptyPresent is " << (emptyPresent != nts.end()) << std::endl;
           }
@@ -201,7 +201,7 @@ std::map<Symbol*,std::set<Symbol*> > Grammar::first (void)
 
           if(DEBUG){ //these are debug messages
             std::cout << "==> Adding only:" << std::endl;
-            print_set (copy);
+            debug_print_set (copy);
           }
 
           /* Do the union */
