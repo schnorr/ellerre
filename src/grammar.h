@@ -43,12 +43,15 @@ public:
   Symbol *getDollarSymbol ();
   std::map<Symbol*,std::set<Symbol*> > first (void);
   std::map<Symbol*,std::set<Symbol*> > follow (void);
+  void print_first_sets (void);
+  void print_follow_sets (void);
 
 private:
   std::vector<Rule*> rulesForNonterminal(Symbol*);
   bool deriveToEmpty(Symbol*);
   std::vector<Symbol*> terminals (void);
   std::vector<Symbol*> nonterminals (void);
+  void print_set (std::map<Symbol*,std::set<Symbol*> > map);
 };
 
 std::ostream &operator<< (std::ostream &output, const Grammar &grammar);

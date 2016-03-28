@@ -351,6 +351,28 @@ std::map<Symbol*,std::set<Symbol*> > Grammar::follow ()
   return follows;
 }
 
+void Grammar::print_first_sets (void)
+{
+  this->print_set(this->first());
+}
+
+void Grammar::print_follow_sets (void)
+{
+  this->print_set(this->follow());
+}
+
+void Grammar::print_set (std::map<Symbol*,std::set<Symbol*> > map)
+{
+  std::map<Symbol*,std::set<Symbol*> > follows = map;
+  for (auto& entry : follows){
+    std::cout << *(entry.first) << " -- ";
+    for (Symbol *s : entry.second){
+      std::cout << *s << " ";
+    }
+    std::cout << std::endl;
+  }
+}
+
 std::ostream &operator<< (std::ostream &output, const Grammar &grammar)
 {
   //count number of non-terminals
