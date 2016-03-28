@@ -260,7 +260,7 @@ std::map<Symbol*,std::set<Symbol*> > Grammar::follow ()
   
   while (keep_going){
     if (DEBUG){
-      std::cout << "====================" << std::endl;
+      std::cout << "========= Starting Iteration ===========" << std::endl;
     }
     //count
     int count = count_map (follows);
