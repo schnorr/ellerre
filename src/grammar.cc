@@ -344,6 +344,8 @@ std::map<Symbol*,std::set<Symbol*> > Grammar::follow ()
 
     
     if ((count_map (follows) - count) == 0){
+      /* Size of the follows data structure hasn't changed. So Stop */
+      if (DEBUG) std::cout << "Size of the follows data struct hasn't changed. Stop." << std::endl;
       keep_going = false;
     }
   }
