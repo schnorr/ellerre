@@ -276,70 +276,78 @@ std::map<Symbol*,std::set<Symbol*> > Grammar::follow ()
       std::vector<Symbol*>::iterator it;
       for (it = rule->body.begin(); it != rule->body.end(); it++){
 	Symbol *s = *it;
-	if (s->terminal == false){
-	  /* Great, we have found a non-terminal, let's start
-	     calculating its follow set based on current rule's
-	     body. */
+	/* if symbol s is terminal, there is nothing to do */
+	if (s->terminal) continue;
 
-	  if (DEBUG){
-	    std::cout << "==> Found " << *s << " to analyze." << std::endl;
-	  }
-	  
-	  /* What comes next */
-	  std::vector<Symbol*>::iterator it_next = it+1;
+	/* Great, we have found a non-terminal, let's start
+	   calculating its follow set based on current rule's body. */
+	if (DEBUG){
+	  std::cout << "==> Found " << *s << " to analyze." << std::endl;
+	}
 
-	  /* Let's analyze the next symbol. */
-	  if (it_next != (rule->body).end()){
-	    if (DEBUG){
-	      std::cout << "==> Next is " << *(*it_next) << "." << std::endl;
+	/* What comes next, let's analyze them */
+	std::vector<Symbol*>::iterator it_next;
+	it_next = it+1;
+
+	/* if there is no next, add head's follow set in s's follow set */
+	if (it_next == (rule->body).end()){
+	  if (DEBUG) std::cout << "==> No next, get follow set from " << *(rule->head) << "." << std::endl;
+	  std::set<Symbol*> copy = follows[rule->head];
+	  if (DEBUG) std::cout << "Size of head's follow set is "<< copy.size() << std::endl;
+	  if (DEBUG) debug_print_set (copy);
+	  if (DEBUG) std::cout << "s is " << *(s) << std::endl;
+	  if (DEBUG) debug_print_set (follows[s]);
+	  follows[s].insert(copy.begin(), copy.end());
+	  continue;
+	}
+
+	/* there is a next symbol, let's analyze it */
+	if (it_next != (rule->body).end()){
+	  if (DEBUG) std::cout << "==> Next is " << *(*it_next) << "." << std::endl;
+	   
+	  /* Let's analyse next symbols. If next symbol is a
+	   * terminal, that's easy. We simply add it to the follow
+	   * set of current *s symbol. If next symbol is a
+	   * nonterminal, that's relatively easy. We simply add
+	   * its first set to the follow set of current *s symbol,
+	   * with the exception of the empty symbol. If this first
+	   * set contains the empty symbol, we should keep looking
+	   * for the next symbols until the end of the current
+	   * rule's body. */
+	  while (it_next != rule->body.end()){
+
+	    if (DEBUG) std::cout << "==> Next is " << *(*it_next) << "..." << std::endl;
+	    /* If next symbol is terminal, add it and stop. */
+	    if ((*it_next)->terminal){
+	      follows[s].insert (*it_next);
+	      break;
 	    }
-	    
-	    /* Let's analyse next symbols. If next symbol is a
-	     * terminal, that's easy. We simply add it to the follow
-	     * set of current *s symbol. If next symbol is a
-	     * nonterminal, that's relatively easy. We simply add
-	     * its first set to the follow set of current *s symbol,
-	     * with the exception of the empty symbol. If this first
-	     * set contains the empty symbol, we should keep looking
-	     * for the next symbols until the end of the current
-	     * rule's body. */
-	    while (it_next != rule->body.end()){
 
-	      /* If next symbol is terminal, add it and stop. */
-	      if ((*it_next)->terminal){
-		follows[s].insert (*it_next);
-		break;
+	    /* We continue for this nonterminal. */
+	    /* Consider all symbols except the empty symbol. */
+	    std::set<Symbol*> f = firsts[*it_next];
+	    std::set<Symbol*>::iterator emptyPresent = f.find(getEmptySymbol());
+	    bool emptyIsPresent = !(emptyPresent == f.end());
+	    f.erase (getEmptySymbol());
+	    follows[s].insert (f.begin(), f.end()); /* Do the union */
+
+	    /* if empty is not present, just break. */
+	    if (!emptyIsPresent){
+	      break;
+	    }else{
+	      /* if there is no next, add the head's follow set to s's
+	       * follow set. */
+	      if ((it_next+1) == rule->body.end()){
+		std::set<Symbol*> copy = follows[rule->head];
+		follows[s].insert(copy.begin(), copy.end());
 	      }
-
-	      /* We continue for nonterminal. */
-	      
-	      /* Consider all symbols except the empty symbol. */
-	      std::set<Symbol*> copy = firsts[*it_next];
-	      std::set<Symbol*>::iterator emptyPresent = copy.find(getEmptySymbol());
-	      copy.erase (getEmptySymbol());
-
-	      /* Do the union */
-	      follows[s].insert (copy.begin(), copy.end());
-
-	      /* Know when to stop. */
-	      if (emptyPresent == copy.end()){
-		break;
-	      }
-	      it_next++;
 	    }
 
-	  }else{
-	    if (DEBUG){
-	      std::cout << "==> No Next, get follow set from " << *(rule->head) << "." << std::endl;
-	    }
-
-	    std::set<Symbol*> copy = follows[rule->head];
-	    follows[s].insert(copy.begin(), copy.end());
+	    /* if empty is present, we must continue */
+	    it_next++;
 	  }
-
 	}
       }
-
     }
 
     
