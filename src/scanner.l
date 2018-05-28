@@ -18,6 +18,8 @@
   #include "symbol.h"
   #include "rule.h"
   #include "parser.hh"
+
+  extern "C" int yylex(void);
 %}
 
 %option yylineno

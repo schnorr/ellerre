@@ -20,7 +20,7 @@
   #include "rule.h"
   #include "main.h"
 
-  extern int yylex (void);
+  extern "C" int yylex (void);
   extern int yylineno;
   extern char *yytext;
   void yyerror (char const *msg);
