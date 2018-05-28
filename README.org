@@ -3,11 +3,11 @@
 
 EllErre is designed to be an LR automata generator, with the following algorithms:
 
-+ First Set
-+ Follow Set
-+ LR(0) automata
-+ SLR(1)
-+ LR(1)
++ [X] First Set
++ [X] Follow Set
++ [ ] LR(0) automata
++ [ ] SLR(1)
++ [ ] LR(1)
 
 It is current in development.
 
