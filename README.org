@@ -1,0 +1,96 @@
+#+STARTUP: overview indent
+#+Title: EllErre - An LR automata generator
+
+EllErre is designed to be an LR automata generator, with the following algorithms:
+
++ First Set
++ Follow Set
++ LR(0) automata
++ SLR(1)
++ LR(1)
+
+It is current in development.
+
+For now, it only calculates the First/Follow sets for a given grammar.
+
+* Installation & Compilation
+
+#+begin_src shell :results output
+sudo apt-get install git cmake build-essential flex bison;
+git clone git://github.com/schnorr/ellerre.git ; mkdir -p ellerre/b ; cd ellerre/b ; cmake .. ; make
+#+end_src
+
+* Compilation only
+
+#+begin_src shell :results output :exports both
+mkdir -p build ; cd build ; cmake .. ; make
+#+end_src
+
+#+RESULTS:
+#+begin_example
+-- The C compiler identification is GNU 7.3.0
+-- The CXX compiler identification is GNU 7.3.0
+-- Check for working C compiler: /usr/bin/cc
+-- Check for working C compiler: /usr/bin/cc -- works
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Check for working CXX compiler: /usr/bin/c++
+-- Check for working CXX compiler: /usr/bin/c++ -- works
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Found FLEX: /usr/bin/flex (found version "2.6.4") 
+-- Found BISON: /usr/bin/bison (found version "3.0.4") 
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /tmp/ellerre/build
+[ 11%] [BISON][parser] Building parser with bison 3.0.4
+[ 22%] [FLEX][scanner] Building scanner with flex 2.6.4
+Scanning dependencies of target ellerre
+[ 33%] Building CXX object CMakeFiles/ellerre.dir/src/main.cc.o
+[ 44%] Building CXX object CMakeFiles/ellerre.dir/src/symbol.cc.o
+[ 55%] Building CXX object CMakeFiles/ellerre.dir/src/rule.cc.o
+[ 66%] Building CXX object CMakeFiles/ellerre.dir/src/grammar.cc.o
+[ 66%] [BISON][parser] Building parser with bison 3.0.4
+[ 77%] Building CXX object CMakeFiles/ellerre.dir/scanner.cc.o
+[ 88%] Building CXX object CMakeFiles/ellerre.dir/parser.cc.o
+[100%] Linking CXX executable ellerre
+[100%] Built target ellerre
+#+end_example
+
+* Execution
+
+#+begin_src shell :results output :exports both
+cd build
+./ellerre < ../examples/g1.ee
+#+end_src
+
+#+RESULTS:
+#+begin_example
+Grammar with 7 rules and 8 symbols (4 non-terminals):
+S => S ( A ) S 
+S => ε 
+A => B C 
+A => ε 
+B => b 
+C => c 
+C => ε 
+
+First sets:
+S -- ε ( 
+A -- ε b 
+B -- b 
+C -- ε c 
+
+Follow sets:
+S -- $ ( 
+A -- ) 
+B -- ) c 
+C -- ) 
+#+end_example
+
+
+     
