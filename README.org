@@ -1,5 +1,6 @@
 #+STARTUP: overview indent
 #+Title: EllErre - An LR automata generator
+#+EXPORT_EXCLUDE_TAGS: noexport
 
 EllErre is designed to be an LR automata generator, with the following algorithms:
 
