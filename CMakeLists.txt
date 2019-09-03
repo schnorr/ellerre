@@ -10,6 +10,7 @@ ADD_EXECUTABLE(ellerre
   src/main.cc
   src/symbol.cc
   src/rule.cc
+  src/item.cc
   src/grammar.cc
   ${FLEX_scanner_OUTPUTS}
   ${BISON_parser_OUTPUTS}
