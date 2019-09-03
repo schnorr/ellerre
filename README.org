@@ -1,5 +1,6 @@
 #+STARTUP: overview indent
 #+Title: EllErre - An LR automata generator
+#+EXPORT_EXCLUDE_TAGS: noexport
 
 EllErre is designed to be an LR automata generator, with the following algorithms:
 
@@ -94,3 +95,40 @@ C -- )
 
 
      
+* Plan                                                             :noexport:
+
+A disciplina de compiladores propõe um estudo das partes de um
+compilador, desde o front-end de análise até o parte do back-end de
+síntese de código. Essa estrutura se reflete ao longo do semestre,
+onde são estudados análise léxica, sintática e semântica; seguido de
+geração de código intermediário, de máquina, e múltiplos passes de
+otimização. No caso específico do frontend, o professor iniciu a
+criação de uma ferramenta pedagógica chamada EllErre, disponível em
+https://github.com/schnorr/ellerre. Na sua concepção, espera-se que
+essa ferramenta seja um gerador de autômatos LR: LR(0)/SLR(1), LR(1) e
+LALR(1). Atualmente, apenas o cálculo dos conjuntos primeiro e
+sequência está implementado.
+
+O plano de atuação na Graduação do mestrando Marcelo Cogo Miletto é
+completar as funcionalidades projetadas para a ferramenta EllErre, de
+uma maneira que ela possa ser utilizada pelos alunos para averiguarem
+de maneira autônoma se os exercícios da disciplina estão
+corretos. Todas as soluções devem seguir a filosofia UNIX, ou seja,
+pequenas ferramentas com propósito único. Especificamente, envolve a
+implementação dos seguintes algoritmos:
+
+Análise Léxica
+- Algoritmo de Thompson para conversão de ER em AFND
+- Algoritmo de Subconjuntos para conversão de AFND em AFD
+
+Análise Sintática, dado uma gramática qualquer
+- Criar o autômato LR(0) - com extra SLR(1)
+- Criar o autômato LR(1)
+- Criar o autômato LALR(1)
+
+A extensão da ferramenta EllErre se dará diretamente sobre o seu
+repositório oficial (link acima), mediante commits diretos na branch
+de desenvolvimento principal. As respostas para as soluções devem (1)
+ser apresentadas de maneira textual de maneira legível por outro
+programa de computador; e (2) ser documentadas a ponto de permitir
+uso autônomo pelos alunos de graduação.
