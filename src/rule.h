@@ -39,5 +39,6 @@ public:
 };
 
 std::ostream &operator<< (std::ostream &output, const Rule &rule);
+bool operator== (const Rule &r1, const Rule &r2);
 
 #endif
