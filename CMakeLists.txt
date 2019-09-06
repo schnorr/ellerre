@@ -6,7 +6,7 @@ FLEX_TARGET(scanner src/scanner.l ${CMAKE_CURRENT_BINARY_DIR}/scanner.cc)
 BISON_TARGET(parser src/parser.y ${CMAKE_CURRENT_BINARY_DIR}/parser.cc VERBOSE REPORT_FILE parser.output)
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR})
 INCLUDE_DIRECTORIES(${ellerre_SOURCE_DIR}/src/)
-ADD_EXECUTABLE(ellerre
+ADD_EXECUTABLE(firstfollow
   src/main.cc
   src/symbol.cc
   src/rule.cc
@@ -14,7 +14,18 @@ ADD_EXECUTABLE(ellerre
   src/grammar.cc
   ${FLEX_scanner_OUTPUTS}
   ${BISON_parser_OUTPUTS}
-  
 )
-TARGET_LINK_LIBRARIES(ellerre ${FLEX_LIBRARIES})
-SET(CMAKE_CXX_FLAGS "-std=gnu++11")
+ADD_EXECUTABLE(lr0
+  src/lr0.cc
+  src/symbol.cc
+  src/rule.cc
+  src/item.cc
+  src/grammar.cc
+  src/state.cc
+  src/parser.cc
+  ${FLEX_scanner_OUTPUTS}
+  ${BISON_parser_OUTPUTS}
+)
+TARGET_LINK_LIBRARIES(firstfollow ${FLEX_LIBRARIES})
+TARGET_LINK_LIBRARIES(lr0 ${FLEX_LIBRARIES})
+SET(CMAKE_CXX_FLAGS "-std=gnu++11 -pg")
