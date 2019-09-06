@@ -21,6 +21,7 @@
 #include "symbol.h"
 #include "rule.h"
 #include "grammar.h"
+#include "parser.h"
 
 extern int yyparse(void);
 extern Grammar *grammar;

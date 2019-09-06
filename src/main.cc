@@ -32,9 +32,6 @@ int main (int argc, char **argv)
   std::cout << std::endl << "Follow sets:" << std::endl;
   grammar->print_follow_sets();
   
-  grammar->LR0_item_set();
-  grammar->print_item_set();
-  
   delete grammar;
   grammar = NULL;
   return ret;
