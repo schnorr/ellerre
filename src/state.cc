@@ -65,6 +65,20 @@ void State::setKernel(std::set<Item*> kernel)
             this->item_set.begin(), this->item_set.end(), 
             std::inserter(this->all_items, this->all_items.begin()));
 }
+
+bool State::haveSameKernel(State* s2)
+{
+  std::set<Item*>::iterator it;
+  if(this->kernel.size() != s2->kernel.size())
+    return false;
+  
+  for (it = this->kernel.begin(); it != this->kernel.end(); it++){
+    if (s2->kernel.find((*it)) == s2->kernel.end())
+      return false;
+  }
+  return true;
+}
+
 std::ostream &operator<< (std::ostream &output, const State &state)
 { 
   // output << "__________________" << std::endl;
