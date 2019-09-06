@@ -6,13 +6,14 @@ EllErre is designed to be an LR automata generator, with the following algorithm
 
 + [X] First Set
 + [X] Follow Set
-+ [ ] LR(0) automata
++ [X] LR(0) automata
 + [ ] SLR(1)
 + [ ] LR(1)
 
 It is current in development.
 
-For now, it only calculates the First/Follow sets for a given grammar.
+For now, it only calculates the First/Follow sets and the LR(0)
+automata for a given grammar.
 
 * Installation & Compilation
 
@@ -63,10 +64,10 @@ Scanning dependencies of target ellerre
 #+end_example
 
 * Execution
-
+** First and Follow
 #+begin_src shell :results output :exports both
 cd build
-./ellerre < ../examples/g1.ee
+./firstfollow < ../examples/g1.ee
 #+end_src
 
 #+RESULTS:
@@ -93,7 +94,124 @@ B -- ) c
 C -- ) 
 #+end_example
 
+** LR(0) automata
+#+begin_src shell :results output :exports both
+cd build
+./lr0 < ../examples/g1.ee
+#+end_src
 
+#+RESULTS:
+#+begin_example
+Grammar with 8 rules and 8 symbols (4 non-terminals):
+S' => S $ 
+S => S ( A ) S 
+S => ε 
+A => B C 
+A => ε 
+B => b 
+C => c 
+C => ε 
+
+LR0 item set:
+S' => • S $ 
+S' => S • $ 
+S' => S $ • 
+S => • S ( A ) S 
+S => S • ( A ) S 
+S => S ( • A ) S 
+S => S ( A • ) S 
+S => S ( A ) • S 
+S => S ( A ) S • 
+S => • ε 
+S => ε • 
+A => • B C 
+A => B • C 
+A => B C • 
+A => • ε 
+A => ε • 
+B => • b 
+B => b • 
+C => • c 
+C => c • 
+C => • ε 
+C => ε • 
+
+LR0 automata:
+State 0:
+S' => • S $ 
+S => • S ( A ) S 
+S => • ε 
+Transitions: 
+ε ---> 1
+S ---> 2
+
+State 1:
+S => ε • 
+
+State 2:
+S' => S • $ 
+S => S • ( A ) S 
+Transitions: 
+$ ---> 3
+( ---> 4
+
+State 3:
+S' => S $ • 
+
+State 4:
+S => S ( • A ) S 
+A => • B C 
+A => • ε 
+B => • b 
+Transitions: 
+ε ---> 5
+A ---> 6
+B ---> 7
+b ---> 8
+
+State 5:
+A => ε • 
+
+State 6:
+S => S ( A • ) S 
+Transitions: 
+) ---> 9
+
+State 7:
+A => B • C 
+C => • c 
+C => • ε 
+Transitions: 
+ε ---> 10
+C ---> 11
+c ---> 12
+
+State 8:
+B => b • 
+
+State 9:
+S => S ( A ) • S 
+S => • S ( A ) S 
+S => • ε 
+Transitions: 
+ε ---> 1
+S ---> 13
+
+State 10:
+C => ε • 
+
+State 11:
+A => B C • 
+
+State 12:
+C => c • 
+
+State 13:
+S => S • ( A ) S 
+S => S ( A ) S • 
+Transitions: 
+( ---> 4
+#+end_example
      
 * Plan                                                             :noexport:
 
