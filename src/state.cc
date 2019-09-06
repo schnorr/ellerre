@@ -65,3 +65,21 @@ void State::setKernel(std::set<Item*> kernel)
             this->item_set.begin(), this->item_set.end(), 
             std::inserter(this->all_items, this->all_items.begin()));
 }
+std::ostream &operator<< (std::ostream &output, const State &state)
+{ 
+  // output << "__________________" << std::endl;
+  output << "State " << state.id << ":" << std::endl;
+  for(auto& i : state.kernel)
+    output << *i;
+  
+
+  for(auto& i : state.item_set)
+    output << *i;
+
+  if(state.transitions.size() > 0) {
+    output << "Transitions: " << std::endl;
+    for(auto& t : state.transitions)
+      output << *t.first << " ---> " << t.second->id << std::endl;
+  }
+  output << std::endl;
+}
