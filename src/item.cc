@@ -21,13 +21,13 @@ Item::Item()
 {
 }
 
-Item::Item(Rule* rule, std::tuple<int, Symbol*> dot)
+Item::Item(Rule* rule, std::tuple<int, bool, Symbol*> dot)
 {
     this->rule = rule;
     this->dot = dot;
 }
 
-Item::Item(Rule* rule, std::tuple<int, Symbol*> dot, std::vector<Symbol*> lookahed)
+Item::Item(Rule* rule, std::tuple<int, bool, Symbol*> dot, std::vector<Symbol*> lookahed)
 {
     this->dot = dot;
     this->rule = rule;
@@ -39,30 +39,28 @@ Item::~Item()
     lookahed.clear();
 }
 
-void Item::print_item() 
+std::ostream &operator<< (std::ostream &output, const Item &item)
 {
-  std::cout << this->rule->body[0]->str << " => ";
-  
-  for (auto& symbol : this->rule->body){
-    std::cout << symbol->str << " ";
-  }
-  std::cout << std::endl;
-}
-
-
-std::ostream &operator<< (std::ostream &output, const Item &item){
   int dot = 0;
   output << *(item.rule->head) << " => "; 
   
   for (auto& symbol : item.rule->body){
     if(dot == std::get<0>(item.dot)){
-      output << "\u26ab "; 
+      output << "• "; 
     } 
     output << symbol->str << " ";
     dot++;
   }
   if(dot == std::get<0>(item.dot)){
-    output << "\u26ab "; 
+    output << "• "; 
   } 
   output << std::endl;
+}
+
+bool operator==( const Item &i1, const Item &i2 )
+{
+  if(!(i1.rule == i2.rule))
+    return false;
+  
+  return true;
 }
