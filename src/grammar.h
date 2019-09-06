@@ -23,7 +23,6 @@
 #include <vector>
 #include "symbol.h"
 #include "rule.h"
-#include "item.h"
 
 class Grammar
 {
@@ -33,26 +32,21 @@ private:
   
 public:
   std::vector<Rule*> rules;
-  std::map<std::string,Symbol*> symbols;
-  std::vector<Item*> items;
-  //std::map<std::string, std::vector<Item*> items> states;
+  std::map<std::string, Symbol*> symbols;
 
 public:
   Grammar();
   ~Grammar();
   void addRule(Rule *rule);
-  void addItem(Item *item);
+  void addRule(Rule *rule, bool front);
   Symbol *getSymbol(char *str);
   Symbol *getEmptySymbol ();
   Symbol *getDollarSymbol ();
   std::map<Symbol*,std::set<Symbol*> > first (void);
   std::map<Symbol*,std::set<Symbol*> > follow (void);
-  
-  void print_item_set (void);
   void print_first_sets (void);
   void print_follow_sets (void);
-  void LR0_item_set (void);
-  std::set<Item*> closure(Item* item);
+  void expand_grammar(void);
 
 private:
   std::vector<Rule*> rulesForNonterminal(Symbol*);
@@ -60,7 +54,6 @@ private:
   std::vector<Symbol*> terminals (void);
   std::vector<Symbol*> nonterminals (void);
   void print_set (std::map<Symbol*,std::set<Symbol*> > map);
-  void augmented_grammar (Rule* start);
 };
 
 std::ostream &operator<< (std::ostream &output, const Grammar &grammar);

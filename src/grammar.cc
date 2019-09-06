@@ -48,11 +48,14 @@ void Grammar::addRule(Rule *rule)
   rules.push_back(rule);
 }
 
-void Grammar::addItem(Item *item)
+void Grammar::addRule(Rule *rule, bool front)
 {
-  this->items.push_back(item);
+  rule->head->terminal = false;
+  if(front)
+    rules.insert(rules.begin(), rule);
+  else
+    rules.push_back(rule);
 }
-
 
 Symbol *Grammar::getSymbol(char *str)
 {
@@ -122,7 +125,8 @@ std::vector<Rule*> Grammar::rulesForNonterminal (Symbol *symbol)
   return ret;
 }
 
-static int count_map (std::map<Symbol*,std::set<Symbol*> > map){
+static int count_map (std::map<Symbol*,std::set<Symbol*> > map)
+{
   int ret = map.size();
   for (auto &entry : map){
     ret += entry.second.size();
@@ -366,12 +370,7 @@ std::map<Symbol*,std::set<Symbol*> > Grammar::follow (void)
   return follows;
 }
 
-void Grammar::print_item_set (void)
-{
-  std::cout << std::endl << "Item set:" << std::endl;
-  for(auto& item : this->items)
-    std::cout << *item;
-}
+
 
 void Grammar::print_first_sets (void)
 {
@@ -381,48 +380,6 @@ void Grammar::print_first_sets (void)
 void Grammar::print_follow_sets (void)
 {
   this->print_set(this->follow());
-}
-
-void Grammar::LR0_item_set(void) 
-{
-  augmented_grammar(rules[0]);
-  std::vector<Rule*> r = this->rules; 
-  std::vector<Rule*>::iterator it_r;
-  std::vector<Symbol*> s;
-  std::vector<Symbol*>::iterator it_s;
-  int dot;
-
-  // for each rule in grammar
-  for (it_r = r.begin(); it_r != r.end(); it_r++){
-    s = (*it_r)->body;
-    dot = 0;
-
-    // for each symbol in rule 
-    for (it_s = s.begin(); it_s != s.end(); it_s++){
-      Item *i = new Item((*it_r), std::make_tuple(dot, (*it_s)));
-      addItem(i);
-      dot++;
-    }
-    Item *i = new Item((*it_r), std::make_tuple(dot, (*it_s)));
-    addItem(i);
-  }
-}
-
-std::set<Item*> closure(Item* item)
-{ 
-  closure_i.insert(item);
-
-  std::vector<Symbol*> s = item->rule->body;
-  std::vector<Symbol*>::iterator it_s;
-  std::set<Symbol*> visited;
-
-  // for each nonterminal preceded by a dot
-  while(closure_i.size() != last_size)
-  {
-
-  }
-
-  return closure_i; 
 }
 
 void Grammar::print_set (std::map<Symbol*,std::set<Symbol*> > map)
@@ -437,10 +394,12 @@ void Grammar::print_set (std::map<Symbol*,std::set<Symbol*> > map)
   }
 }
 
-void Grammar::augmented_grammar (Rule* start)
+void Grammar::expand_grammar (void)
 {
-  char* new_head;
+  Rule* start = (Rule*) this->rules[0];
+  char* new_head = (char*) malloc(strlen(start->head->str) * sizeof(char));
   strcpy(new_head, start->head->str);
+
   Symbol* Start2 = new Symbol(strcat(new_head, "'") , false);
   std::vector<Symbol*> Start2_body;
 
@@ -448,7 +407,7 @@ void Grammar::augmented_grammar (Rule* start)
   Start2_body.push_back(getDollarSymbol());
 
   Rule* new_start = new Rule(Start2, Start2_body);
-  addRule(new_start);
+  addRule(new_start, true);
 }
 
 std::ostream &operator<< (std::ostream &output, const Grammar &grammar)
