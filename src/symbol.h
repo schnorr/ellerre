@@ -41,5 +41,6 @@ public:
 };
 
 std::ostream &operator<< (std::ostream &output, const Symbol &symbol);
+bool operator== (const Symbol &s1, const Symbol &s2);
 
 #endif
