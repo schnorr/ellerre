@@ -20,18 +20,29 @@
 #include "rule.h"
 #include "item.h"
 #include <set>
+#include <string>
+#include <vector>
+#include <algorithm>
 
 class State
 {
-private:
-    char* id;
-    std::set<Item*> item_set;
-    std::set<Symbol*, char*> transitions;
 
 public:
-	State();
-    State(char* id, std::set<Item*> item_set, std::set<Symbol*, char*> transitions);
-	~State();
+  int id;
+  std::set<Item*> kernel;
+  std::set<Item*> item_set;
+  std::set<Item*> all_items;
+  std::set<std::pair<Symbol*, State* >> transitions;
+
+public:
+  State();
+  State(std::set<Item*> kernel);
+  State(int id, std::set<Item*> kernel, std::set<Item*> item_set);
+  ~State();
+  void setId(int id);
+  void setItemSet(std::set<Item*> item_set);
+  void setKernel(std::set<Item*> kernel);
+  bool haveSameKernel(State* s2);
 };
 
 std::ostream &operator<< (std::ostream &output, const State &state);
