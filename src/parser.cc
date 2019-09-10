@@ -123,10 +123,12 @@ void Parser::addItem(Item *item)
 void Parser::print_item_set (void)
 {
   std::cout << std::endl << this->type << " item set:" << std::endl;
-  for(auto& item : this->items)
+  for(auto& item : this->items){
     std::cout << *item;
+  }
+  
 }
-
+    
 void Parser::print_automata(void)
 {
   std::cout << std::endl << this->type << " automata:" << std::endl;
@@ -149,17 +151,26 @@ void Parser::LR0_item_set(void)
     s = (*it_r)->body;
     dot = 0;
 
-    // for each symbol in rule add a dot
-    for (it_s = s.begin(); it_s != s.end(); it_s++){
+    // if the rule produces the empty symbol
+    if(s.size() == 1 && s[0]->empty) {
+      hasNext = false;
+      Rule* r = new Rule((*it_r)->head);
+      Item *i = new Item(r, std::make_tuple(0, hasNext, s[0]));
+      addItem(i);
+    } else {
+      // for each symbol in rule add a dot
+      for (it_s = s.begin(); it_s != s.end(); it_s++) {
+        Item *i = new Item((*it_r), std::make_tuple(dot, hasNext, (*it_s)));
+        addItem(i);
+        dot++;
+      }
+
+      // the last dot does not precede any symbol
+      hasNext = false;
+      it_s--;
       Item *i = new Item((*it_r), std::make_tuple(dot, hasNext, (*it_s)));
       addItem(i);
-      dot++;
     }
-    // the last dot does not precede any symbol
-    hasNext = false;
-    it_s--;
-    Item *i = new Item((*it_r), std::make_tuple(dot, hasNext, (*it_s)));
-    addItem(i);
   }
 }
 

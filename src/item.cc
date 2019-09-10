@@ -44,20 +44,26 @@ std::ostream &operator<< (std::ostream &output, const Item &item)
   int dot = 0;
   output << *(item.rule->head) << " => "; 
   
-  for (auto& symbol : item.rule->body){
+  if(item.rule->body.size() > 0) {
+
+    for (auto& symbol : item.rule->body) {
+      if(dot == std::get<0>(item.dot)) {
+        output << "• "; 
+      } 
+      output << *symbol << " ";
+      dot++;
+    }
     if(dot == std::get<0>(item.dot)){
       output << "• "; 
     } 
-    output << symbol->str << " ";
-    dot++;
-  }
-  if(dot == std::get<0>(item.dot)){
+    output << std::endl;
+  } else {
     output << "• "; 
-  } 
-  output << std::endl;
+    output << std::endl;
+  }
 }
 
-bool operator==( const Item &i1, const Item &i2 )
+bool operator==(const Item &i1, const Item &i2)
 {
   if(!(i1.rule == i2.rule))
     return false;

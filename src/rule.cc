@@ -59,8 +59,8 @@ std::ostream &operator<< (std::ostream &output, const Rule &rule)
   output << *(rule.head) << " => ";
   std::vector<Symbol*>::iterator it;
   std::vector<Symbol*> r = rule.body;
-  for (it = r.begin(); it != r.end(); it++){
-    output << *(*it) << " ";
+  for (it = r.begin(); it != r.end(); it++) {
+      output << *(*it) << " ";
   }
   return output;
 }
