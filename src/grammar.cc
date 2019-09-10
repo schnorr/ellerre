@@ -404,7 +404,6 @@ void Grammar::expand_grammar (void)
   std::vector<Symbol*> Start2_body;
 
   Start2_body.push_back(start->head);
-  Start2_body.push_back(getDollarSymbol());
 
   Rule* new_start = new Rule(Start2, Start2_body);
   addRule(new_start, true);
