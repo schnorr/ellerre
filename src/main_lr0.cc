@@ -21,20 +21,20 @@ Grammar *grammar = NULL;
 int main (int argc, char **argv)
 {
   grammar = new Grammar();
-  Parser* parser;
+  LR0* parser;
 
   int ret = yyparse();
 
   grammar->expand_grammar();
-  parser = new Parser("LR0", grammar);
-  parser->LR0();
-  
+  parser = new LR0(grammar);
+
   std::cout << *grammar << std::endl;
   parser->print_item_set();
   parser->print_automata();
 
-  delete parser;
   delete grammar;
+  delete parser;
   grammar = NULL;
+  parser = NULL;
   return ret;
 }

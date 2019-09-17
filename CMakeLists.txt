@@ -16,13 +16,14 @@ ADD_EXECUTABLE(firstfollow
   ${BISON_parser_OUTPUTS}
 )
 ADD_EXECUTABLE(lr0
-  src/lr0.cc
+  src/main_lr0.cc
   src/symbol.cc
   src/rule.cc
   src/item.cc
   src/grammar.cc
   src/state.cc
   src/parser.cc
+  src/LR0.cc
   ${FLEX_scanner_OUTPUTS}
   ${BISON_parser_OUTPUTS}
 )
