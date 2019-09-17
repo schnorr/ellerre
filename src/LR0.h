@@ -14,37 +14,23 @@
     You should have received a copy of the GNU Public License
     along with Ellerre. If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef __PARSER_H
-#define __PARSER_H
+#ifndef __LR0_H
+#define __LR0_H
 #include <algorithm>
 #include "grammar.h"
 #include "item.h"
 #include "state.h"
+#include "parser.h"
 
-class Parser
+class LR0 : public Parser
 {
-public:
-  std::string type;
-  Grammar* grammar;
-  std::set<Item*> items;
-  std::set<State*> states;
 
 public:
-  Parser();
-  Parser(std::string type, Grammar* grammar);
-  ~Parser();
-  
-  void setType(std::string type);
-  void clearItems();
-  void clearStates();
-  State* createState(State* state);
-  int getNextStateId(void);
-  Item* getNextItem(Item* i);
-  void addItem(Item *item);
-  void print_automata(void);
-  void print_item_set(void);
+  LR0();
+  LR0(Grammar* grammar);
+  ~LR0();
 
-  // Methods to be overwritten by different parsers
+public:
   void create_item_set(void);
   void create_automata(void);
   std::set<Item*> closure(std::set<Item*> kernel);
