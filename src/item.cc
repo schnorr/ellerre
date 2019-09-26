@@ -27,16 +27,16 @@ Item::Item(Rule* rule, std::tuple<int, bool, Symbol*> dot)
     this->dot = dot;
 }
 
-Item::Item(Rule* rule, std::tuple<int, bool, Symbol*> dot, std::vector<Symbol*> lookahed)
+Item::Item(Rule* rule, std::tuple<int, bool, Symbol*> dot, std::vector<Symbol*> lookahead)
 {
     this->dot = dot;
     this->rule = rule;
-    this->lookahed = lookahed;
+    this->lookahead = lookahead;
 }
 
 Item::~Item()
 {
-    lookahed.clear();
+    lookahead.clear();
 }
 
 std::ostream &operator<< (std::ostream &output, const Item &item)
@@ -44,18 +44,29 @@ std::ostream &operator<< (std::ostream &output, const Item &item)
   int dot = 0;
   output << *(item.rule->head) << " => "; 
   
-  if(item.rule->body.size() > 0) {
+  if (item.rule->body.size() > 0) {
 
+    // print the item rule symbols with the dot
     for (auto& symbol : item.rule->body) {
+
       if(dot == std::get<0>(item.dot)) {
         output << "• "; 
       } 
       output << *symbol << " ";
       dot++;
     }
-    if(dot == std::get<0>(item.dot)){
+
+    if (dot == std::get<0>(item.dot)){
       output << "• "; 
     } 
+
+    // print lookahead (if any)
+    if (item.lookahead.size() > 0) {
+      for (auto& symbol : item.lookahead) {
+        output << ", " *symbol;
+      }
+    }
+
     output << std::endl;
   } else {
     output << "• "; 

@@ -370,7 +370,6 @@ std::map<Symbol*,std::set<Symbol*> > Grammar::follow (void)
   return follows;
 }
 
-
 void Grammar::print_first_sets (void)
 {
   this->print_set(this->first());
