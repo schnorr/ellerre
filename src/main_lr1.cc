@@ -14,18 +14,27 @@
     You should have received a copy of the GNU Public License
     along with Ellerre. If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef __MAIN_H
-#define __MAIN_H
-#include <iostream>
-#include <vector>
-#include "symbol.h"
-#include "rule.h"
-#include "grammar.h"
-#include "parser.h"
-#include "LR0.h"
-#include "LR1.h"
+#include "main.h"
 
-extern int yyparse(void);
-extern Grammar *grammar;
+Grammar *grammar = NULL;
 
-#endif
+int main (int argc, char **argv)
+{
+  grammar = new Grammar();
+  LR0* parser;
+
+  int ret = yyparse();
+
+  grammar->expand_grammar();
+  parser = new LR0(grammar);
+
+  std::cout << *grammar << std::endl;
+  parser->print_item_set();
+  parser->print_automata();
+
+  delete grammar;
+  delete parser;
+  grammar = NULL;
+  parser = NULL;
+  return ret;
+}

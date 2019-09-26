@@ -22,7 +22,6 @@ Parser::Parser()
 
 Parser::Parser(std::string type, Grammar* grammar)
 {
-  std::cout << "parser class\n";
   this->type = type;
   this->grammar = grammar;
 }
