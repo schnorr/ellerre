@@ -35,7 +35,7 @@
 %token TK_BREAK
 %token TK_SEP
 %token TK_DIVISOR
-%error-verbose
+%define parse.error verbose
 %start gr
 %%
 
