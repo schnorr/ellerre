@@ -63,7 +63,7 @@ std::ostream &operator<< (std::ostream &output, const Item &item)
     // print lookahead (if any)
     if (item.lookahead.size() > 0) {
       for (auto& symbol : item.lookahead) {
-        output << ", " *symbol;
+        output << ", " << *symbol;
       }
     }
 
