@@ -72,6 +72,7 @@ std::ostream &operator<< (std::ostream &output, const Item &item)
     output << "• "; 
     output << std::endl;
   }
+  return output;
 }
 
 bool operator==(const Item &i1, const Item &i2)
