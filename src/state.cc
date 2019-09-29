@@ -96,4 +96,5 @@ std::ostream &operator<< (std::ostream &output, const State &state)
       output << *t.first << " ---> " << t.second->id << std::endl;
   }
   output << std::endl;
+  return output;
 }
