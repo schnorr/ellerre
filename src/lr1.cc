@@ -27,7 +27,7 @@ int main (int argc, char **argv)
 
   grammar->expand_grammar();
   parser = new Parser(grammar);
-  parser->LR0();
+  parser->LR1();
   
   std::cout << *grammar << std::endl;
   parser->print_item_set();

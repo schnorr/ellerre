@@ -20,9 +20,8 @@ Parser::Parser()
 {
 }
 
-Parser::Parser(std::string type, Grammar* grammar)
+Parser::Parser(Grammar* grammar)
 {
-  this->type = type;
   this->grammar = grammar;
 }
   
@@ -244,6 +243,10 @@ std::set<Item*> Parser::closure(std::set<Item*> kernel)
 
 void Parser::LR0(void)
 { 
+  // clear any previous defined states and items
+  clearItems();
+  clearStates();
+  setType("LR0");
   // create item set from input grammar
   LR0_item_set();
 
@@ -282,4 +285,15 @@ void Parser::LR0(void)
     if(last_size != this->states.size())
       change = true;
   }
+}
+
+
+void Parser::LR1(void) {
+  // clear any previous defined states and items
+  clearItems();
+  clearStates();
+  setType("LR1");
+
+  // TODO LR1_item_set()
+  // expand, create states, for each state do the same
 }

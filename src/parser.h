@@ -31,7 +31,7 @@ private:
 
 public:
   Parser();
-  Parser(std::string type, Grammar* grammar);
+  Parser(Grammar* grammar);
   ~Parser();
   
   void setType(std::string type);
@@ -49,6 +49,7 @@ public:
   std::set<Item*> getProductionOfItem(Item* item);
   std::set<Item*> closure(std::set<Item*> kernel);
   void LR0(void);
+  void LR1(void);
   void closure(void);
 };
 
