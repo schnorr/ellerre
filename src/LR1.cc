@@ -74,7 +74,18 @@ void LR1::create_item_set(void)
 
 void LR1::create_automata(void)
 {
+  // The first item in closure is the Starting item rule from the augmented grammar
+  std::vector<State*> states;
+  bool change = true;
+  int last_size = 0;
+  Item* start = *this->items.begin(); 
+  std::set<Item*> kernel = {start}; 
+  std::set<Item*> items_set = closure(kernel);
 
+  // Create the first state with its id, kernel and item_set
+  State* starting_state = new State(0, kernel, items_set);
+  createTransitionStates(starting_state);
+  this->states.insert(starting_state);
 }
 
 std::set<Item*> LR1::closure(std::set<Item*> kernel)

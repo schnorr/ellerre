@@ -78,6 +78,8 @@ bool operator==(const Item &i1, const Item &i2)
 {
   if(!(i1.rule == i2.rule))
     return false;
+  else if(!(i1.lookahead[0] == i2.lookahead[1]))
+    return false;
   
   return true;
 }
