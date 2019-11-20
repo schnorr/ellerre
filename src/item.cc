@@ -63,7 +63,7 @@ std::ostream &operator<< (std::ostream &output, const Item &item)
     // print lookahead (if any)
     if (item.lookahead.size() > 0) {
       for (auto& symbol : item.lookahead) {
-        output << ", " *symbol;
+        output << ", " << *symbol;
       }
     }
 
@@ -72,6 +72,7 @@ std::ostream &operator<< (std::ostream &output, const Item &item)
     output << "• "; 
     output << std::endl;
   }
+  return output;
 }
 
 bool operator==(const Item &i1, const Item &i2)

@@ -21,12 +21,12 @@ Grammar *grammar = NULL;
 int main (int argc, char **argv)
 {
   grammar = new Grammar();
-  LR0* parser;
+  LR1* parser;
 
   int ret = yyparse();
 
   grammar->expand_grammar();
-  parser = new LR0(grammar);
+  parser = new LR1(grammar);
 
   std::cout << *grammar << std::endl;
   parser->print_item_set();

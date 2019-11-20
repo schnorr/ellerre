@@ -14,7 +14,7 @@
     You should have received a copy of the GNU Public License
     along with Ellerre. If not, see <http://www.gnu.org/licenses/>.
 */
-#include "LR0.h"
+#include "LR1.h"
 
 LR1::LR1()
 {

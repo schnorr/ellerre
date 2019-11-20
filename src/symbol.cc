@@ -56,6 +56,7 @@ std::ostream &operator<< (std::ostream &output, const Symbol &symbol)
 {
 //  output << "{"<<symbol.str << "," << symbol.terminal<<"}";
   output << symbol.str;
+  return output;
 }
 
 bool operator== (const Symbol &s1, const Symbol &s2)
