@@ -26,6 +26,18 @@ ADD_EXECUTABLE(lr0
   ${FLEX_scanner_OUTPUTS}
   ${BISON_parser_OUTPUTS}
 )
+ADD_EXECUTABLE(lr1
+  src/lr1.cc
+  src/symbol.cc
+  src/rule.cc
+  src/item.cc
+  src/grammar.cc
+  src/state.cc
+  src/parser.cc
+  ${FLEX_scanner_OUTPUTS}
+  ${BISON_parser_OUTPUTS}
+)
 TARGET_LINK_LIBRARIES(firstfollow ${FLEX_LIBRARIES})
 TARGET_LINK_LIBRARIES(lr0 ${FLEX_LIBRARIES})
-SET(CMAKE_CXX_FLAGS "-std=gnu++11 -pg")
+TARGET_LINK_LIBRARIES(lr1 ${FLEX_LIBRARIES})
+SET(CMAKE_CXX_FLAGS "-std=gnu++11")
