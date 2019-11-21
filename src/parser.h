@@ -36,22 +36,13 @@ public:
   
   void setType(std::string type);
   void clearItems();
+  void setItems(std::set<Item*> items);
   void clearStates();
-  State* createState(State* state);
   int getNextStateId(void);
   Item* getNextItem(Item* i);
   void addItem(Item *item);
   void print_automata(void);
   void print_item_set(void);
-  void closure(void);
-  std::set<Item*> getProductionOfItem(Item* item);
-
-  // Methods to be overwritten by different parsers
-  void create_item_set(void);
-  void create_automata(void);
-  std::set<Item*> closure(std::set<Item*> kernel);
-  State* getTransitionState(State state, Symbol* s);
-  void createTransitionStates(State* state);
 };
 
 #endif
