@@ -28,6 +28,8 @@ public:
   Grammar* grammar;
   std::set<Item*> items;
   std::set<State*> states;
+  std::map<Symbol*,std::set<Symbol*> > first;
+  std::map<Symbol*,std::set<Symbol*> > follow;
 
 public:
   Parser();
