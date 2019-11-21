@@ -38,35 +38,35 @@ void LR0::create_item_set(void)
 {
   std::vector<Rule*> r = this->grammar->rules; 
   std::vector<Rule*>::iterator it_r;
-  std::vector<Symbol*> s;
-  std::vector<Symbol*>::iterator it_s;
+  std::vector<Symbol*> body;
+  std::vector<Symbol*>::iterator it_b;
   int dot;
   bool hasNext;
 
   // for each rule in grammar
   for (it_r = r.begin(); it_r != r.end(); it_r++) {
     hasNext = true;
-    s = (*it_r)->body;
+    body = (*it_r)->body;
     dot = 0;
 
     // if the rule produces the empty symbol
-    if(s.size() == 1 && s[0]->empty) {
+    if(body.size() == 1 && body[0]->empty) {
       hasNext = false;
       Rule *r = new Rule((*it_r)->head);
-      Item *i = new Item(r, std::make_tuple(0, hasNext, s[0]));
+      Item *i = new Item(r, std::make_tuple(0, hasNext, body[0]));
       addItem(i);
     } else {
       // for each symbol in rule add a dot
-      for (it_s = s.begin(); it_s != s.end(); it_s++) {
-        Item *i = new Item((*it_r), std::make_tuple(dot, hasNext, (*it_s)));
+      for (it_b = body.begin(); it_b != body.end(); it_b++) {
+        Item *i = new Item((*it_r), std::make_tuple(dot, hasNext, (*it_b)));
         addItem(i);
         dot++;
       }
 
       // the last dot does not precede any symbol
       hasNext = false;
-      it_s--;
-      Item *i = new Item((*it_r), std::make_tuple(dot, hasNext, (*it_s)));
+      it_b--;
+      Item *i = new Item((*it_r), std::make_tuple(dot, hasNext, (*it_b)));
       addItem(i);
     }
   }
@@ -80,7 +80,7 @@ void LR0::create_automata(void)
   int last_size = 0;
   Item* start = *this->items.begin(); 
   std::set<Item*> kernel = {start}; 
-  std::set<Item*> items_set = Parser::closure(kernel);
+  std::set<Item*> items_set = closure(kernel);
 
   // Create the first state with its id, kernel and item_set
   State* starting_state = new State(0, kernel, items_set);
@@ -135,8 +135,94 @@ void LR0::createTransitionStates(State* state)
     }
     State* new_state = new State(kernel);
     new_state = createState(new_state);
-    new_state->setItemSet(Parser::closure(new_state->kernel));
+    new_state->setItemSet(closure(new_state->kernel));
     std::pair<Symbol*, State*> transition = std::make_pair(s, new_state);
     state->transitions.insert(transition);
   }
+}
+
+// The closure creates the item set of a given state
+std::set<Item*> LR0::closure(std::set<Item*> kernel)
+{
+  std::set<Item*> items_set;
+  std::set<Item*> new_set;
+  std::tuple<int, bool, Symbol*> dot;
+  Symbol* s;
+  bool change = true;
+  int last_size;
+
+  // add the first productions from kernel items
+  for(Item* item : kernel) {
+    dot = item->dot;
+    s = std::get<2>(dot);
+
+    // if the kernel item is not closed, and the dot precedes any symbol that is non-terminal
+    if(std::get<1>(dot) && !(s->terminal)) {
+      new_set = getProductionOfItem(item);
+      set_union(items_set.begin(), items_set.end(), 
+                new_set.begin(), new_set.end(), 
+                std::inserter(items_set, items_set.begin()));
+    }
+  }
+
+  // while there are possible non-terminals items to expand
+  while(change) {
+    change = false;
+    last_size = items_set.size(); 
+
+    // for each item already in the set   
+    for (Item* i: items_set) {                
+      dot = i->dot;
+      s = std::get<2>(dot);
+     
+      // item is closed, continue to next item
+      if(!(std::get<1>(dot)) || s->terminal)
+        continue;                             
+     
+      // for each item of the parser 
+      for(Item* it: this->items) {             
+        // check if it starts with a dot and if the head is equal to the symbol that the dot precedes
+        if(std::get<0>(it->dot) == 0 && std::get<2>(dot) == it->rule->head) {
+          items_set.insert(it);
+        }
+      }
+    }
+    // if a new item was added, reiterate the loop
+    if(last_size != items_set.size())
+      change = true;
+  }
+  return items_set;
+}
+
+State* LR0::createState(State* newState)
+{
+  // check if state already exists
+  for(State* s : this->states) { 
+    if (newState->haveSameKernel(s)) {
+      return s;
+    }
+  }
+  
+  // the state doesn't exists, add new state with a new unique id
+  int id = getNextStateId();
+  newState->setId(id);
+  newState->setItemSet(closure(newState->kernel));
+  this->states.insert(newState);
+  return newState;
+}
+
+std::set<Item*> LR0::getProductionOfItem(Item* item)
+{
+  std::set<Item*> items_set;
+  std::tuple<int, bool, Symbol*> dot = item->dot;
+  Symbol* s = std::get<2>(dot);
+  // for each item of the parser
+  for(Item* it: this->items) {
+    // check if it starts with a dot and if the head is equal to the symbol that the dot precedes
+    if(std::get<0>(it->dot) == 0 && s == it->rule->head) {
+      int last_size = items_set.size();
+      items_set.insert(it);
+    }
+  }
+  return items_set;
 }
