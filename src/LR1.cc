@@ -119,11 +119,30 @@ void LR1::create_automata(void)
   State* starting_state = new State(0, kernel, items_set);
   createTransitionStates(starting_state);
   this->states.insert(starting_state);
-}
+  // MARCELO: for the first state it os ok
 
-std::set<Item*> LR1::closure(std::set<Item*> kernel)
-{
+  // TODO: check if this while is really necessary
+  // while new states appear in this->states
+  while(change) {
+    change = false;
+    last_size = this->states.size();
 
+    // for each state in the current states
+    for(State* s : this->states) {
+      // expand the state and create the transition states
+      createTransitionStates(s);
+      this->states.insert(s);
+      
+      // for each state in the transitions
+      for(auto& ts : s->transitions) {
+        // expand the state and create the transition states
+        createTransitionStates(ts.second);
+        this->states.insert(ts.second);
+      }
+    }
+    if(last_size != this->states.size())
+      change = true;
+  }
 }
 
 State* LR1::getTransitionState(State state, Symbol* s)
