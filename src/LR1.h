@@ -33,10 +33,12 @@ public:
 public:
   void create_item_set(void);
   void create_automata(void);
-  std::set<Item*> closure(std::set<Item*> kernel);
-  State* getTransitionState(State state, Symbol* s);
   void createTransitionStates(State* state);
-  std::set<Item*> getProductionOfItem(Item* item);
+  bool isLookaheadInFirst(Symbol* head, Symbol* lookahead);
+  std::set<Item*> closure(std::set<Item*> kernel);
+  State* createState(State* state);
+  std::set<Item*> getProductionOfItem(Item* item, std::map<Symbol*,std::set<Symbol*> > firsts);
+
 };
 
 #endif
