@@ -25,6 +25,16 @@ LR1::LR1(Grammar* grammar)
 {
   this->type = "LR1";
   this->grammar = grammar;
+  // expand grammar
+  this->grammar->expand_grammar();
+
+  // calculate first and follow sets
+  this->follow = this->grammar->follow();
+  this->first = this->grammar->first();
+  std::cout << "first: \n";
+  grammar->print_first_sets();
+  std::cout << "follow: \n";
+  grammar->print_follow_sets();
   // create item set from input grammar
   create_item_set();
   create_automata();
