@@ -26,13 +26,13 @@ class Item
 {
 public:
   Rule* rule;
-  std::vector<Symbol*> lookahed;
+  std::vector<Symbol*> lookahead;
   std::tuple<int, bool, Symbol*> dot;
 
 public:
   Item();
   Item(Rule* rule, std::tuple<int, bool, Symbol*> dot);
-  Item(Rule* rule, std::tuple<int, bool, Symbol*> dot, std::vector<Symbol*> lookahed);
+  Item(Rule* rule, std::tuple<int, bool, Symbol*> dot, std::vector<Symbol*> lookahead);
   ~Item();
 };
 

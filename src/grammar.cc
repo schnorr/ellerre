@@ -19,7 +19,7 @@
 Grammar::Grammar()
 {
   empty = new Symbol(true);
-  dollar = new DollarSymbol ();
+  dollar = new DollarSymbol();
 }
 
 Grammar::~Grammar()
@@ -370,8 +370,6 @@ std::map<Symbol*,std::set<Symbol*> > Grammar::follow (void)
   return follows;
 }
 
-
-
 void Grammar::print_first_sets (void)
 {
   this->print_set(this->first());
@@ -397,16 +395,18 @@ void Grammar::print_set (std::map<Symbol*,std::set<Symbol*> > map)
 void Grammar::expand_grammar (void)
 {
   Rule* start = (Rule*) this->rules[0];
-  char* new_head = (char*) malloc(strlen(start->head->str) * sizeof(char));
+  char* new_head = (char*) malloc((strlen(start->head->str)+2) * sizeof(char));
   strcpy(new_head, start->head->str);
-
-  Symbol* Start2 = new Symbol(strcat(new_head, "'") , false);
+  strcat(new_head, "'");
+  
+  Symbol* Start2 = new Symbol(new_head , false);
   std::vector<Symbol*> Start2_body;
 
   Start2_body.push_back(start->head);
 
   Rule* new_start = new Rule(Start2, Start2_body);
   addRule(new_start, true);
+  free(new_head);
 }
 
 std::ostream &operator<< (std::ostream &output, const Grammar &grammar)

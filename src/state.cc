@@ -43,6 +43,7 @@ State::~State()
   this->kernel.clear();
   this->item_set.clear();
   this->transitions.clear();
+  this->all_items.clear();
 }
  
 void State::setId(int id)
@@ -81,7 +82,6 @@ bool State::haveSameKernel(State* s2)
 
 std::ostream &operator<< (std::ostream &output, const State &state)
 { 
-  // output << "__________________" << std::endl;
   output << "State " << state.id << ":" << std::endl;
   for(auto& i : state.kernel)
     output << *i;
@@ -96,4 +96,5 @@ std::ostream &operator<< (std::ostream &output, const State &state)
       output << *t.first << " ---> " << t.second->id << std::endl;
   }
   output << std::endl;
+  return output;
 }

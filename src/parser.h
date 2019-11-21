@@ -23,7 +23,7 @@
 
 class Parser
 {
-private:
+public:
   std::string type;
   Grammar* grammar;
   std::set<Item*> items;
@@ -38,19 +38,20 @@ public:
   void clearItems();
   void clearStates();
   State* createState(State* state);
-  int getMaxStateId(void);
+  int getNextStateId(void);
   Item* getNextItem(Item* i);
+  void addItem(Item *item);
+  void print_automata(void);
+  void print_item_set(void);
+  void closure(void);
+  std::set<Item*> getProductionOfItem(Item* item);
+
+  // Methods to be overwritten by different parsers
+  void create_item_set(void);
+  void create_automata(void);
+  std::set<Item*> closure(std::set<Item*> kernel);
   State* getTransitionState(State state, Symbol* s);
   void createTransitionStates(State* state);
-  void addItem(Item *item);
-  void print_item_set(void);
-  void print_automata(void);
-  void LR0_item_set(void);
-  std::set<Item*> getProductionOfItem(Item* item);
-  std::set<Item*> closure(std::set<Item*> kernel);
-  void LR0(void);
-  void LR1(void);
-  void closure(void);
 };
 
 #endif
