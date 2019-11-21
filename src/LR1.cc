@@ -145,9 +145,38 @@ void LR1::create_automata(void)
   }
 }
 
-State* LR1::getTransitionState(State state, Symbol* s)
+void LR1::createTransitionStates(State* state)
 {
+  std::set<Symbol*> symbols;
 
+  // add all possible transitions of the state to the symbols set
+  for(auto& i : state->all_items) {
+    if(std::get<1>(i->dot))
+      symbols.insert(std::get<2>(i->dot));
+  }
+  // for each transition symbol, look at the reachable states
+  for(auto& s : symbols) {
+    std::set<Item*> kernel;
+      // if(isLookaheadInFirst(i->rule->head, i->lookahead[0])) {
+        std::cout << "transition symbol " << *s << "\n";
+      // }
+    for(auto& i : state->all_items) {
+      // if the current symbol s is found before the dot in an item
+      // and its lookahead is in the state item first set
+      if(std::get<1>(i->dot) && std::get<2>(i->dot) == s) {
+        // find the item that have the dot in the next symbol 
+        Item* nextItem = getNextItem(i);
+        if(nextItem != NULL)
+          kernel.insert(nextItem);
+      }   
+    }
+    State* new_state = new State(kernel);
+    new_state = createState(new_state);
+    new_state->setItemSet(closure(new_state->kernel));
+    std::pair<Symbol*, State*> transition = std::make_pair(s, new_state);
+    state->transitions.insert(transition);
+  }
+  std::cout << "\n\n";
 }
 
 
