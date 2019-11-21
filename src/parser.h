@@ -31,7 +31,7 @@ public:
 
 public:
   Parser();
-  Parser(std::string type, Grammar* grammar);
+  Parser(Grammar* grammar);
   ~Parser();
   
   void setType(std::string type);
@@ -43,6 +43,8 @@ public:
   void addItem(Item *item);
   void print_automata(void);
   void print_item_set(void);
+  void closure(void);
+  std::set<Item*> getProductionOfItem(Item* item);
 
   // Methods to be overwritten by different parsers
   void create_item_set(void);
@@ -50,7 +52,6 @@ public:
   std::set<Item*> closure(std::set<Item*> kernel);
   State* getTransitionState(State state, Symbol* s);
   void createTransitionStates(State* state);
-  std::set<Item*> getProductionOfItem(Item* item);
 };
 
 #endif

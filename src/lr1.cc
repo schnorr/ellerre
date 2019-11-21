@@ -26,15 +26,15 @@ int main (int argc, char **argv)
   int ret = yyparse();
 
   grammar->expand_grammar();
-  parser = new LR0(grammar);
+  parser = new Parser(grammar);
+  parser->LR1();
   
   std::cout << *grammar << std::endl;
   parser->print_item_set();
   parser->print_automata();
 
-  delete grammar;
   delete parser;
+  delete grammar;
   grammar = NULL;
-  parser = NULL;
   return ret;
 }
