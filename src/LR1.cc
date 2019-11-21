@@ -81,11 +81,33 @@ void LR1::create_item_set(void)
       addItem(i);
     }
   }
+
+  // Get the follow set to determine LR1 lookaheads in the items
+  std::map<Symbol*,std::set<Symbol*> > follows = this->grammar->follow();
+  std::set<Item*> items_lookahead;
+
+  // For each item in the LR(0) item set, apply each element of the follow set as a lookahead
+  for(Item *i:  this->items){
+    // for each entry <Head,follow> in the follow set
+    for (auto& entry : follows) {
+      // add the follow lookahead symbols for the head symbol of our items that matches entry.first 
+      if(*(entry.first) == *i->rule->head) {
+        // for each follow symbol for a given non terminal
+        for (Symbol *s : entry.second) {
+          std::vector<Symbol*> l{s};
+          items_lookahead.insert(new Item(i->rule, i->dot, l)); 
+        }        
+      }
+    }
+  }
+  // remove previous LR0 item set and assign the item set with the lookaheads to this->items
+  this->clearItems();
+  setItems(items_lookahead);
 }
 
 void LR1::create_automata(void)
 {
-  // The first item in closure is the Starting item rule from the augmented grammar
+  // This assumes that the first item in closure is the Starting item rule from the augmented grammar located at this->items.begin()
   std::vector<State*> states;
   bool change = true;
   int last_size = 0;
