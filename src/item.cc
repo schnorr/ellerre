@@ -36,7 +36,7 @@ Item::Item(Rule* rule, std::tuple<int, bool, Symbol*> dot, std::vector<Symbol*> 
 
 Item::~Item()
 {
-    lookahead.clear();
+  lookahead.clear();
 }
 
 std::ostream &operator<< (std::ostream &output, const Item &item)
@@ -77,10 +77,15 @@ std::ostream &operator<< (std::ostream &output, const Item &item)
 
 bool operator==(const Item &i1, const Item &i2)
 {
+  // compare rules
   if(!(i1.rule == i2.rule))
     return false;
-  else if(!(i1.lookahead[0] == i2.lookahead[1]))
-    return false;
+
+  // compare lookaheads
+  for(int i=0; i < i1.lookahead.size(); i++) {
+    if(!(i1.lookahead[i] == i2.lookahead[i]))
+      return false;
+  }
   
   return true;
 }
