@@ -180,8 +180,17 @@ void LR1::createTransitionStates(State* state)
 }
 
 
-void LR1::createTransitionStates(State* state)
+// && isLookaheadInFirst(i->rule->head, i->lookahead[0])
+
+bool LR1::isLookaheadInFirst(Symbol* head, Symbol* lookahead)
 {
+  for(Symbol* s: this->first[head]) {
+    if(lookahead == s)
+      return true;
+  }
+  return false;
+}
+
 
 }
 
