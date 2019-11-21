@@ -70,8 +70,9 @@ bool operator== (const Rule &r1, const Rule &r2)
   if(r1.body.size() != r2.body.size())
     return false;
 
-  if(r1.head->str != r2.head->str)
+  if(!(r1.head == r2.head)) {
     return false;
+  }
 
   for(int i=0; i<r1.body.size(); i++) {
     if(r1.body.at(i) != r2.body.at(i)) {
