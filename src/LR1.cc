@@ -191,7 +191,58 @@ bool LR1::isLookaheadInFirst(Symbol* head, Symbol* lookahead)
   return false;
 }
 
+// The closure creates the item set of a given state
+std::set<Item*> LR1::closure(std::set<Item*> kernel)
+{
+  std::set<Item*> items_set;
+  std::set<Item*> new_set;
+  std::tuple<int, bool, Symbol*> dot;
+  Symbol* s;
+  bool change = true;
+  int last_size;
 
+  // add the first productions from kernel items
+  for(Item* item : kernel) {
+    dot = item->dot;
+    s = std::get<2>(dot);
+
+    // if the kernel item is not closed, and the dot precedes any symbol that is non-terminal
+    if(std::get<1>(dot) && !(s->terminal)) {
+      new_set = getProductionOfItem(item, this->first);
+      set_union(items_set.begin(), items_set.end(), 
+                new_set.begin(), new_set.end(), 
+                std::inserter(items_set, items_set.begin()));
+    }
+  }
+
+  // while there are possible non-terminals items to expand
+  while(change) {
+    change = false;
+    last_size = items_set.size(); 
+
+    // for each item already in the set   
+    for (Item* i: items_set) {                
+      dot = i->dot;
+      s = std::get<2>(dot);
+     
+      // item is closed, continue to next item
+      if(!(std::get<1>(dot)) || s->terminal)
+        continue;                             
+     
+      // for each item of the parser 
+      for(Item* it: this->items) {             
+        // check if it starts with a dot and if the head is equal to the symbol that the dot precedes
+        // and the lookahead is in the first set of that head symbol
+        if(std::get<0>(it->dot) == 0 && std::get<2>(dot) == it->rule->head && isLookaheadInFirst(it->rule->head, it->lookahead[0])) {
+          items_set.insert(it);
+        }
+      }
+    }
+    // if a new item was added, reiterate the loop
+    if(last_size != items_set.size())
+      change = true;
+  }
+  return items_set;
 }
 
 std::set<Item*> LR1::getProductionOfItem(Item* item)
