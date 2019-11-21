@@ -245,7 +245,20 @@ std::set<Item*> LR1::closure(std::set<Item*> kernel)
   return items_set;
 }
 
-std::set<Item*> LR1::getProductionOfItem(Item* item)
+State* LR1::createState(State* newState)
 {
-    
+  // check if state already exists
+  for(State* s : this->states) { 
+    if (newState->haveSameKernel(s)) {
+      return s;
+    }
+  }
+  
+  // the state doesn't exists, add new state with a new unique id
+  int id = getNextStateId();
+  newState->setId(id);
+  newState->setItemSet(closure(newState->kernel));
+  this->states.insert(newState);
+  return newState;
+}
 }
