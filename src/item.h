@@ -27,7 +27,7 @@ class Item
 public:
   Rule* rule;
   std::vector<Symbol*> lookahead;
-  std::tuple<int, bool, Symbol*> dot;
+  std::tuple<int, bool, Symbol*> dot; // <position in the rule body, if precedes a symbol, which symbol is next to the dot>
 
 public:
   Item();
