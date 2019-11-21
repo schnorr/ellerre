@@ -44,39 +44,40 @@ LR1::~LR1()
 {
 }
 
-void LR1::create_item_set(void)
+void LR1::create_item_set(void) 
 {
+  // Produce the LR0 item set
   std::vector<Rule*> r = this->grammar->rules; 
   std::vector<Rule*>::iterator it_r;
-  std::vector<Symbol*> s;
-  std::vector<Symbol*>::iterator it_s;
+  std::vector<Symbol*> body;
+  std::vector<Symbol*>::iterator it_b;
   int dot;
   bool hasNext;
 
   // for each rule in grammar
   for (it_r = r.begin(); it_r != r.end(); it_r++) {
     hasNext = true;
-    s = (*it_r)->body;
+    body = (*it_r)->body;
     dot = 0;
 
     // if the rule produces the empty symbol
-    if(s.size() == 1 && s[0]->empty) {
+    if(body.size() == 1 && body[0]->empty) {
       hasNext = false;
       Rule *r = new Rule((*it_r)->head);
-      Item *i = new Item(r, std::make_tuple(0, hasNext, s[0]));
+      Item *i = new Item(r, std::make_tuple(0, hasNext, body[0]));
       addItem(i);
     } else {
       // for each symbol in rule add a dot
-      for (it_s = s.begin(); it_s != s.end(); it_s++) {
-        Item *i = new Item((*it_r), std::make_tuple(dot, hasNext, (*it_s)));
+      for (it_b = body.begin(); it_b != body.end(); it_b++) {
+        Item *i = new Item((*it_r), std::make_tuple(dot, hasNext, (*it_b)));
         addItem(i);
         dot++;
       }
 
       // the last dot does not precede any symbol
       hasNext = false;
-      it_s--;
-      Item *i = new Item((*it_r), std::make_tuple(dot, hasNext, (*it_s)));
+      it_b--;
+      Item *i = new Item((*it_r), std::make_tuple(dot, hasNext, (*it_b)));
       addItem(i);
     }
   }
