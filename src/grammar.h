@@ -33,7 +33,7 @@ private:
 public:
   std::vector<Rule*> rules;
   std::map<std::string, Symbol*> symbols;
-
+  
 public:
   Grammar();
   ~Grammar();
