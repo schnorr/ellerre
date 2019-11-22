@@ -254,11 +254,13 @@ State* LR1::createState(State* newState)
   // the state doesn't exists, add new state with a new unique id
   int id = getNextStateId();
   newState->setId(id);
-  newState->setItemSet(closure(newState->kernel));
+  newState->setItemSet(closure(newState->all_items));
   this->states.insert(newState);
   return newState;
 }
-std::set<Item*> LR1::getProductionOfItem(Item* item, std::map<Symbol*,std::set<Symbol*> > firsts)
+
+
+std::set<Item*> LR1::getProductionOfItem(Item* item)
 {
   std::set<Item*> items_set;
   std::tuple<int, bool, Symbol*> dot = item->dot;
@@ -266,25 +268,14 @@ std::set<Item*> LR1::getProductionOfItem(Item* item, std::map<Symbol*,std::set<S
 
   // for each item of the parser
   for(Item* it: this->items) {
+    
     // check if it starts with a dot and if the head is equal to the symbol that the dot precedes
     if(std::get<0>(it->dot) == 0 && s == it->rule->head) {
-      // TODO: check if this is working 
-      // if there is a lookahead symbol, compare it to see if they match
-      if(it->lookahead.size() > 0) {
-        bool isLookaheadEqual = true;
-        for(int i=0; i<it->lookahead.size(); i++){
-
-          // check all lookahead symbols (an item can have more than one, LR(2) for example
-          if(!(it->lookahead[i] == item->lookahead[i]))
-            isLookaheadEqual = false;
-        }
-        if(isLookaheadEqual) {
-          int last_size = items_set.size();
+      bool isLookaheadEqual = false;
+      for(int i=0; i<it->lookahead.size(); i++) {
+        // check lookahead symbols
+        if(it->lookahead[i] == item->lookahead[i])
           items_set.insert(it);
-        }
-      } else {
-        int last_size = items_set.size();
-        items_set.insert(it);
       }
     }
   }
