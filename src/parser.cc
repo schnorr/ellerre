@@ -92,3 +92,15 @@ void Parser::print_automata(void)
   for(State* s : this->states)
     std::cout << *s;
 }
+
+void Parser::print_first_sets(void)
+{
+  std::cout << std::endl << "First set: " << std::endl;
+  this->grammar->print_first_sets();
+}
+
+void Parser::print_follow_sets(void)
+{
+  std::cout << std::endl << "Follow set: " << std::endl;
+  this->grammar->print_follow_sets();
+}

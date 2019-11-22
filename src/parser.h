@@ -45,6 +45,8 @@ public:
   void addItem(Item *item);
   void print_automata(void);
   void print_item_set(void);
+  void print_first_sets(void);
+  void print_follow_sets(void);
 };
 
 #endif
