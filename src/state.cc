@@ -24,6 +24,7 @@ State::State()
 State::State(std::set<Item*> kernel)
 {
   this->kernel = kernel;
+  updateAllItems();
 }
 
 State::State(int id,
@@ -33,9 +34,7 @@ State::State(int id,
   this->id = id;
   this->kernel = kernel;
   this->item_set = item_set;
-  set_union(this->kernel.begin(), this->kernel.end(), 
-            this->item_set.begin(), this->item_set.end(), 
-            std::inserter(this->all_items, this->all_items.begin()));
+  updateAllItems();
 }
 
 State::~State()
@@ -54,17 +53,13 @@ void State::setId(int id)
 void State::setItemSet(std::set<Item*> item_set)
 {
   this->item_set = item_set;
-  set_union(this->kernel.begin(), this->kernel.end(), 
-            this->item_set.begin(), this->item_set.end(), 
-            std::inserter(this->all_items, this->all_items.begin()));
+  updateAllItems();
 }
 
 void State::setKernel(std::set<Item*> kernel)
 {
   this->kernel = kernel;
-  set_union(this->kernel.begin(), this->kernel.end(), 
-            this->item_set.begin(), this->item_set.end(), 
-            std::inserter(this->all_items, this->all_items.begin()));
+  updateAllItems();
 }
 
 bool State::haveSameKernel(State* s2)
@@ -86,6 +81,7 @@ std::ostream &operator<< (std::ostream &output, const State &state)
   for(auto& i : state.kernel)
     output << *i;
   
+  output << "---------------" << std::endl;
 
   for(auto& i : state.item_set)
     output << *i;
@@ -97,4 +93,11 @@ std::ostream &operator<< (std::ostream &output, const State &state)
   }
   output << std::endl;
   return output;
+}
+
+void State::updateAllItems()
+{
+  set_union(this->kernel.begin(), this->kernel.end(), 
+            this->item_set.begin(), this->item_set.end(), 
+            std::inserter(this->all_items, this->all_items.begin()));
 }
