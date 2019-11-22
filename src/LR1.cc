@@ -114,12 +114,14 @@ void LR1::create_automata(void)
   Item* start = *this->items.begin(); 
   std::set<Item*> kernel = {start}; 
   std::set<Item*> items_set = closure(kernel);
-
+  
   // Create the first state with its id, kernel and item_set
   State* starting_state = new State(0, kernel, items_set);
+  
   createTransitionStates(starting_state);
   this->states.insert(starting_state);
-  // MARCELO: for the first state it os ok
+  // MARCELO: for the first state it is ok
+  
 
   // TODO: check if this while is really necessary
   // while new states appear in this->states
@@ -130,6 +132,7 @@ void LR1::create_automata(void)
     // for each state in the current states
     for(State* s : this->states) {
       // expand the state and create the transition states
+      std::cout << "current state -> " << *s;
       createTransitionStates(s);
       this->states.insert(s);
       
@@ -157,9 +160,6 @@ void LR1::createTransitionStates(State* state)
   // for each transition symbol, look at the reachable states
   for(auto& s : symbols) {
     std::set<Item*> kernel;
-      // if(isLookaheadInFirst(i->rule->head, i->lookahead[0])) {
-        std::cout << "transition symbol " << *s << "\n";
-      // }
     for(auto& i : state->all_items) {
       // if the current symbol s is found before the dot in an item
       // and its lookahead is in the state item first set
@@ -176,11 +176,8 @@ void LR1::createTransitionStates(State* state)
     std::pair<Symbol*, State*> transition = std::make_pair(s, new_state);
     state->transitions.insert(transition);
   }
-  std::cout << "\n\n";
+  
 }
-
-
-// && isLookaheadInFirst(i->rule->head, i->lookahead[0])
 
 bool LR1::isLookaheadInFirst(Symbol* head, Symbol* lookahead)
 {
