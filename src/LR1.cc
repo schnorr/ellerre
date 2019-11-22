@@ -31,10 +31,7 @@ LR1::LR1(Grammar* grammar)
   // calculate first and follow sets
   this->follow = this->grammar->follow();
   this->first = this->grammar->first();
-  std::cout << "first: \n";
-  grammar->print_first_sets();
-  std::cout << "follow: \n";
-  grammar->print_follow_sets();
+
   // create item set from input grammar
   create_item_set();
   create_automata();
@@ -114,28 +111,22 @@ void LR1::create_automata(void)
   Item* start = *this->items.begin(); 
   std::set<Item*> kernel = {start}; 
   std::set<Item*> items_set = closure(kernel);
-  
+
   // Create the first state with its id, kernel and item_set
   State* starting_state = new State(0, kernel, items_set);
-  
   createTransitionStates(starting_state);
   this->states.insert(starting_state);
-  // MARCELO: for the first state it is ok
-  
 
-  // TODO: check if this while is really necessary
   // while new states appear in this->states
   while(change) {
     change = false;
     last_size = this->states.size();
-
     // for each state in the current states
     for(State* s : this->states) {
       // expand the state and create the transition states
-      std::cout << "current state -> " << *s;
       createTransitionStates(s);
       this->states.insert(s);
-      
+
       // for each state in the transitions
       for(auto& ts : s->transitions) {
         // expand the state and create the transition states
@@ -152,11 +143,13 @@ void LR1::createTransitionStates(State* state)
 {
   std::set<Symbol*> symbols;
 
-  // add all possible transitions of the state to the symbols set
+  // add all possible transitions of the state to the symbols set (all symbols that the dot precedes)
   for(auto& i : state->all_items) {
+    // if the dot precedes a symbol
     if(std::get<1>(i->dot))
       symbols.insert(std::get<2>(i->dot));
   }
+
   // for each transition symbol, look at the reachable states
   for(auto& s : symbols) {
     std::set<Item*> kernel;
@@ -172,7 +165,6 @@ void LR1::createTransitionStates(State* state)
     }
     State* new_state = new State(kernel);
     new_state = createState(new_state);
-    new_state->setItemSet(closure(new_state->kernel));
     std::pair<Symbol*, State*> transition = std::make_pair(s, new_state);
     state->transitions.insert(transition);
   }
@@ -196,16 +188,16 @@ std::set<Item*> LR1::closure(std::set<Item*> kernel)
   std::tuple<int, bool, Symbol*> dot;
   Symbol* s;
   bool change = true;
-  int last_size;
+  int last_size, item_rule_body_size;
 
   // add the first productions from kernel items
   for(Item* item : kernel) {
     dot = item->dot;
     s = std::get<2>(dot);
-
+    std::cout << "kernel item = " << *item;
     // if the kernel item is not closed, and the dot precedes any symbol that is non-terminal
     if(std::get<1>(dot) && !(s->terminal)) {
-      new_set = getProductionOfItem(item, this->first);
+      new_set = getProductionOfItem(item);
       set_union(items_set.begin(), items_set.end(), 
                 new_set.begin(), new_set.end(), 
                 std::inserter(items_set, items_set.begin()));
