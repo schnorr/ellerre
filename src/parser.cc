@@ -61,17 +61,6 @@ int Parser::getNextStateId(void)
   return maxid+1;
 }
 
-Item* Parser::getNextItem(Item* i)
-{
-  for(Item* it : this->items) {
-    // if the item represents the same rule and the dot of i is greater by 1 
-    if(it->rule == i->rule && std::get<0>(i->dot)+1 == std::get<0>(it->dot) && std::get<1>(i->dot))
-      return it;
-  }
-
-  return NULL;
-}
-
 void Parser::addItem(Item *item)
 {
   this->items.insert(item);
