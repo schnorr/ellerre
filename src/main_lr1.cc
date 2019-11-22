@@ -28,6 +28,9 @@ int main (int argc, char **argv)
   parser = new LR1(grammar);
   
   std::cout << *grammar << std::endl;
+  parser->print_first_sets();
+  parser->print_follow_sets();
+  
   parser->print_item_set();
   parser->print_automata();
 
