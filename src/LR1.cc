@@ -217,28 +217,56 @@ std::set<Item*> LR1::closure(std::set<Item*> kernel)
     change = false;
     last_size = items_set.size(); 
 
-    // for each item already in the set   
+    // for each item currently in the set   
     for (Item* i: items_set) {                
+      std::cout << "item_set item " << *i;
       dot = i->dot;
       s = std::get<2>(dot);
-     
-      // item is closed, continue to next item
+
+      // if item is closed, continue to next items
       if(!(std::get<1>(dot)) || s->terminal)
         continue;                             
-     
-      // for each item of the parser 
-      for(Item* it: this->items) {             
-        // check if it starts with a dot and if the head is equal to the symbol that the dot precedes
-        // and the lookahead is in the first set of that head symbol
-        if(std::get<0>(it->dot) == 0 && std::get<2>(dot) == it->rule->head && isLookaheadInFirst(it->rule->head, it->lookahead[0])) {
-          items_set.insert(it);
+      
+      // for each item of the parser item set 
+      for(Item* it: this->items) {        
+        // check if it starts with a dot AND if the head is equal to the symbol that the dot precedes
+        if(std::get<0>(it->dot) == 0 && std::get<2>(dot) == it->rule->head) {
+          // Now we need to decide wich lookaheads are possible for this item in this state
+          
+          // If there is only one symbol after the dot, we add items that have the i's lookahead (i is the item in the state item set)
+          if(i->rule->body_size - std::get<0>(dot) == 1) {
+            if(it->lookahead[0] == i->lookahead[0])
+              new_set.insert(it);
+
+          // if there are more symbols in the rule body
+          } else {
+            // we add first of that symbol (if not terminal) or the symbol itself (if terminal)
+            // Non terminal symbol
+            if(!(i->rule->body[std::get<0>(dot)+1]->terminal)) {
+              // if the lookahead of our item is in the first set of the symbol that is next to it (i->rule->body[1])
+              // this takes care when we have empty productions on a subsequent symbol
+              if(isLookaheadInFirst(i->rule->body[std::get<0>(dot)+1], it->lookahead[0]))
+                new_set.insert(it);
+            // Next symbol (i->rule->body[std::get<0>(dot)+1]) is terminal, it becomes the lookahead 
+            } else {
+              if(it->lookahead[0] == i->rule->body[std::get<0>(dot)+1])
+                new_set.insert(it);
+            }
+          }  
         }
       }
     }
+
+    // include new items in the state items_set
+    set_union(items_set.begin(), items_set.end(), 
+                new_set.begin(), new_set.end(), 
+                std::inserter(items_set, items_set.begin()));
+
     // if a new item was added, reiterate the loop
     if(last_size != items_set.size())
       change = true;
   }
+  
   return items_set;
 }
 
