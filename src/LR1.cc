@@ -290,3 +290,17 @@ std::set<Item*> LR1::getProductionOfItem(Item* item, std::map<Symbol*,std::set<S
   }
   return items_set;
 }
+
+Item* LR1::getNextItem(Item* i)
+{
+  for(Item* it : this->items) {
+    // if the item represents the same rule and the dot of i is greater by 1 having the same lookahead 
+    if( it->rule == i->rule && 
+        std::get<0>(i->dot)+1 == std::get<0>(it->dot) && 
+        std::get<1>(i->dot) && 
+        it->lookahead[0] == i->lookahead[0])
+      return it;
+  }
+
+  return NULL;
+}
