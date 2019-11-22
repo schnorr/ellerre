@@ -37,6 +37,7 @@ public:
   std::set<Item*> closure(std::set<Item*> kernel);
   State* createState(State* state);
   std::set<Item*> getProductionOfItem(Item* item);
+  Item* getNextItem(Item* i);
 };
 
 #endif

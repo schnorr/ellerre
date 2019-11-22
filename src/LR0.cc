@@ -65,7 +65,7 @@ void LR0::create_item_set(void)
 
       // the last dot does not precede any symbol
       hasNext = false;
-      it_b--;
+      it_b--; // get the symbol before the dot
       Item *i = new Item((*it_r), std::make_tuple(dot, hasNext, (*it_b)));
       addItem(i);
     }
@@ -225,4 +225,15 @@ std::set<Item*> LR0::getProductionOfItem(Item* item)
     }
   }
   return items_set;
+}
+
+Item* LR0::getNextItem(Item* i)
+{
+  for(Item* it : this->items) {
+    // if the item represents the same rule and the dot of i is greater by 1 
+    if(it->rule == i->rule && std::get<0>(i->dot)+1 == std::get<0>(it->dot) && std::get<1>(i->dot))
+      return it;
+  }
+
+  return NULL;
 }
