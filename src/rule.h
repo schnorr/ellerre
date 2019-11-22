@@ -26,6 +26,7 @@ class Rule
 public:
   Symbol *head;
   std::vector<Symbol*> body;
+  int body_size;
   
 public:
   Rule();

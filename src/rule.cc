@@ -32,6 +32,7 @@ Rule::Rule(Symbol *head, std::vector<Symbol*> body)
 {
   this->head = head;
   this->body = body;
+  this->body_size = body.size();
 }
 
 Rule::~Rule()
@@ -47,11 +48,13 @@ void Rule::addHead(Symbol *head)
 void Rule::addBody(std::vector<Symbol*> body)
 {
   this->body = body;
+  this->body_size = body.size();
 }
 
 void Rule::addToBody(Symbol *symbol)
 {
   body.push_back(symbol);
+  this->body_size = body.size();
 }
 
 std::ostream &operator<< (std::ostream &output, const Rule &rule)
