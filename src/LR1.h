@@ -37,8 +37,8 @@ public:
   bool isLookaheadInFirst(Symbol* head, Symbol* lookahead);
   std::set<Item*> closure(std::set<Item*> kernel);
   State* createState(State* state);
-  std::set<Item*> getProductionOfItem(Item* item, std::map<Symbol*,std::set<Symbol*> > firsts);
-
+  std::set<Item*> getProductionOfItem(Item* item);
+  Item* getNextItem(Item* i);
 };
 
 #endif
