@@ -70,6 +70,12 @@ std::ostream &operator<< (std::ostream &output, const Item &item)
     output << std::endl;
   } else {
     output << "• "; 
+    // print lookahead (if any)
+    if (item.lookahead.size() > 0) {
+      for (auto& symbol : item.lookahead) {
+        output << ", " << *symbol;
+      }
+    }
     output << std::endl;
   }
   return output;
