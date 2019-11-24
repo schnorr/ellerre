@@ -43,6 +43,7 @@ public:
   void setItemSet(std::set<Item*> item_set);
   void setKernel(std::set<Item*> kernel);
   bool haveSameKernel(State* s2);
+  bool haveSameKernelItems(State* s2);
   void updateAllItems();
 };
 

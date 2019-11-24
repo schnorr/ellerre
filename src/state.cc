@@ -75,6 +75,24 @@ bool State::haveSameKernel(State* s2)
   return true;
 }
 
+bool State::haveSameKernelItems(State* s2)
+{
+  // check if all kernel rules of this->kernel are in s2->kernel
+  for (Item* i: this->kernel) {
+    bool isIn = false;
+    
+    for(Item* i2: s2->kernel) {
+      if(i->isBodyEqual(i2))
+        isIn = true;
+    }
+    if(!isIn)
+      return false;
+  }
+  return true;
+}
+
+
+
 std::ostream &operator<< (std::ostream &output, const State &state)
 { 
   output << "State " << state.id << ":" << std::endl;
