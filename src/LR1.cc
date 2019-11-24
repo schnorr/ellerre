@@ -195,6 +195,16 @@ bool LR1::isLookaheadInFollow(Symbol* head, Symbol* lookahead)
   }
   return false;
 }
+
+bool LR1::isEmptyInFirst(Symbol* head)
+{
+    for(Symbol* s: this->first[head]) {
+    if(s->empty){
+      return true;
+    }
+  }
+  return false;
+}
 // The closure creates the item set of a given state
 std::set<Item*> LR1::closure(std::set<Item*> kernel)
 {
