@@ -8,7 +8,8 @@ EllErre is designed to be an LR automata generator, with the following algorithm
 + [X] Follow Set
 + [X] LR(0) automata
 + [ ] SLR(1)
-+ [ ] LR(1)
++ [X] LR(1)
++ [ ] LALR(1)
 
 It is current in development.
 
@@ -213,6 +214,94 @@ Transitions:
 ( ---> 4
 #+end_example
      
+** LR(1) automata
+#+begin_src shell :results output :exports both
+cd build
+./lr1  < ../examples/9.30_book.ee
+#+end_src
+
+#+RESULTS:
+#+begin_example
+Grammar with 5 rules and 6 symbols (3 non-terminals):
+S' => S 
+S => A B c 
+A => a 
+B => b 
+B => ε 
+
+First set: 
+S -- a 
+A -- a 
+B -- ε b 
+S' -- a 
+
+Follow set: 
+S -- $ 
+A -- c b 
+B -- c 
+S' -- $ 
+
+LR1 item set:
+S' => • S , $
+S' => S • , $
+S => • A B c , $
+S => A • B c , $
+S => A B • c , $
+S => A B c • , $
+A => • a , c
+A => • a , b
+A => a • , c
+A => a • , b
+B => • b , c
+B => b • , c
+B => • , c
+
+LR1 automata:
+State 0:
+S' => • S , $
+---------------
+S => • A B c , $
+A => • a , c
+A => • a , b
+Transitions: 
+S ---> 1
+A ---> 2
+a ---> 3
+
+State 1:
+S' => S • , $
+---------------
+
+State 2:
+S => A • B c , $
+---------------
+B => • b , c
+B => • , c
+Transitions: 
+B ---> 4
+b ---> 5
+
+State 3:
+A => a • , c
+A => a • , b
+---------------
+
+State 4:
+S => A B • c , $
+---------------
+Transitions: 
+c ---> 6
+
+State 5:
+B => b • , c
+---------------
+
+State 6:
+S => A B c • , $
+---------------
+
+#+end_example
+
 * Plan                                                             :noexport:
 
 A disciplina de compiladores propõe um estudo das partes de um
