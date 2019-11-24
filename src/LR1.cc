@@ -205,6 +205,12 @@ bool LR1::isEmptyInFirst(Symbol* head)
   }
   return false;
 }
+
+std::set<Symbol*> LR1::getFollowOf(Symbol* s)
+{
+  return this->follow[s];
+}
+
 // The closure creates the item set of a given state
 std::set<Item*> LR1::closure(std::set<Item*> kernel)
 {
