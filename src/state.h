@@ -45,6 +45,8 @@ public:
   bool haveSameKernel(State* s2);
   bool haveSameKernelItems(State* s2);
   void updateAllItems();
+  void addItemToKernel(Item* i);
+  void addItemToItemsSet(Item* i);
 };
 
 std::ostream &operator<< (std::ostream &output, const State &state);

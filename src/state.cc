@@ -119,3 +119,15 @@ void State::updateAllItems()
             this->item_set.begin(), this->item_set.end(), 
             std::inserter(this->all_items, this->all_items.begin()));
 }
+
+void State::addItemToKernel(Item* i)
+{ 
+  this->kernel.insert(i);
+  this->updateAllItems();
+}
+
+void State::addItemToItemsSet(Item* i)
+{
+  this->item_set.insert(i);
+  this->updateAllItems();
+}
