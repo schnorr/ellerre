@@ -47,6 +47,15 @@ public:
   void print_item_set(void);
   void print_first_sets(void);
   void print_follow_sets(void);
+  void createTransitionStates(State* state);
+  std::set<Symbol*> getFollowOf(Symbol* s);
+  State* createState(State* newState);
+  std::set<Item*> closure(std::set<Item*> kernel);
+  bool isLookaheadInFirst(Symbol* head, Symbol* lookahead);
+  bool isLookaheadInFollow(Symbol* head, Symbol* lookahead);
+  bool isEmptyInFirst(Symbol* head);
+  void create_automata(void);
+  void expandStates(void);
 };
 
 #endif

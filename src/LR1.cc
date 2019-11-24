@@ -34,7 +34,7 @@ LR1::LR1(Grammar* grammar)
 
   // create item set from input grammar
   create_item_set();
-  create_automata();
+  Parser::create_automata();
 }
 
 LR1::~LR1()
@@ -95,9 +95,9 @@ void LR1::create_item_set(void)
           }   
         // if the rule produces the empty symbol, the valid lookahed is what follows it 
         } else {
-          for (Symbol *s: getFollowOf(i->rule->head)) {
+          for (Symbol *s: Parser::getFollowOf(i->rule->head)) {
             std::vector<Symbol*> l{s};
-            if(isLookaheadInFollow(i->rule->head, s))
+            if(Parser::isLookaheadInFollow(i->rule->head, s))
               items_lookahead.insert(new Item(i->rule, i->dot, l));
           }
         }     
@@ -107,164 +107,6 @@ void LR1::create_item_set(void)
   // remove previous LR0 item set and assign the item set with the lookaheads to this->items
   this->clearItems();
   setItems(items_lookahead);
-}
-
-void LR1::create_automata(void)
-{
-  // This assumes that the first item in closure is the Starting item rule from the augmented grammar located at this->items.begin()
-  std::vector<State*> states;
-  bool change = true;
-  int last_size = 0;
-  Item* start = *this->items.begin(); 
-  std::set<Item*> kernel = {start}; 
-  std::set<Item*> items_set = closure(kernel);
-
-  // Create the first state with its id, kernel and item_set
-  State* starting_state = new State(0, kernel, items_set);
-  createTransitionStates(starting_state);
-  this->states.insert(starting_state);
-
-  // while new states appear in this->states
-  while(change) {
-    change = false;
-    last_size = this->states.size();
-    // for each state in the current states
-    for(State* s : this->states) {
-      // expand the state and create the transition states
-      createTransitionStates(s);
-      this->states.insert(s);
-
-      // for each state in the transitions
-      for(auto& ts : s->transitions) {
-        // expand the state and create the transition states
-        createTransitionStates(ts.second);
-        this->states.insert(ts.second);
-      }
-    }
-    if(last_size != this->states.size())
-      change = true;
-  }
-}
-
-void LR1::createTransitionStates(State* state)
-{
-  std::set<Symbol*> symbols;
-
-  // add all possible transitions of the state to the symbols set (all symbols that the dot precedes)
-  for(auto& i : state->all_items) {
-    // if the dot precedes a symbol
-    if(std::get<1>(i->dot))
-      symbols.insert(std::get<2>(i->dot));
-  }
-
-  // for each transition symbol, look at the reachable states
-  for(auto& s : symbols) {
-    std::set<Item*> kernel;
-    for(auto& i : state->all_items) {
-      // if the current symbol s is found before the dot in an item
-      // and its lookahead is in the state item first set
-      if(std::get<1>(i->dot) && std::get<2>(i->dot) == s) {
-        // find the item that have the dot in the next symbol 
-        Item* nextItem = getNextItem(i);
-        if(nextItem != NULL)
-          kernel.insert(nextItem);
-      }   
-    }
-    State* new_state = new State(kernel);
-    new_state = createState(new_state);
-    std::pair<Symbol*, State*> transition = std::make_pair(s, new_state);
-    state->transitions.insert(transition);
-  }
-  
-}
-
-bool LR1::isLookaheadInFirst(Symbol* head, Symbol* lookahead)
-{
-  for(Symbol* s: this->first[head]) {
-    if(lookahead == s)
-      return true;
-  }
-  return false;
-}
-
-bool LR1::isLookaheadInFollow(Symbol* head, Symbol* lookahead)
-{
-  for(Symbol* s: this->follow[head]) {
-    if(lookahead == s)
-      return true;
-  }
-  return false;
-}
-
-bool LR1::isEmptyInFirst(Symbol* head)
-{
-    for(Symbol* s: this->first[head]) {
-    if(s->empty){
-      return true;
-    }
-  }
-  return false;
-}
-
-std::set<Symbol*> LR1::getFollowOf(Symbol* s)
-{
-  return this->follow[s];
-}
-
-// The closure creates the item set of a given state
-std::set<Item*> LR1::closure(std::set<Item*> kernel)
-{
-  std::set<Item*> items_set;
-  std::set<Item*> new_set;
-  std::tuple<int, bool, Symbol*> dot;
-  Symbol* s;
-  bool change = true;
-  int last_size;
-
-  // add the first productions from kernel items
-  for(Item* item : kernel) {
-      new_set = getProductionOfItem(item);
-      set_union(items_set.begin(), items_set.end(), 
-                new_set.begin(), new_set.end(), 
-                std::inserter(items_set, items_set.begin()));
-  }
-
-  // while there are possible non-terminals items to expand
-  while(change) {
-    change = false;
-    last_size = items_set.size(); 
-
-    // for each item currently in the set
-    for (Item* i: items_set) { 
-      new_set = getProductionOfItem(i);
-      set_union(items_set.begin(), items_set.end(), 
-                new_set.begin(), new_set.end(), 
-                std::inserter(items_set, items_set.begin()));          
-    }
-
-    // if a new item was added, reiterate the loop
-    if(last_size != items_set.size())
-      change = true;
-  }
-  
-  return items_set;
-}
-
-State* LR1::createState(State* newState)
-{
-  // check if state already exists
-  for(State* s : this->states) { 
-    if (newState->haveSameKernel(s)) {
-      return s;
-    }
-  }
-  
-  // the state doesn't exists, add new state with a new unique id
-  int id = getNextStateId();
-  newState->setId(id);
-  newState->setItemSet(closure(newState->all_items));
-  this->states.insert(newState);
-  return newState;
 }
 
 std::set<Item*> LR1::getProductionOfItem(Item* item)
@@ -294,13 +136,13 @@ std::set<Item*> LR1::getProductionOfItem(Item* item)
           // Non terminal symbol
           if(!(item->rule->body[std::get<0>(dot)+1]->terminal)) {
             // if the lookahead of our item is in the first set of the symbol that is next to it (item->rule->body[std::get<0>(dot)+1)
-            if(isLookaheadInFirst(item->rule->body[std::get<0>(dot)+1], it->lookahead[0]))
+            if(Parser::isLookaheadInFirst(item->rule->body[std::get<0>(dot)+1], it->lookahead[0]))
               items_set.insert(it);
           
             // need to check if the empty symbol is in first of the subsequent symbol
-            if(isEmptyInFirst(item->rule->body[std::get<0>(dot)+1])){
+            if(Parser::isEmptyInFirst(item->rule->body[std::get<0>(dot)+1])){
               // if so, we consider all follow symbols as valid lookaheads
-              if(isLookaheadInFollow(item->rule->body[std::get<0>(dot)+1], it->lookahead[0]))
+              if(Parser::isLookaheadInFollow(item->rule->body[std::get<0>(dot)+1], it->lookahead[0]))
                 items_set.insert(it);
             }
 

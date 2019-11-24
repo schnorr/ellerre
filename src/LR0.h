@@ -32,10 +32,6 @@ public:
 
 public:
   void create_item_set(void);
-  void create_automata(void);
-  void createTransitionStates(State* state);
-  std::set<Item*> closure(std::set<Item*> kernel);
-  State* createState(State* state);
   std::set<Item*> getProductionOfItem(Item* item);
   Item* getNextItem(Item* i);
 };
