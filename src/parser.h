@@ -41,7 +41,6 @@ public:
   void setItems(std::set<Item*> items);
   void clearStates();
   int getNextStateId(void);
-  Item* getNextItem(Item* i);
   void addItem(Item *item);
   void print_automata(void);
   void print_item_set(void);
@@ -56,6 +55,10 @@ public:
   bool isEmptyInFirst(Symbol* head);
   void create_automata(void);
   void expandStates(void);
+  // Abstract methods to be overridden
+  virtual Item* getNextItem(Item* i) = 0;
+  virtual std::set<Item*> getProductionOfItem(Item* item) = 0;
+  virtual void create_item_set(void) = 0;
 };
 
 #endif
