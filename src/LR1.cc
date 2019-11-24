@@ -267,26 +267,52 @@ State* LR1::createState(State* newState)
   return newState;
 }
 
-
 std::set<Item*> LR1::getProductionOfItem(Item* item)
 {
   std::set<Item*> items_set;
   std::tuple<int, bool, Symbol*> dot = item->dot;
-  Symbol* s = std::get<2>(dot);
+  Symbol* s = std::get<2>(dot); // symbol that the dot precedes
+
+  // if item is closed, the item can't be expanded
+  if(!(std::get<1>(dot)) || s->terminal)
+    return items_set;    
 
   // for each item of the parser
   for(Item* it: this->items) {
-    
-    // check if it starts with a dot and if the head is equal to the symbol that the dot precedes
-    if(std::get<0>(it->dot) == 0 && s == it->rule->head) {
-      bool isLookaheadEqual = false;
-      for(int i=0; i<it->lookahead.size(); i++) {
-        // check lookahead symbols
-        if(it->lookahead[i] == item->lookahead[i])
-          items_set.insert(it);
+
+      // check if it starts with a dot AND if the head is equal to the symbol that the dot precedes
+      if(std::get<0>(it->dot) == 0 && s == it->rule->head) {
+        // Now we need to decide wich lookaheads are possible for this item in this state
+        
+        // If there is only one symbol after the dot, we add items that have the i's lookahead (i is the item in the state item set)
+        if(item->rule->body_size - std::get<0>(dot) == 1) {
+          if(it->lookahead[0] == item->lookahead[0])
+            items_set.insert(it);
+        // if there are more symbols in the rule body
+        } else {
+          // we add first of that symbol (if not terminal) or the symbol itself (if terminal)
+          // Non terminal symbol
+          if(!(item->rule->body[std::get<0>(dot)+1]->terminal)) {
+            // if the lookahead of our item is in the first set of the symbol that is next to it (item->rule->body[std::get<0>(dot)+1)
+            if(isLookaheadInFirst(item->rule->body[std::get<0>(dot)+1], it->lookahead[0]))
+              items_set.insert(it);
+          
+            // need to check if the empty symbol is in first of the subsequent symbol
+            if(isEmptyInFirst(item->rule->body[std::get<0>(dot)+1])){
+              // if so, we consider all follow symbols as valid lookaheads
+              if(isLookaheadInFollow(item->rule->body[std::get<0>(dot)+1], it->lookahead[0]))
+                items_set.insert(it);
+            }
+
+          // Next symbol (i->rule->body[std::get<0>(dot)+1]) is terminal, it becomes the lookahead 
+          } else {
+            if(it->lookahead[0] == item->rule->body[std::get<0>(dot)+1])
+              items_set.insert(it);
+          }
+        }  
       }
     }
-  }
+
   return items_set;
 }
 
