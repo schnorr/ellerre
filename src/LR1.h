@@ -35,6 +35,10 @@ public:
   void create_automata(void);
   void createTransitionStates(State* state);
   bool isLookaheadInFirst(Symbol* head, Symbol* lookahead);
+  bool isLookaheadInFollow(Symbol* head, Symbol* lookahead);
+  bool isEmptyInFirst(Symbol* head);
+  std::set<Symbol*> getFollowOf(Symbol* s);
+
   std::set<Item*> closure(std::set<Item*> kernel);
   State* createState(State* state);
   std::set<Item*> getProductionOfItem(Item* item);
