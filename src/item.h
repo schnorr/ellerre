@@ -34,9 +34,10 @@ public:
   Item(Rule* rule, std::tuple<int, bool, Symbol*> dot);
   Item(Rule* rule, std::tuple<int, bool, Symbol*> dot, std::vector<Symbol*> lookahead);
   ~Item();
+  bool isBodyEqual(Item* i2);
 };
 
 std::ostream &operator<< (std::ostream &output, const Item &item);
-bool operator== (const Item &i1, const Item &i2 );
+bool operator== (const Item &i1, const Item &i2);
 
 #endif

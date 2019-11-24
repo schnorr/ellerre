@@ -93,5 +93,23 @@ bool operator==(const Item &i1, const Item &i2)
       return false;
   }
   
+  // compare the dot position
+  if(std::get<0>(i1.dot) != std::get<0>(i2.dot))
+    return false;
+
+  return true;
+}
+
+// here we ignore lookahead
+bool Item::isBodyEqual(Item* i2)
+{
+  // compare rules
+  if(!(this->rule == i2->rule))
+    return false;
+
+  // compare the dot position
+  if(std::get<0>(this->dot) != std::get<0>(i2->dot))
+    return false;
+
   return true;
 }
