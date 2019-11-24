@@ -14,19 +14,29 @@
     You should have received a copy of the GNU Public License
     along with Ellerre. If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef __MAIN_H
-#define __MAIN_H
-#include <iostream>
-#include <vector>
-#include "symbol.h"
-#include "rule.h"
+#ifndef __LALR1_H
+#define __LALR1_H
+#include <algorithm>
 #include "grammar.h"
+#include "item.h"
+#include "state.h"
 #include "parser.h"
-#include "LR0.h"
 #include "LR1.h"
-#include "LALR1.h"
 
-extern int yyparse(void);
-extern Grammar *grammar;
+class LALR1 : public LR1
+{
+
+public:
+  LALR1();
+  LALR1(Grammar* grammar);
+  ~LALR1();
+
+public: 
+  State* createState(State* newState);
+  void createTransitionStates(State* state);
+  void create_automata(void);
+  std::set<Item*> getProductionOfItem(Item* item);
+  // Item* getNextItem(Item* i);
+};
 
 #endif
