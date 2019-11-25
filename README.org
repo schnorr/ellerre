@@ -9,7 +9,7 @@ EllErre is designed to be an LR automata generator, with the following algorithm
 + [X] LR(0) automata
 + [ ] SLR(1)
 + [X] LR(1)
-+ [ ] LALR(1)
++ [X] LALR(1)
 
 It is current in development.
 
@@ -68,236 +68,346 @@ Scanning dependencies of target ellerre
 ** First and Follow
 #+begin_src shell :results output :exports both
 cd build
-./firstfollow < ../examples/g1.ee
+./firstfollow < ../examples/ex1.ee
 #+end_src
 
 #+RESULTS:
 #+begin_example
-Grammar with 7 rules and 8 symbols (4 non-terminals):
-S => S ( A ) S 
-S => ε 
-A => B C 
-A => ε 
-B => b 
-C => c 
-C => ε 
+Grammar with 3 rules and 4 symbols (2 non-terminals):
+S => A A 
+A => a A 
+A => b 
 
 First sets:
-S -- ε ( 
-A -- ε b 
-B -- b 
-C -- ε c 
+S -- b a 
+A -- b a 
 
 Follow sets:
-S -- $ ( 
-A -- ) 
-B -- ) c 
-C -- ) 
+S -- $ 
+A -- $ b a 
 #+end_example
 
 ** LR(0) automata
 #+begin_src shell :results output :exports both
 cd build
-./lr0 < ../examples/g1.ee
+./lr0 < ../examples/ex1.ee
 #+end_src
 
 #+RESULTS:
 #+begin_example
-Grammar with 8 rules and 8 symbols (4 non-terminals):
-S' => S $ 
-S => S ( A ) S 
-S => ε 
-A => B C 
-A => ε 
-B => b 
-C => c 
-C => ε 
+Grammar with 4 rules and 4 symbols (2 non-terminals):
+S' => S 
+S => A A 
+A => a A 
+A => b 
 
 LR0 item set:
-S' => • S $ 
-S' => S • $ 
-S' => S $ • 
-S => • S ( A ) S 
-S => S • ( A ) S 
-S => S ( • A ) S 
-S => S ( A • ) S 
-S => S ( A ) • S 
-S => S ( A ) S • 
-S => • ε 
-S => ε • 
-A => • B C 
-A => B • C 
-A => B C • 
-A => • ε 
-A => ε • 
-B => • b 
-B => b • 
-C => • c 
-C => c • 
-C => • ε 
-C => ε • 
+S' => • S 
+S' => S • 
+S => • A A 
+S => A • A 
+S => A A • 
+A => • a A 
+A => a • A 
+A => a A • 
+A => • b 
+A => b • 
 
 LR0 automata:
 State 0:
-S' => • S $ 
-S => • S ( A ) S 
-S => • ε 
+S' => • S 
+---------------
+S => • A A 
+A => • a A 
+A => • b 
 Transitions: 
-ε ---> 1
-S ---> 2
+S ---> 1
+A ---> 2
+b ---> 3
+a ---> 4
 
 State 1:
-S => ε • 
+S' => S • 
+---------------
+S => • A A 
+A => • a A 
+A => • b 
+Transitions: 
+A ---> 2
+b ---> 3
+a ---> 4
 
 State 2:
-S' => S • $ 
-S => S • ( A ) S 
+S => A • A 
+---------------
+A => • a A 
+A => • b 
 Transitions: 
-$ ---> 3
-( ---> 4
+A ---> 5
+b ---> 3
+a ---> 4
 
 State 3:
-S' => S $ • 
+A => b • 
+---------------
 
 State 4:
-S => S ( • A ) S 
-A => • B C 
-A => • ε 
-B => • b 
+A => a • A 
+---------------
+A => • a A 
+A => • b 
 Transitions: 
-ε ---> 5
 A ---> 6
-B ---> 7
-b ---> 8
+b ---> 3
+a ---> 4
 
 State 5:
-A => ε • 
+S => A A • 
+---------------
+A => • a A 
+A => • b 
+Transitions: 
+b ---> 3
+a ---> 4
 
 State 6:
-S => S ( A • ) S 
+A => a A • 
+---------------
+A => • a A 
+A => • b 
 Transitions: 
-) ---> 9
+b ---> 3
+a ---> 4
 
-State 7:
-A => B • C 
-C => • c 
-C => • ε 
-Transitions: 
-ε ---> 10
-C ---> 11
-c ---> 12
-
-State 8:
-B => b • 
-
-State 9:
-S => S ( A ) • S 
-S => • S ( A ) S 
-S => • ε 
-Transitions: 
-ε ---> 1
-S ---> 13
-
-State 10:
-C => ε • 
-
-State 11:
-A => B C • 
-
-State 12:
-C => c • 
-
-State 13:
-S => S • ( A ) S 
-S => S ( A ) S • 
-Transitions: 
-( ---> 4
 #+end_example
      
 ** LR(1) automata
 #+begin_src shell :results output :exports both
 cd build
-./lr1  < ../examples/9.30_book.ee
+./lr1  < ../examples/ex1.ee
 #+end_src
 
 #+RESULTS:
 #+begin_example
-Grammar with 5 rules and 6 symbols (3 non-terminals):
+Grammar with 4 rules and 4 symbols (2 non-terminals):
 S' => S 
-S => A B c 
-A => a 
-B => b 
-B => ε 
+S => A A 
+A => a A 
+A => b 
 
 First set: 
-S -- a 
-A -- a 
-B -- ε b 
-S' -- a 
+S -- b a 
+A -- b a 
+S' -- b a 
 
 Follow set: 
 S -- $ 
-A -- c b 
-B -- c 
+A -- $ b a 
 S' -- $ 
 
 LR1 item set:
 S' => • S , $
 S' => S • , $
-S => • A B c , $
-S => A • B c , $
-S => A B • c , $
-S => A B c • , $
-A => • a , c
-A => • a , b
-A => a • , c
-A => a • , b
-B => • b , c
-B => b • , c
-B => • , c
+S => • A A , $
+S => A • A , $
+S => A A • , $
+A => • a A , $
+A => • a A , b
+A => • a A , a
+A => a • A , $
+A => a • A , b
+A => a • A , a
+A => a A • , $
+A => a A • , b
+A => a A • , a
+A => • b , $
+A => • b , b
+A => • b , a
+A => b • , $
+A => b • , b
+A => b • , a
 
 LR1 automata:
 State 0:
 S' => • S , $
 ---------------
-S => • A B c , $
-A => • a , c
-A => • a , b
+S => • A A , $
+A => • a A , b
+A => • a A , a
+A => • b , b
+A => • b , a
 Transitions: 
 S ---> 1
 A ---> 2
-a ---> 3
+b ---> 3
+a ---> 4
 
 State 1:
 S' => S • , $
 ---------------
 
 State 2:
-S => A • B c , $
+S => A • A , $
 ---------------
-B => • b , c
-B => • , c
+A => • a A , $
+A => • b , $
 Transitions: 
-B ---> 4
-b ---> 5
+A ---> 5
+b ---> 6
+a ---> 7
 
 State 3:
-A => a • , c
-A => a • , b
+A => b • , b
+A => b • , a
 ---------------
 
 State 4:
-S => A B • c , $
+A => a • A , b
+A => a • A , a
 ---------------
+A => • a A , b
+A => • a A , a
+A => • b , b
+A => • b , a
 Transitions: 
-c ---> 6
+A ---> 8
+b ---> 3
+a ---> 4
 
 State 5:
-B => b • , c
+S => A A • , $
 ---------------
 
 State 6:
-S => A B c • , $
+A => b • , $
+---------------
+
+State 7:
+A => a • A , $
+---------------
+A => • a A , $
+A => • b , $
+Transitions: 
+A ---> 9
+b ---> 6
+a ---> 7
+
+State 8:
+A => a A • , b
+A => a A • , a
+---------------
+
+State 9:
+A => a A • , $
+---------------
+
+#+end_example
+
+** LALR(1) automata
+#+begin_src shell :results output :exports both
+cd build
+./lalr1  < ../examples/ex1.ee
+#+end_src
+
+#+RESULTS:
+#+begin_example
+Grammar with 4 rules and 4 symbols (2 non-terminals):
+S' => S 
+S => A A 
+A => a A 
+A => b 
+
+First set: 
+S -- b a 
+A -- b a 
+S' -- b a 
+
+Follow set: 
+S -- $ 
+A -- $ b a 
+S' -- $ 
+
+LALR1 item set:
+S' => • S , $
+S' => S • , $
+S => • A A , $
+S => A • A , $
+S => A A • , $
+A => • a A , $
+A => • a A , b
+A => • a A , a
+A => a • A , $
+A => a • A , b
+A => a • A , a
+A => a A • , $
+A => a A • , b
+A => a A • , a
+A => • b , $
+A => • b , b
+A => • b , a
+A => b • , $
+A => b • , b
+A => b • , a
+
+LALR1 automata:
+State 0:
+S' => • S , $
+---------------
+S => • A A , $
+A => • a A , b
+A => • a A , a
+A => • b , b
+A => • b , a
+Transitions: 
+S ---> 1
+A ---> 2
+b ---> 3
+a ---> 4
+
+State 1:
+S' => S • , $
+---------------
+
+State 2:
+S => A • A , $
+---------------
+A => • a A , $
+A => • b , $
+Transitions: 
+A ---> 5
+b ---> 3
+a ---> 4
+
+State 3:
+A => b • , $
+A => b • , b
+A => b • , a
+---------------
+
+State 4:
+A => a • A , $
+A => a • A , b
+A => a • A , a
+---------------
+A => • a A , $
+A => • a A , b
+A => • a A , a
+A => • b , $
+A => • b , b
+A => • b , a
+Transitions: 
+A ---> 6
+b ---> 3
+a ---> 4
+
+State 5:
+S => A A • , $
+---------------
+
+State 6:
+A => a A • , $
+A => a A • , b
+A => a A • , a
 ---------------
 
 #+end_example
