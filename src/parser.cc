@@ -94,6 +94,11 @@ void Parser::print_follow_sets(void)
   this->grammar->print_follow_sets();
 }
 
+/*! Creates all the possible transitions given a State and add
+    them in the state item passed as parameter
+    \param State* state, the state to create transitions
+    \return void
+*/
 void Parser::createTransitionStates(State* state)
 {
   std::set<Symbol*> symbols;
@@ -146,7 +151,11 @@ State* Parser::createState(State* newState)
   return newState;
 }
 
-// The closure creates the item set of a given state
+
+/*! Computes the closure of a state given its kernel
+    \param std::set<Item*> kernel, the state kernel items
+    \return std::set<Item*>  the complete item set of the state
+*/
 std::set<Item*> Parser::closure(std::set<Item*> kernel)
 {
   std::set<Item*> items_set;
@@ -213,6 +222,11 @@ bool Parser::isEmptyInFirst(Symbol* head)
   return false;
 }
 
+
+/*! Handles the automata creation for any type of automata as the different parsers
+    override the methods getNextItem, getProductionOfItem, and create_item_set according
+    to their specifications
+*/
 void Parser::create_automata(void)
 { 
   // This assumes that the first item in closure is the Starting item rule from the augmented grammar located at this->items.begin()
