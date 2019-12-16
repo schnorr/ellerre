@@ -271,3 +271,14 @@ void Parser::expandStates(void)
     s->updateAllItems();
   }
 }
+
+/*! Generates a .dot file representing the whole automata, this file can be
+    processed by GraphViz to generate a visual representation of the automata
+*/
+void Parser::generateDotFile(std::string outFile)
+{
+  // std::string type;
+  // Grammar* grammar;
+  // std::set<Item*> items;
+  // td::set<State*> states;
+}

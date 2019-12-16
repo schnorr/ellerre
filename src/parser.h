@@ -55,6 +55,7 @@ public:
   bool isEmptyInFirst(Symbol* head);
   void create_automata(void);
   void expandStates(void);
+  void generateDotFile(std::string outFile);
   // Abstract methods to be overridden
   virtual Item* getNextItem(Item* i) = 0;
   virtual std::set<Item*> getProductionOfItem(Item* item) = 0;
