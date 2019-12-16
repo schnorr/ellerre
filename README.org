@@ -7,14 +7,16 @@ EllErre is designed to be an LR automata generator, with the following algorithm
 + [X] First Set
 + [X] Follow Set
 + [X] LR(0) automata
-+ [ ] SLR(1)
-+ [X] LR(1)
-+ [X] LALR(1)
++ [ ] SLR(1) automata
++ [X] LR(1) automata
++ [X] LALR(1) automata
++ [ ] GraphViz automata representation
++ [ ] Step by Step GraphViz automata representation
 
 It is current in development.
 
-For now, it only calculates the First/Follow sets and the LR(0)
-automata for a given grammar.
+For now, it calculates the First/Follow sets, the LR(0), LR(1) and
+LALR(1) automatas for a given grammar.
 
 * Installation & Compilation
 
