@@ -449,3 +449,21 @@ de desenvolvimento principal. As respostas para as soluções devem (1)
 ser apresentadas de maneira textual de maneira legível por outro
 programa de computador; e (2) ser documentadas a ponto de permitir
 uso autônomo pelos alunos de graduação.
+
+* Relatório                                                        :noexport:
+
+Durante a disciplina de Atividade Didática I - CMP410 realizada com o
+professor Lucas Mello Schnor na disciplina de Compiladores -
+INF01147. A proposta seguida envolvia a continuação do desenvolvimento
+de uma ferramenta pedagócica chamada EllErre, disponível em
+https://github.com/schnorr/ellerre. O desenvolvimento foi realizado em
+um ramo separado do repositório original que pode ser acessado em
+https://github.com/schnorr/ellerre/tree/develop. Neste novo ramo os
+autômatos LR(0), LR(1) e LALR(1) podem ser gerados automáticamente
+dada uma grámatica passada como entrada. Desta forma os alunos podem
+averiguar de maneira autônoma se os exercícios da disciplina estão
+corretos, bem como propor novos exercícios e verificar sua solução.
+
+
+
+
