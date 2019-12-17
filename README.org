@@ -461,10 +461,12 @@ de uma ferramenta pedagócica chamada EllErre, disponível em
 https://github.com/schnorr/ellerre. O desenvolvimento foi realizado em
 um ramo separado do repositório original que pode ser acessado em
 https://github.com/schnorr/ellerre/tree/develop. Neste novo ramo os
-autômatos LR(0), LR(1) e LALR(1) podem ser gerados automáticamente
-dada uma grámatica passada como entrada. Desta forma os alunos podem
-averiguar de maneira autônoma se os exercícios da disciplina estão
-corretos, bem como propor novos exercícios e verificar sua solução.
+autômatos LR(0), LR(1) e LALR(1) podem ser gerados automaticamente
+dada uma gramática passada como entrada. Desta forma os alunos podem
+averiguar de maneira autônoma se os exercícios de análise sintática da
+disciplina estão corretos, bem como propor novos exercícios (com
+gramáticas alternativas) e verificar sua solução (confirmando se a
+classe das gramáticas fornecidas).
 
 
 
