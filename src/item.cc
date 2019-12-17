@@ -42,7 +42,7 @@ Item::~Item()
 std::ostream &operator<< (std::ostream &output, const Item &item)
 {
   int dot = 0;
-  output << *(item.rule->head) << " => "; 
+  output << *(item.rule->head) << " \u21d2 "; 
   
   if (item.rule->body.size() > 0) {
 
