@@ -17,6 +17,7 @@
 #ifndef __PARSER_H
 #define __PARSER_H
 #include <algorithm>
+#include <fstream>
 #include "grammar.h"
 #include "item.h"
 #include "state.h"

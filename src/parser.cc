@@ -277,8 +277,43 @@ void Parser::expandStates(void)
 */
 void Parser::generateDotFile(std::string outFile)
 {
-  // std::string type;
-  // Grammar* grammar;
-  // std::set<Item*> items;
-  // td::set<State*> states;
+  int port = 0;
+  std::ofstream dotFile;
+  dotFile.open (outFile);
+  dotFile << "digraph g { graph [fontsize=30 labelloc=\"t\" label=\"\" splines=true overlap=false rankdir = \"LR\"]; ratio = auto;\n";
+
+  // create the automata states
+  for(State *s: this->states){
+    port = 0; // port for node connections
+    // opent the table tag
+    dotFile << "\t\"state" << s->id << "\" [ style = \"filled\" penwidth = 1 fillcolor = \"white\" fontname = \"Courier New\" shape = \"Mrecord\" label = <<table border=\"0\" cellborder=\"0\" cellpadding=\"3\" bgcolor=\"white\">\n";
+
+    // set the state identificator
+    dotFile << "\t\t<tr><td bgcolor=\"black\" align=\"center\" colspan=\"2\"><font color=\"white\">State #" << s->id << "</font></td></tr>\n";
+
+    // add kernel items of the state
+    for(Item* i : s->kernel) {
+      dotFile << "\t\t<tr><td align=\"left\" port=\"r" << port << "\"><font face=\"bold\">" << *i << "</font></td></tr>\n";
+      port++;
+    }
+    // add production items of the state
+    for(Item* i : s->item_set) {
+      dotFile << "\t\t<tr><td align=\"left\" port=\"r" << port << "\"><font color=\"gray25\" face=\"bold\">" << *i << "</font></td></tr>\n";
+      // dotFile << "\t\t<tr><td align=\"left\" port=\"r" << port << "\">" << *i << "</td></tr>\n";
+      port++;
+    }
+    // close table tag
+    dotFile << "\t</table>>];\n\n";
+  }
+
+  // generate the state transitions
+  for(State *s: this->states){
+    for(std::pair<Symbol*, State* > t : s->transitions){
+      // t.first, t.second.
+      dotFile << "state" << s->id << " -> state" << t.second->id << "[ penwidth = 3 fontsize = 22 fontcolor = \"black\" label = \"" << t.first->str << "\" ];";
+    }
+  }
+
+  dotFile << "}";
+  dotFile.close();
 }
