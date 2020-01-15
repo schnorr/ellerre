@@ -25,6 +25,11 @@ sudo apt-get install git cmake build-essential flex bison;
 git clone git://github.com/schnorr/ellerre.git ; mkdir -p ellerre/b ; cd ellerre/b ; cmake .. ; make
 #+end_src
 
+- If you want to visualize the automatas with graphviz
+#+begin_src shell :results output
+sudo apt-get install graphviz
+#+end_src
+
 * Compilation only
 
 #+begin_src shell :results output :exports both
