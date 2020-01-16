@@ -72,7 +72,6 @@ void Parser::print_item_set (void)
   for(auto& item : this->items){
     std::cout << *item;
   }
-  
 }
     
 void Parser::print_automata(void)
@@ -310,7 +309,7 @@ void Parser::generateDotFile(std::string outFile)
   for(State *s: this->states){
     for(std::pair<Symbol*, State* > t : s->transitions){
       // t.first, t.second.
-      dotFile << "state" << s->id << " -> state" << t.second->id << "[ penwidth = 3 fontsize = 22 fontcolor = \"black\" label = \"" << t.first->str << "\" ];";
+      dotFile << "state" << s->id << " -> state" << t.second->id << "[ penwidth = 3 fontsize = 22 fontcolor = \"black\" label = \"" << t.first->str << "\" ];\n";
     }
   }
 

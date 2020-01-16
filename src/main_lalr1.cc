@@ -33,6 +33,7 @@ int main (int argc, char **argv)
   
   parser->print_item_set();
   parser->print_automata();
+  parser->generateDotFile("LALR1.dot");
 
   delete parser;
   delete grammar;

@@ -31,6 +31,7 @@ int main (int argc, char **argv)
   std::cout << *grammar << std::endl;
   parser->print_item_set();
   parser->print_automata();
+  parser->generateDotFile("LR0.dot");
 
   delete grammar;
   delete parser;
