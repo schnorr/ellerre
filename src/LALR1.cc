@@ -181,3 +181,88 @@ std::set<Item*> LALR1::getProductionOfItem(Item* item)
 
   return items_set;
 } 
+
+/* 
+  The method for printing the automata is different for LALR1, we want to reduce the
+  number of items printed by grouping items lookahead symbols with same rule and dot
+  in the same item:
+
+    A => a, b
+    A => a, $
+
+  Is now printed by
+
+    A => a , b $
+*/
+void LALR1::print_automata(void)
+{
+  std::cout << std::endl << this->type << " automata:" << std::endl;
+  
+  // maps the items with the same Rule and group their lookaheads for each state
+  std::vector< std::pair<Item*, std::vector<Symbol*> > >item_map;
+  std::vector< std::pair<Item*, std::vector<Symbol*> > >::iterator itmap;
+  bool found;
+
+  for(State* s : this->states) {
+    item_map.clear();
+    std::cout << "State " << s->id << ":" << std::endl;
+
+    // check if kernel items have the same body
+    for (Item* item: s->kernel) {
+      // find out if the item in the item_map
+      found = false;
+      for (itmap = item_map.begin(); itmap != item_map.end(); itmap++){
+        if ((*itmap).first->isBodyEqual(item)) {
+          (*itmap).second.push_back(item->lookahead[0]);
+          found = true;
+          break;
+        }
+      }
+      // if item was not seen before, add it to the vector
+      if(!found){
+        item_map.push_back(std::make_pair( item, item->lookahead));
+      }
+    } 
+
+    // print kernel items
+    for (itmap = item_map.begin(); itmap != item_map.end(); itmap++) {
+      (*itmap).first->printItemWithoutLookahead();
+
+      // now we print our grouped lookaheads
+      std::cout << ", ";
+      for(Symbol* symbol : (*itmap).second) 
+        std::cout << *symbol << " ";
+    }
+    std::cout << std::endl << "---------------" << std::endl;
+
+    item_map.clear();
+    // now we do the same for the items in the closure of the state
+    for (Item* item: s->item_set) {
+      // find out if the item in the item_map
+      found = false;
+      for (itmap = item_map.begin(); itmap != item_map.end(); itmap++){
+        if ((*itmap).first->isBodyEqual(item)) {
+          (*itmap).second.push_back(item->lookahead[0]);
+          found = true;
+          break;
+        }
+      }
+      // if item was not seen before, add it to the vector
+      if(!found){
+        item_map.push_back(std::make_pair( item, item->lookahead));
+      }
+    }
+
+    // print state items
+    for (itmap = item_map.begin(); itmap != item_map.end(); itmap++) {
+      (*itmap).first->printItemWithoutLookahead();
+
+      // now we print our grouped lookaheads
+      std::cout << ", ";
+      for(Symbol* symbol : (*itmap).second) 
+        std::cout << *symbol << " ";
+      std::cout << std::endl;  
+    }
+    s->printTransitions();
+  }
+}

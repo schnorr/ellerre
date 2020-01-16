@@ -59,7 +59,7 @@ void Rule::addToBody(Symbol *symbol)
 
 std::ostream &operator<< (std::ostream &output, const Rule &rule)
 {
-  output << *(rule.head) << " => ";
+  output << *(rule.head) << " \u21d2 ";
   std::vector<Symbol*>::iterator it;
   std::vector<Symbol*> r = rule.body;
   for (it = r.begin(); it != r.end(); it++) {

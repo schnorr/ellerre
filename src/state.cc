@@ -52,6 +52,7 @@ void State::setId(int id)
 
 void State::setItemSet(std::set<Item*> item_set)
 {
+  this->item_set.clear();
   this->item_set = item_set;
   updateAllItems();
 }
@@ -130,4 +131,14 @@ void State::addItemToItemsSet(Item* i)
 {
   this->item_set.insert(i);
   this->updateAllItems();
+}
+
+void State::printTransitions(void)
+{
+  if(this->transitions.size() > 0) {
+    std::cout << "Transitions: " << std::endl;
+    for(auto& t : this->transitions)
+      std::cout << *t.first << " ---> " << t.second->id << std::endl;
+  }
+  std::cout << std::endl;
 }

@@ -36,7 +36,7 @@ public:
   void createTransitionStates(State* state);
   void create_automata(void);
   std::set<Item*> getProductionOfItem(Item* item);
-  // Item* getNextItem(Item* i);
+  void print_automata(void);
 };
 
 #endif

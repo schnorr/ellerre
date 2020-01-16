@@ -35,6 +35,7 @@ public:
   Item(Rule* rule, std::tuple<int, bool, Symbol*> dot, std::vector<Symbol*> lookahead);
   ~Item();
   bool isBodyEqual(Item* i2);
+  void printItemWithoutLookahead(void);
 };
 
 std::ostream &operator<< (std::ostream &output, const Item &item);

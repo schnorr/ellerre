@@ -43,7 +43,6 @@ public:
   void clearStates();
   int getNextStateId(void);
   void addItem(Item *item);
-  void print_automata(void);
   void print_item_set(void);
   void print_first_sets(void);
   void print_follow_sets(void);
@@ -57,7 +56,11 @@ public:
   void create_automata(void);
   void expandStates(void);
   void generateDotFile(std::string outFile);
-  // Abstract methods to be overridden
+  
+  // Abtract methods that can be overriden
+  virtual void print_automata(void);
+
+  // Abstract methods that must be overridden
   virtual Item* getNextItem(Item* i) = 0;
   virtual std::set<Item*> getProductionOfItem(Item* item) = 0;
   virtual void create_item_set(void) = 0;

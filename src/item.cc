@@ -1,4 +1,4 @@
-/*
+  /*
     This file is part of Ellerre
 
     Ellerre is free software: you can redistribute it and/or modify
@@ -112,4 +112,29 @@ bool Item::isBodyEqual(Item* i2)
     return false;
 
   return true;
+}
+
+void Item::printItemWithoutLookahead(void)
+{
+  int dot = 0;
+  std::cout << *this->rule->head << " \u21d2 "; 
+  
+  if (this->rule->body.size() > 0) {
+
+    // print the item rule symbols with the dot
+    for (auto& symbol : this->rule->body) {
+
+      if(dot == std::get<0>(this->dot)) {
+        std::cout << "• "; 
+      } 
+      std::cout << *symbol << " ";
+      dot++;
+    }
+
+    if (dot == std::get<0>(this->dot)){
+      std::cout << "• "; 
+    } 
+  } else {
+    std::cout << "• ";
+  }
 }
