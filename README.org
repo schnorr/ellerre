@@ -10,8 +10,9 @@ EllErre is designed to be an LR automata generator, with the following algorithm
 + [ ] SLR(1) automata
 + [X] LR(1) automata
 + [X] LALR(1) automata
-+ [ ] GraphViz automata representation
-+ [ ] Step by Step GraphViz automata representation
++ [X] GraphViz automata representation
++ [X] Step by Step GraphViz automata representation
++ [ ] Mark inital and end states in the automata
 
 It is current in development.
 
@@ -419,7 +420,126 @@ A => a A • , a
 
 #+end_example
 
-* Plan                                                             :noexport:
+* Generating the visual representation of the automata
+Each parser execution from EllErre generate a *.dot* file after its
+execution. The dot files are named after its parsing algorithm
+(LR0.dot, LR1.dot, and LALR1.dot).
+
+This files can be used by tools like *graphviz* to generate a visual
+representation of the given LR automata.  
+
+** Example
+
+*** Running the example
+The following execution generates the "LR0.dot" file, which describes
+the automata in the using the .dot syntax.
+#+begin_src shell :results output :exports both
+cd build
+./lr0 < ../examples/ex1.ee >> /dev/null
+cat LR0.dot
+#+end_src
+
+#+RESULTS:
+#+begin_example
+digraph g { graph [fontsize=30 labelloc="t" label="" splines=true overlap=false rankdir = "LR"]; ratio = auto;
+	"state0" [ style = "filled" penwidth = 1 fillcolor = "white" fontname = "Courier New" shape = "Mrecord" label = <<table border="0" cellborder="0" cellpadding="3" bgcolor="white">
+		<tr><td bgcolor="black" align="center" colspan="2"><font color="white">State #0</font></td></tr>
+		<tr><td align="left" port="r0"><font face="bold">S' ⇒ • S 
+</font></td></tr>
+		<tr><td align="left" port="r1"><font color="gray25" face="bold">S ⇒ • A A 
+</font></td></tr>
+		<tr><td align="left" port="r2"><font color="gray25" face="bold">A ⇒ • a A 
+</font></td></tr>
+		<tr><td align="left" port="r3"><font color="gray25" face="bold">A ⇒ • b 
+</font></td></tr>
+	</table>>];
+
+	"state1" [ style = "filled" penwidth = 1 fillcolor = "white" fontname = "Courier New" shape = "Mrecord" label = <<table border="0" cellborder="0" cellpadding="3" bgcolor="white">
+		<tr><td bgcolor="black" align="center" colspan="2"><font color="white">State #1</font></td></tr>
+		<tr><td align="left" port="r0"><font face="bold">S' ⇒ S • 
+</font></td></tr>
+		<tr><td align="left" port="r1"><font color="gray25" face="bold">S ⇒ • A A 
+</font></td></tr>
+		<tr><td align="left" port="r2"><font color="gray25" face="bold">A ⇒ • a A 
+</font></td></tr>
+		<tr><td align="left" port="r3"><font color="gray25" face="bold">A ⇒ • b 
+</font></td></tr>
+	</table>>];
+
+	"state2" [ style = "filled" penwidth = 1 fillcolor = "white" fontname = "Courier New" shape = "Mrecord" label = <<table border="0" cellborder="0" cellpadding="3" bgcolor="white">
+		<tr><td bgcolor="black" align="center" colspan="2"><font color="white">State #2</font></td></tr>
+		<tr><td align="left" port="r0"><font face="bold">S ⇒ A • A 
+</font></td></tr>
+		<tr><td align="left" port="r1"><font color="gray25" face="bold">A ⇒ • a A 
+</font></td></tr>
+		<tr><td align="left" port="r2"><font color="gray25" face="bold">A ⇒ • b 
+</font></td></tr>
+	</table>>];
+
+	"state3" [ style = "filled" penwidth = 1 fillcolor = "white" fontname = "Courier New" shape = "Mrecord" label = <<table border="0" cellborder="0" cellpadding="3" bgcolor="white">
+		<tr><td bgcolor="black" align="center" colspan="2"><font color="white">State #3</font></td></tr>
+		<tr><td align="left" port="r0"><font face="bold">A ⇒ b • 
+</font></td></tr>
+	</table>>];
+
+	"state4" [ style = "filled" penwidth = 1 fillcolor = "white" fontname = "Courier New" shape = "Mrecord" label = <<table border="0" cellborder="0" cellpadding="3" bgcolor="white">
+		<tr><td bgcolor="black" align="center" colspan="2"><font color="white">State #4</font></td></tr>
+		<tr><td align="left" port="r0"><font face="bold">A ⇒ a • A 
+</font></td></tr>
+		<tr><td align="left" port="r1"><font color="gray25" face="bold">A ⇒ • a A 
+</font></td></tr>
+		<tr><td align="left" port="r2"><font color="gray25" face="bold">A ⇒ • b 
+</font></td></tr>
+	</table>>];
+
+	"state5" [ style = "filled" penwidth = 1 fillcolor = "white" fontname = "Courier New" shape = "Mrecord" label = <<table border="0" cellborder="0" cellpadding="3" bgcolor="white">
+		<tr><td bgcolor="black" align="center" colspan="2"><font color="white">State #5</font></td></tr>
+		<tr><td align="left" port="r0"><font face="bold">S ⇒ A A • 
+</font></td></tr>
+		<tr><td align="left" port="r1"><font color="gray25" face="bold">A ⇒ • a A 
+</font></td></tr>
+		<tr><td align="left" port="r2"><font color="gray25" face="bold">A ⇒ • b 
+</font></td></tr>
+	</table>>];
+
+	"state6" [ style = "filled" penwidth = 1 fillcolor = "white" fontname = "Courier New" shape = "Mrecord" label = <<table border="0" cellborder="0" cellpadding="3" bgcolor="white">
+		<tr><td bgcolor="black" align="center" colspan="2"><font color="white">State #6</font></td></tr>
+		<tr><td align="left" port="r0"><font face="bold">A ⇒ a A • 
+</font></td></tr>
+		<tr><td align="left" port="r1"><font color="gray25" face="bold">A ⇒ • a A 
+</font></td></tr>
+		<tr><td align="left" port="r2"><font color="gray25" face="bold">A ⇒ • b 
+</font></td></tr>
+	</table>>];
+
+state0 -> state1[ penwidth = 3 fontsize = 22 fontcolor = "black" label = "S" ];
+state0 -> state2[ penwidth = 3 fontsize = 22 fontcolor = "black" label = "A" ];
+state0 -> state3[ penwidth = 3 fontsize = 22 fontcolor = "black" label = "b" ];
+state0 -> state4[ penwidth = 3 fontsize = 22 fontcolor = "black" label = "a" ];
+state1 -> state2[ penwidth = 3 fontsize = 22 fontcolor = "black" label = "A" ];
+state1 -> state3[ penwidth = 3 fontsize = 22 fontcolor = "black" label = "b" ];
+state1 -> state4[ penwidth = 3 fontsize = 22 fontcolor = "black" label = "a" ];
+state2 -> state5[ penwidth = 3 fontsize = 22 fontcolor = "black" label = "A" ];
+state2 -> state3[ penwidth = 3 fontsize = 22 fontcolor = "black" label = "b" ];
+state2 -> state4[ penwidth = 3 fontsize = 22 fontcolor = "black" label = "a" ];
+state4 -> state6[ penwidth = 3 fontsize = 22 fontcolor = "black" label = "A" ];
+state4 -> state3[ penwidth = 3 fontsize = 22 fontcolor = "black" label = "b" ];
+state4 -> state4[ penwidth = 3 fontsize = 22 fontcolor = "black" label = "a" ];
+state5 -> state3[ penwidth = 3 fontsize = 22 fontcolor = "black" label = "b" ];
+state5 -> state4[ penwidth = 3 fontsize = 22 fontcolor = "black" label = "a" ];
+state6 -> state3[ penwidth = 3 fontsize = 22 fontcolor = "black" label = "b" ];
+state6 -> state4[ penwidth = 3 fontsize = 22 fontcolor = "black" label = "a" ];
+}
+#+end_example
+
+*** Generating the image
+#+begin_src shell :results output :exports both
+cd build
+dot -Tpng LR0.dot -o LR0_output.png
+#+end_src
+
+[[./examples/LR0_output.png]]
+* Plano                                                            :noexport:
 
 A disciplina de compiladores propõe um estudo das partes de um
 compilador, desde o front-end de análise até o parte do back-end de
