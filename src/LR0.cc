@@ -56,6 +56,7 @@ void LR0::create_item_set(void)
       Item *i = new Item(r, std::make_tuple(0, hasNext, body[0]));
       addItem(i);
     } else {
+
       // for each symbol in rule add a dot
       for (it_b = body.begin(); it_b != body.end(); it_b++) {
         Item *i = new Item((*it_r), std::make_tuple(dot, hasNext, (*it_b)));
@@ -79,10 +80,13 @@ std::set<Item*> LR0::getProductionOfItem(Item* item)
   Symbol* s = std::get<2>(dot);
   // for each item of the parser
   for(Item* it: this->items) {
-    // check if it starts with a dot and if the head is equal to the symbol that the dot precedes
-    if(std::get<0>(it->dot) == 0 && s == it->rule->head) {
-      int last_size = items_set.size();
-      items_set.insert(it);
+    // check if the dot of item hasNext
+    if(std::get<1>(item->dot)) {
+      // check if it starts with a dot and if the head is equal to the symbol that the dot precedes
+      if(std::get<0>(it->dot) == 0 && s == it->rule->head) {
+        int last_size = items_set.size();
+        items_set.insert(it);
+      }
     }
   }
   return items_set;

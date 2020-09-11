@@ -104,9 +104,11 @@ void Parser::createTransitionStates(State* state)
   
   // add all possible transitions of the state to the symbols set
   for(auto& i : state->all_items) {
-    if(std::get<1>(i->dot))
+    // check if the dot precedes a symbol (get<1>)
+    if(std::get<1>(i->dot)) 
       symbols.insert(std::get<2>(i->dot));
   }
+
   // for each transition symbol, look at the reachable states
   for(auto& s : symbols) {
     std::set<Item*> kernel;
