@@ -12,6 +12,8 @@ EllErre is designed to be an LR automata generator, with the following algorithm
 + [X] GraphViz automata representation
 + [ ] Step by Step GraphViz automata representation
 + [ ] Mark initial and end states in the automata
++ [ ] Detect shift/reduce and reduce/reduce conflicts
++ [ ] LR Analysis for a given input
 
 It is current in development.
 
