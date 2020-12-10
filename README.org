@@ -6,8 +6,7 @@ EllErre is designed to be an LR automata generator, with the following algorithm
 
 + [X] First Set
 + [X] Follow Set
-+ [X] LR(0) automata
-+ [ ] SLR(1) automata
++ [X] LR(0) automata / SLR(1) automata
 + [X] LR(1) automata
 + [X] LALR(1) automata
 + [X] GraphViz automata representation
