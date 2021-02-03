@@ -281,7 +281,7 @@ void Parser::generateDotFile(std::string outFile)
   int port = 0;
   std::ofstream dotFile;
   dotFile.open (outFile);
-  dotFile << "digraph g { graph [fontsize=30 labelloc=\"t\" label=\"\" splines=true overlap=false rankdir = \"LR\"]; ratio = auto;\n";
+  dotFile << "digraph g { graph [fontsize=30 labelloc=\"t\" label=\"\" splines=true overlap=false rankdir = \"LR\"]; ratio = auto;\n\n";
 
   // create the automata states
   for(State *s: this->states){
@@ -307,11 +307,18 @@ void Parser::generateDotFile(std::string outFile)
     dotFile << "\t</table>>];\n\n";
   }
 
-  // generate the state transitions
-  for(State *s: this->states){
-    for(std::pair<Symbol*, State* > t : s->transitions){
+
+  std::set<State*>::iterator it = this->states.begin();
+
+  // Insert initial state mark:
+  dotFile << "nowhere [style=invis,shape=point]\n";
+  dotFile << "nowhere -> state" << (*it)->id << "[ penwidth = 3 fontsize = 22 fontcolor = \"black\"];\n";
+
+  //Print other states:
+  for(; it != this->states.end(); it++){
+    for(std::pair<Symbol*, State* > t : (*it)->transitions){
       // t.first, t.second.
-      dotFile << "state" << s->id << " -> state" << t.second->id << "[ penwidth = 3 fontsize = 22 fontcolor = \"black\" label = \"" << t.first->str << "\" ];\n";
+      dotFile << "state" << (*it)->id << " -> state" << t.second->id << "[ penwidth = 3 fontsize = 22 fontcolor = \"black\" label = \"" << t.first->str << "\" ];\n";
     }
   }
 
