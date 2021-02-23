@@ -287,8 +287,14 @@ void Parser::generateDotFile(std::string outFile)
   for(State *s: this->states){
     port = 0; // port for node connections
     // opent the table tag
-    dotFile << "\t\"state" << s->id << "\" [ style = \"filled\" penwidth = 1 fillcolor = \"white\" fontname = \"Courier New\" shape = \"Mrecord\" label = <<table border=\"0\" cellborder=\"0\" cellpadding=\"3\" bgcolor=\"white\">\n";
 
+    // Insert final state mark:
+    if(s->id == 1){
+      dotFile << "\t\"state" << s->id << "\" [ style = \"filled\" penwidth = 1 fillcolor = \"#D3D3D3\" fontname = \"Courier New\" shape = \"Mrecord\" label = <<table border=\"0\" cellborder=\"0\" cellpadding=\"3\" bgcolor=\"#D3D3D3\">\n";
+    }
+    else{
+      dotFile << "\t\"state" << s->id << "\" [ style = \"filled\" penwidth = 1 fillcolor = \"white\" fontname = \"Courier New\" shape = \"Mrecord\" label = <<table border=\"0\" cellborder=\"0\" cellpadding=\"3\" bgcolor=\"white\">\n";
+    }
     // set the state identificator
     dotFile << "\t\t<tr><td bgcolor=\"black\" align=\"center\" colspan=\"2\"><font color=\"white\">State #" << s->id << "</font></td></tr>\n";
 
