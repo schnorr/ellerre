@@ -129,7 +129,7 @@ server <- function(input, output) {
   }, include.colnames=FALSE)
 
   # LALR1 tab
-  output$lalr <- renderTable({     
+  output$lalr1 <- renderTable({     
 
     # Check input file
     req(input$file1)

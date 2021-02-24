@@ -3,7 +3,7 @@ library(shinyjs)
 library(shinythemes)
 
 # Define UI for the EllErre app --- 
-ui <- fluidPage(
+ui <- fluidPage(title="EllErre",
   tags$head(includeHTML(("google-analytics.html"))),
   tags$head(
         HTML(
@@ -25,11 +25,6 @@ ui <- fluidPage(
   ),
   textOutput("keepAlive"),
 
-  # App tab title --- 
-  titlePanel(
-	"EllErre",
-	title = tags$head(tags$link(rel="icon", type="./image/png", sizes="16x16", href="icon.png"))
-  ),
   useShinyjs(),
   theme = shinytheme("united"), 
 
@@ -62,11 +57,11 @@ ui <- fluidPage(
       tabPanel("Grammar", tableOutput("grammar"), value="grammar"),  
       tabPanel("First/Follow", tableOutput("firstfollow"), value="firstfollow"),
       tabPanel("LR(0)", tableOutput("lr0"), value="lr0"),
-      tabPanel("Image LR(0)", plotOutput("imagelr0"), value="LR0"),
+      tabPanel("LR(0) Image", plotOutput("imagelr0"), value="LR0"),
       tabPanel("LR(1)", tableOutput("lr1"), value="lr1"),
-      tabPanel("Image LR(1)", plotOutput("imagelr1"), value="LR1"),
+      tabPanel("LR(1) Image", plotOutput("imagelr1"), value="LR1"),
       tabPanel("LALR(1)", tableOutput("lalr1"), value="lalr1"),
-      tabPanel("Image LALR(1)", plotOutput("imagelalr1"), value="LALR1"),
+      tabPanel("LALR(1) Image", plotOutput("imagelalr1"), value="LALR1"),
       tabPanel("About", textOutput("about"),
         fluidRow(
           column(width = 12,
