@@ -33,35 +33,37 @@ ui <- fluidPage(title="EllErre",
   tags$style(HTML("#big-heading{color: orange;}")),
   h4("An LR automata generator.", align = "center"),
 
-    div(style="display:inline-block;vertical-align:bottom;horizontal-align:left",
+  mainPanel(width = 11,
+    div(style="display:vertical-align:bottom;horizontal-align:center;margin-left:10px",
       fluidRow(
-        column(7,
-        # Input: Select a file ----
-        fileInput("file1", "Choose File",
-                  multiple = FALSE,
-                  accept = c("text/ee",
-                          "text/comma-separated-values,text/plain",
-                          ".ee")),
-        textOutput("filesubmitted"),
+        tags$head(tags$style(".butt{background-color:orange;} .butt{color: white;} .butt{margin-top:23px;}")),
+        fluidRow(
+          column(4,style=list("padding-right: 2px;"),
+              fileInput("file1", "Choose File", multiple = FALSE, 
+                    accept = c("text/ee", "text/comma-separated-values,text/plain", ".ee"))
+          ),
+          column(3,style=list("padding-left: 1px;"),
+              textInput("grammartxt", "Grammar:", value ="S => A A;")
+          ),
+          column(3, actionButton("grammarButton", "Use my grammar", class="butt")
+          ),
+          column(1, downloadButton("downloadImage", "Image", class="butt")
+          ),
+          column(1, downloadButton("downloadDot", "DOT File", class="butt")
+          )
         ),
-        column(5,
-        br(),
-        # Download buttons ----
-        downloadButton("downloadImage", "Image", class="butt"),
-        downloadButton("downloadDot", "DOT File", class="butt"),
-        tags$head(tags$style(".butt{background-color:orange;} .butt{color: white;} .butt{margin-top:3.5px;}")),
-        ),
-    )),
+      )
+    ),
     # Tabs definition ----
     tabsetPanel(id="tabs",type = "tabs",
       tabPanel("Grammar", tableOutput("grammar"), value="grammar"),  
       tabPanel("First/Follow", tableOutput("firstfollow"), value="firstfollow"),
       tabPanel("LR(0)", tableOutput("lr0"), value="lr0"),
-      tabPanel("LR(0) Image", plotOutput("imagelr0"), value="LR0"),
+      tabPanel("Image LR(0)", plotOutput("imagelr0"), value="LR0"),
       tabPanel("LR(1)", tableOutput("lr1"), value="lr1"),
-      tabPanel("LR(1) Image", plotOutput("imagelr1"), value="LR1"),
+      tabPanel("Image LR(1)", plotOutput("imagelr1"), value="LR1"),
       tabPanel("LALR(1)", tableOutput("lalr1"), value="lalr1"),
-      tabPanel("LALR(1) Image", plotOutput("imagelalr1"), value="LALR1"),
+      tabPanel("Image LALR(1)", plotOutput("imagelalr1"), value="LALR1"),
       tabPanel("About", textOutput("about"),
         fluidRow(
           column(width = 12,
@@ -112,4 +114,5 @@ ui <- fluidPage(title="EllErre",
         )
       )
    )
+  )
 )

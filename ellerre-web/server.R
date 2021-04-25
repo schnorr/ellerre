@@ -4,13 +4,14 @@ library(shinyjs)
 # Define server logic to read selected file ----
 server <- function(input, output) {
 
+  rv <- reactiveValues() 
+  grammar_path <- paste0(tempdir(), "/input.csv")
+
   # Enable buttons if image tab is selected
   observe({
-    if(input$tabs == "LR0" | input$tabs == "LR1" | input$tabs == "LALR1" ){
-      if(!is.null(input$file1)){
-        shinyjs::enable("downloadImage")
-        shinyjs::enable("downloadDot")
-      }      
+    if(grepl("LR", input$tabs)){
+      shinyjs::enable("downloadImage")
+      shinyjs::enable("downloadDot")      
     }else{
       shinyjs::disable("downloadImage")
       shinyjs::disable("downloadDot")
@@ -52,158 +53,111 @@ server <- function(input, output) {
       "}", sep = '<br/>')))
   })
 
-  # Grammar tab
-  output$grammar <- renderTable({    
-    # Check input file
-    req(input$file1)
-    tryCatch({
-        df <- read.csv(input$file1$datapath, header = FALSE)
-    },
-      error = function(e) {
-        stop(safeError(e))
-      }
-    )
+  # Observe when user input a file
+  observeEvent(input$file1, {
+    rv$file1=read.csv(input$file1$datapath, header = FALSE)
+    system(paste("mv ", input$file1$datapath, " ", grammar_path))
+  })
 
-    return(df)
+  # Create an event reactive for the submit data button
+  observeEvent(input$grammarButton, {
+    rv$file1=input$grammartxt
+    write(input$grammartxt, grammar_path)
+    reset('file1')
+  })
   
+  # Show the input grammar
+  output$grammar <- renderTable({
+
+    #If its the first access use default value
+    if(is.null(rv$file1)){
+      rv$file1=input$grammartxt  
+      write(input$grammartxt, grammar_path)
+    }
+      
+    return(rv$file1)
+
   }, include.colnames=FALSE)
 
-  # First/Follow tab
-  output$firstfollow <- renderTable({    
+  # Update tab content according to the selection
+  df <- eventReactive(input$tabs, {
 
-    # Check input file
-    req(input$file1)
-    tryCatch({
-        df <- read.csv(input$file1$datapath, header = FALSE)
-    },
-      error = function(e) {
-        stop(safeError(e))
-      }
-    )
-
-    # Run ellerre
-    command <- paste("./ellerre/build/firstfollow", " < ", input$file1$datapath, sep = "")
+    if(input$tabs == "grammar" || input$tabs == "About")
+      return(NULL)
+      
+    command <- paste("./ellerre/build/", tolower(input$tabs), " < ", grammar_path, sep = "")
     t1 <- try(system(command, intern = TRUE))
     return(t1)
-  
+  })
+
+  # Tabs selected
+  output$firstfollow <- renderTable({
+    return(df())    
   }, include.colnames=FALSE)
 
-  # LR0 tab
-  output$lr0 <- renderTable({    
-
-    # Check input file
-    req(input$file1)
-    tryCatch({
-        df <- read.csv(input$file1$datapath, header = FALSE)
-    },
-      error = function(e) {
-        stop(safeError(e))
-      }
-    )
-
-    # Run ellerre
-    command <- paste("./ellerre/build/lr0", " < ", input$file1$datapath, sep = "")
-    t1 <- try(system(command, intern = TRUE))
-    return(t1)
-  
+  output$lr0 <- renderTable({
+    return(df())    
   }, include.colnames=FALSE)
 
-  # LR1 tab
-  output$lr1 <- renderTable({    
-
-    # Check input file
-    req(input$file1)
-    tryCatch({
-        df <- read.csv(input$file1$datapath, header = FALSE)
-    },
-      error = function(e) {
-        stop(safeError(e))
-      }
-    )
-
-    # Run ellerre
-    command <- paste("./ellerre/build/lr1", " < ", input$file1$datapath, sep = "")
-    t1 <- try(system(command, intern = TRUE))
-    return(t1)
-  
+  output$lr1 <- renderTable({
+    return(df())    
   }, include.colnames=FALSE)
 
-  # LALR1 tab
-  output$lalr1 <- renderTable({     
-
-    # Check input file
-    req(input$file1)
-    tryCatch({
-        df <- read.csv(input$file1$datapath, header = FALSE)
-    },
-      error = function(e) {
-        stop(safeError(e))
-      }
-    )
-
-    # Run ellerre
-    command <- paste("./ellerre/build/lalr1", " < ", input$file1$datapath, sep = "")
-    t1 <- try(system(command, intern = TRUE))
-    return(t1)
-  
+  output$lalr1 <- renderTable({
+    return(df())    
   }, include.colnames=FALSE)
 
-  # LR0 Image tab
-  output$imagelr0 <- renderImage({
+  # Update image tabs content according to the selection
+  df.image <- eventReactive(input$tabs, {
 
-    inFile <- input$file1
-    if (is.null(inFile)) {
+    if(input$tabs == "grammar" || input$tabs == "firstfollow" || input$tabs == "About"){
       filename <- normalizePath(file.path("default.png"))
       list(src = filename, width=0.1)
-    }else{
-      df <- read.csv(input$file1$datapath, header = FALSE)
-      command <- paste("./ellerre/build/lr0 < ", input$file1$datapath, sep = "")
-      try(system(command, intern = TRUE))
-      command <- paste("dot -Tpng LR0.dot -o LR0_output.png", sep="")
-      try(system(paste("export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/app/.apt/usr/lib/x86_64-linux-gnu ; dot -c; ", command), intern=TRUE))
-
-      filename <- normalizePath(file.path("LR0_output.png"))
-      list(src = filename, width=800)
     }
+    
+    else{
+      command <- paste0("./ellerre/build/", tolower(input$tabs), " < ", grammar_path)
+      try(system(command, intern = TRUE))
+
+      f <- paste0(input$tabs,"_output.png")
+      command <- paste0("dot -Tpng ", toupper(input$tabs), ".dot -o ", f)
+      try(system(paste("export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/app/.apt/usr/lib/x86_64-linux-gnu ; dot -c; ", command), intern=TRUE))
+      filename <- normalizePath(file.path(f))
+      list(src = f, width=800)
+    }
+  })
+
+  # Image tabs selected
+  output$imagelr0 <- renderImage({
+    return(df.image())    
   }, deleteFile = FALSE)
 
-  # LR1 Image tab
   output$imagelr1 <- renderImage({
+    return(df.image()) 
+  }, deleteFile = FALSE)
 
-    inFile <- input$file1
-    if (is.null(inFile)) {
-      filename <- normalizePath(file.path("default.png"))
-      list(src = filename, width=0.1)
-    }else{
-      df <- read.csv(input$file1$datapath, header = FALSE)
-      command <- paste("./ellerre/build/lr1 < ", input$file1$datapath, sep = "")
-      try(system(command, intern = TRUE))
-      command <- paste("dot -Tpng LR1.dot -o LR1_output.png", sep="")
-      try(system(paste("export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/app/.apt/usr/lib/x86_64-linux-gnu ; dot -c; ", command), intern=TRUE))
-
-      filename <- normalizePath(file.path("LR1_output.png"))
-      list(src = filename, width=800)
-    }
+  output$imagelalr1 <- renderImage({
+    return(df.image()) 
   }, deleteFile = FALSE)
 
   # LALR1 Image tab
-  output$imagelalr1 <- renderImage({
+  # output$imagelalr1 <- renderImage({
 
-    inFile <- input$file1
-    if (is.null(inFile)) {
-      filename <- normalizePath(file.path("default.png"))
-      list(src = filename, width=0.1)
-    }else{
-      df <- read.csv(input$file1$datapath, header = FALSE)
-      command <- paste("./ellerre/build/lalr1 < ", input$file1$datapath, sep = "")
-      try(system(command, intern = TRUE))
-      command <- paste("dot -Tpng LALR1.dot -o LALR1_output.png", sep="")
-      try(system(paste("export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/app/.apt/usr/lib/x86_64-linux-gnu ; dot -c; ", command), intern=TRUE))
+  #   inFile <- input$file1
+  #   if (is.null(inFile)) {
+  #     filename <- normalizePath(file.path("default.png"))
+  #     list(src = filename, width=0.1)
+  #   }else{
+  #     df <- read.csv(input$file1$datapath, header = FALSE)
+  #     command <- paste("./ellerre/build/lalr1 < ", input$file1$datapath, sep = "")
+  #     try(system(command, intern = TRUE))
+  #     command <- paste("dot -Tpng LALR1.dot -o LALR1_output.png", sep="")
+  #     try(system(paste("export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/app/.apt/usr/lib/x86_64-linux-gnu ; dot -c; ", command), intern=TRUE))
 
-      filename <- normalizePath(file.path("LALR1_output.png"))
-      list(src = filename, width=800)
-    }
-  }, deleteFile = FALSE)
+  #     filename <- normalizePath(file.path("LALR1_output.png"))
+  #     list(src = filename, width=800)
+  #   }
+  # }, deleteFile = FALSE)
 
   # Keep Heroku server alive running the Shiny app
   output$keepAlive <- renderText({
