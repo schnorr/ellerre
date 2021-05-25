@@ -20,6 +20,12 @@ Grammar *grammar = NULL;
 
 int main (int argc, char **argv)
 {
+  
+  if ( argc != 1 ) {
+    show_usage(argv[0]);
+    return 1;
+  }
+
   grammar = new Grammar();
   Parser* parser;
 

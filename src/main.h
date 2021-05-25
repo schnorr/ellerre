@@ -28,5 +28,7 @@
 
 extern int yyparse(void);
 extern Grammar *grammar;
-
+inline void show_usage(std::string name){
+  std::cerr << "Usage: " << name << " < input_file" << std::endl;
+} 
 #endif
