@@ -242,6 +242,25 @@ void Parser::create_automata(void)
   State* starting_state = new State(0, kernel, items_set);
   createTransitionStates(starting_state);
   this->states.insert(starting_state);
+
+#ifdef STEPS
+  int step=0;
+  // Print the initial state
+  std::cout << "[" << step << "] " <<  " ---> " << starting_state->id << std::endl;
+  printf("[%d] State %d\n", step, starting_state->id);
+
+  // Print the kernel/item base 
+  for(auto& i : starting_state->kernel)
+      std::cout << "[" << step << "] " << *i;
+
+  // Print the closure/item set if any
+  if(starting_state->item_set.size()){
+    step++;
+    std::cout << "[" << step << "] " << "(closure)" << std::endl;
+    for(auto& i : starting_state->item_set)
+      std::cout << "[" << step << "] " << *i;
+  }
+#endif
   
   // while new states appear in this->states
   while(change) {
@@ -255,11 +274,33 @@ void Parser::create_automata(void)
       
       // for each state in the transitions
       for(auto& ts : s->transitions) {
+
+#ifdef STEPS
+  step++;
+  printf("[%d] State %d => State %d\n", step, s->id, ts.second->id);
+  std::cout <<  "[" << step << "] " << *ts.first << " ---> " << ts.second->id << std::endl;
+  printf("[%d] State %d\n", step, ts.second->id);
+
+  // If we never visited the state, print the kernel and closure
+  // There is no need to print it if we have already visited the state
+  if(s->id < ts.second->id){
+    for(auto& i : ts.second->kernel)
+      std::cout << "[" << step << "] " << *i;
+
+    if(ts.second->item_set.size()){
+      step++;
+      std::cout << "[" << step << "] " << "(closure)" << std::endl;
+      for(auto& i : ts.second->item_set)
+        std::cout << "[" << step << "] " << *i;
+    }
+  }
+#endif
         // expand the state and create the transition states
         createTransitionStates(ts.second);
         this->states.insert(ts.second);
       }
     }
+    last_size = this->states.size();
     if(last_size != this->states.size())
       change = true;
   }
