@@ -67,18 +67,21 @@ def main():
         global img
         count = count + 1
         filename = tmp_dir.name + '/' + str(count) + '-out.png'
-        print(filename)
+
         # Check if thereis a next image, if not disable button
         if(os.path.exists(filename)):
             img = tk.PhotoImage(file=filename)
         else:
+            button1["state"] = "disable"
             print("File not accessible")
         canvas.itemconfig(myimg, image = img)
 
     def on_click_reset():
         global count
-        canvas.delete(myimg)
+        global img
         button1["state"] = "active"
+        img = tk.PhotoImage(file=first_image)
+        canvas.itemconfig(myimg, image = img)
         count=0
 
     # Load and add buttons to canva
