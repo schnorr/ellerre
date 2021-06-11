@@ -148,10 +148,13 @@ void Parser::createTransitionStates(State* state)
       step++;
     }else{
       std::cout << "Greater current state:" << state->id << std::endl;
-      if(state->id >= new_state->id){
+      if(state->id > new_state->id){
         generateDotFileStep(this->type, step, new_state->id, false);
         step++; 
-      }  
+      }else if(state->id == new_state->id){
+        generateDotFileStep(this->type, step, new_state->id, true);
+        step++; 
+      }
     }
     /*** ANA End ***/
     
