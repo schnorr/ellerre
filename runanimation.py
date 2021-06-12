@@ -3,7 +3,8 @@ import tkinter as tk
 import os,sys
 from re import search
 import tempfile
-
+from PIL import Image, ImageTk
+ 
 count = 0
 
 def create_tmp_dots(file_name, tmp_dir):
@@ -34,70 +35,84 @@ def create_images(tmp_dir):
         os.system(convert_line)
         id = id + 1
 
+class MainCanva(tk.Tk):
+    
+    def __init__(self, *args, **kwargs):
 
-def main():
+        tk.Tk.__init__(self, *args, **kwargs)
+        self.title('EllErre - Animation')
 
-    # Create temporary images
-    file_name = sys.argv[1]
-    tmp_dir = tempfile.TemporaryDirectory(dir = ".")
+        # Create temporary images
+        file_name = sys.argv[1]
+        self.tmp_dir = tempfile.TemporaryDirectory(dir = ".")
 
-    create_tmp_dots(file_name, tmp_dir.name)
-    create_images(tmp_dir.name)
+        create_tmp_dots(file_name, self.tmp_dir.name)
+        create_images(self.tmp_dir.name)
 
-    # Create animation
-    root = tk.Tk()
+        # Create canva
+        self.canvas = tk.Canvas(self, bg='white')
 
-    # Load first image
-    first_image = tmp_dir.name + "/0-out.png"
-    img = tk.PhotoImage(file=first_image)
+        # Need to define it based on the maximum size of the image
+        self.canvas.config(width=1100, height=620)
+        self.canvas.pack(fill=tk.BOTH, expand=1)
+        self.canvas.bind("<Configure>", self.resize)
+        self.first_image = self.tmp_dir.name + "/0-out.png"
+        self.img = ImageTk.PhotoImage(Image.open(self.first_image))
 
-    # Load canva layout images
-    button_img_next = tk.PhotoImage(file='./img/next.png')
-    button_img_reset = tk.PhotoImage(file='./img/reset.png')
+        # Load first image
+        # self.img = tk.PhotoImage(file=self.first_image)
+        self.myimg = self.canvas.create_image((0, 0), image=self.img, anchor="nw")
 
-    # Create canva
-    canvas = tk.Canvas(root, bg='white')
-    # Need to define it based on the maximum size of the image
-    canvas.config(width=1000, height=600)
-    canvas.pack()
-    myimg = canvas.create_image(0, 0, image=img, anchor="nw")
+        # Load canva layout images
+        button_img_next = tk.PhotoImage(file=r'./img/next.png')
+        button_img_reset = tk.PhotoImage(file=r'./img/reset.png')
 
-    def on_click_next():
-        global count
-        global img
+        # Load and add buttons to canva
+        self.button1 = tk.Button(self, image=button_img_next, command=self.on_click_next)
+        self.button1.config(width=1100, height=50)
+        self.button1.pack()
+
+        button2 = tk.Button(self, image=button_img_reset, command=self.on_click_reset)
+        button2.config(width=1100, height=30)
+        button2.pack()
+
+        # Open the canva
+        self.mainloop()
+        # self.tmp_dir.cleanup()
+
+    def on_click_next(self):
+        global img, count
         count = count + 1
-        filename = tmp_dir.name + '/' + str(count) + '-out.png'
+        filename = self.tmp_dir.name + '/' + str(count) + '-out.png'
 
         # Check if thereis a next image, if not disable button
         if(os.path.exists(filename)):
             img = tk.PhotoImage(file=filename)
         else:
-            button1["state"] = "disable"
+            self.button1["state"] = "disable"
             print("File not accessible")
-        canvas.itemconfig(myimg, image = img)
+        self.canvas.itemconfig(self.myimg, image = img)
 
-    def on_click_reset():
-        global count
-        global img
-        button1["state"] = "active"
-        img = tk.PhotoImage(file=first_image)
-        canvas.itemconfig(myimg, image = img)
+    def on_click_reset(self):
+        global img, count
+        self.button1["state"] = "active"
+        img = tk.PhotoImage(file=self.first_image)
+        self.canvas.itemconfig(self.myimg, image = img)
         count=0
 
-    # Load and add buttons to canva
-    button1 = tk.Button(root, image=button_img_next, command=on_click_next)
-    button1.config(width=1000, height=50)
-    button1.pack()
+    def resize(self, event):
+        global count
+        filename = self.tmp_dir.name + '/' + str(count) + '-out.png'
 
-    button2 = tk.Button(root, image=button_img_reset, command=on_click_reset)
-    button2.config(width=1000, height=30)
-    button2.pack()
+        img = Image.open(filename).resize(
+            (event.width, event.height), Image.ANTIALIAS
+        )
+        self.img = ImageTk.PhotoImage(img)
+        self.canvas.itemconfig(self.myimg, image=self.img)
 
-    # Open the canva
-    root.mainloop()
-
-    tmp_dir.cleanup()
+    def close_app(self):
+        self.destroy()
 
 
 if __name__ == "__main__":
-    main()
+    main_canva = MainCanva()
