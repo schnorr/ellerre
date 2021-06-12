@@ -420,7 +420,7 @@ void Parser::generateDotFileStep(std::string outFile, int step, int myid, bool c
 
     // add kernel items of the state
     for(Item* i : (*it)->kernel) {
-      dotFile << "\t\t<tr><td align=\"left\" port=\"r" << port << "\"><font face=\"bold\">" << *i << "</font></td></tr>\n";
+      dotFile << "\t\t<tr><td align=\"left\" port=\"r" << port << "\"><font color=\"white\" face=\"bold\">" << *i << "</font></td></tr>\n";
       port++;
     }
     // add production items of the state
@@ -441,13 +441,13 @@ void Parser::generateDotFileStep(std::string outFile, int step, int myid, bool c
   it = this->states.begin();
   // Insert initial state mark:
   dotFile << "nowhere [style=invis,shape=point]\n";
-  dotFile << "nowhere -> state0 [ penwidth = 3 fontsize = 22 fontcolor = \"black\"];\n";
+  dotFile << "nowhere -> state0 [ penwidth = 3 fontsize = 22 fontcolor = \"black\" color = \"black\"];\n";
 
   //Print other states:
   for(; it != this->states.end(); it++){
     for(std::pair<Symbol*, State* > t : (*it)->transitions){
       // t.first, t.second.
-      dotFile << "state" << (*it)->id << " -> state" << t.second->id << "[ penwidth = 3 fontsize = 22 fontcolor = \"black\" label = \"" << t.first->str << "\" ];\n";
+      dotFile << "state" << (*it)->id << " -> state" << t.second->id << "[ penwidth = 3 fontsize = 22 fontcolor = \"black\" color = \"black\" label = \"" << t.first->str << "\" ];\n";
     }
   }
 
