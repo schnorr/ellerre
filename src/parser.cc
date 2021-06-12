@@ -420,7 +420,7 @@ void Parser::generateDotFileStep(std::string outFile, int step, int myid, bool c
 
     // add kernel items of the state
     for(Item* i : (*it)->kernel) {
-      dotFile << "\t\t<tr><td align=\"left\" port=\"r" << port << "\"><font color=\"white\" face=\"bold\">" << *i << "</font></td></tr>\n";
+      dotFile << "\t\t<tr><td align=\"left\" port=\"r" << port << "\"><font color=\"black\" face=\"bold\">" << *i << "</font></td></tr>\n";
       port++;
     }
     // add production items of the state
