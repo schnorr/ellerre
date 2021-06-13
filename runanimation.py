@@ -37,7 +37,7 @@ def create_images(tmp_dir):
 
 # TO-DO 
 # [ ] Ajustar img resizing
-# [ ] Salvar imagem atual
+# [X] Salvar imagem atual
 # [ ] Carregar documento dot
 # [ ] Testar com todos os casos
 class MainCanva(tk.Tk):
