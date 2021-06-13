@@ -1,4 +1,3 @@
-# from PIL import Image, ImageShow, ImageTk
 import tkinter as tk
 import os,sys
 from re import search
@@ -6,7 +5,16 @@ import tempfile
 from PIL import Image, ImageTk
 from tkinter import filedialog
 
+# TO-DO 
+# [ ] Ajustar img resizing
+# [X] Carregar documento dot via menu
+# [ ] Verificar retorno das caixas de dialogo
+# [ ] Verificar arquivo em create_tmp_dot
+# [ ] Testar com todos os casos
+
 count = 0
+
+# Dot files processing
 
 def create_tmp_dots(file_name, tmp_dir):
     write = True
@@ -35,11 +43,7 @@ def create_images(tmp_dir):
         os.system(convert_line)
         id = id + 1
 
-# TO-DO 
-# [ ] Ajustar img resizing
-# [X] Salvar imagem atual
-# [ ] Carregar documento dot
-# [ ] Testar com todos os casos
+# Tkinter canva
 class MainCanva(tk.Tk):
     
     def __init__(self, *args, **kwargs):
@@ -53,7 +57,7 @@ class MainCanva(tk.Tk):
 
         # To create a menu
         fileMenu = tk.Menu(self.menu)
-        fileMenu.add_command(label="Load .dot File")
+        fileMenu.add_command(label="Load .dot File",  command=self.load_dot)
         fileMenu.add_command(label="Save current image", command=self.save_image)
         fileMenu.add_command(label="Exit", command=self.close_app)
         self.menu.add_cascade(label="File", menu=fileMenu)
@@ -144,6 +148,18 @@ class MainCanva(tk.Tk):
             image = Image.open(abs_path)
             image.save(user_filename.name)
             image.close()
+    
+    def load_dot(self):
+        global count, img
+        file_name =  filedialog.askopenfilename(initialdir = ".",title = "Select file",filetypes = (("dot files","*.dot"),("all files","*.*")))
+        count = 0
+        self.tmp_dir = tempfile.TemporaryDirectory(dir = ".")
+        create_tmp_dots(file_name, self.tmp_dir.name)
+        create_images(self.tmp_dir.name)
+        self.first_image = self.tmp_dir.name + "/0-out.png"
+        img = ImageTk.PhotoImage(Image.open(self.first_image))
+        self.canvas.itemconfig(self.myimg, image = img)
+        self.menu.entryconfig(2, state=tk.DISABLED)
 
     def close_app(self):
         self.destroy()
