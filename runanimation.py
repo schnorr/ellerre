@@ -6,14 +6,12 @@ from PIL import Image, ImageTk
 from tkinter import filedialog
 
 # TO-DO 
-# [ ] Ajustar img resizing
 # [ ] Verificar se arquivo é válido em create_tmp_dot
 # [ ] Testar com todos os casos
 
 count = 0
 
 # Dot files processing
-
 def create_tmp_dots(file_name, tmp_dir):
     write = True
     step=0
@@ -34,6 +32,7 @@ def create_tmp_dots(file_name, tmp_dir):
                     f1.write(line) 
         step = step + 1 
 
+# Create step by step temporary images from partial dot files
 def create_images(tmp_dir):
     id = 0
     for file in os.listdir(tmp_dir):
@@ -63,21 +62,23 @@ class MainCanva(tk.Tk):
 
         # Create canva
         self.canvas = tk.Canvas(self, bg='white')
-        # Create a temporary file to store the step by step images
-        self.tmp_dir = tempfile.TemporaryDirectory(dir = ".")
-
-        # Need to define it based on the maximum size of the image
         self.canvas.config(width=1150, height=600)
         self.canvas.pack(fill=tk.BOTH, expand=1)
         self.myimg = None
 
-        # Read input file through command line
+        # Create a temporary directory to store the step by step temporary images
+        self.tmp_dir = tempfile.TemporaryDirectory(dir = ".")
+
+        # Check if user input a file by command line
         if(len(sys.argv) > 1):
+
             file_name = sys.argv[1] 
 
             # Create dot files and images
             create_tmp_dots(file_name, self.tmp_dir.name)
             create_images(self.tmp_dir.name)
+
+            # Activate buttons
             self.menu.entryconfig(3, state=tk.NORMAL)
             self.menu.entryconfig(4, state=tk.NORMAL)
 
@@ -98,8 +99,7 @@ class MainCanva(tk.Tk):
         count = count - 1
         filename = self.tmp_dir.name + '/' + str(count) + '-out.png'
 
-        # Check if thereis a previous image, if its the first,
-        #  disable the previous button
+        # Check if thereis a previous image, if its the first, disable the "previous" button
         if(count > 0):
             img = tk.PhotoImage(file=filename)
             self.menu.entryconfig(2, state=tk.NORMAL)
@@ -114,7 +114,7 @@ class MainCanva(tk.Tk):
         count = count + 1
         filename = self.tmp_dir.name + '/' + str(count) + '-out.png'
 
-        # Check if there is a next image, if not disable button
+        # Check if there is a next image, if not disable the "next" button
         if(os.path.exists(filename)):
             img = tk.PhotoImage(file=filename)
             self.menu.entryconfig(2, state=tk.NORMAL)
@@ -125,8 +125,11 @@ class MainCanva(tk.Tk):
     def on_click_reset(self):
         global img, count
         count=0
+
+        # Enable "next" and disable "previous", since it's the first image
         self.menu.entryconfig(3, state=tk.NORMAL)
         self.menu.entryconfig(2, state=tk.DISABLED)
+
         img = tk.PhotoImage(file=self.first_image)
         self.canvas.itemconfig(self.myimg, image = img)
 
@@ -134,9 +137,7 @@ class MainCanva(tk.Tk):
         global count
         filename = self.tmp_dir.name + '/' + str(count) + '-out.png'
 
-        img = Image.open(filename).resize(
-            (event.width, event.height), Image.ANTIALIAS
-        )
+        img = Image.open(filename).resize((event.width, event.height), Image.ANTIALIAS)
         self.img = ImageTk.PhotoImage(img)
         self.canvas.itemconfig(self.myimg, image=self.img)
 
@@ -144,18 +145,22 @@ class MainCanva(tk.Tk):
 
         global count
         filename = self.tmp_dir.name + '/' + str(count) + '-out.png'
+        abs_path = os.path.abspath(filename)
+        
         user_filename = filedialog.asksaveasfile(mode = 'w', defaultextension=".png", initialfile = str(count) + '-out.png')
-
-        if user_filename != None:
-            abs_path = os.path.abspath(filename)
-            image = Image.open(abs_path)
-            image.save(user_filename.name)
-            image.close()
+        
+        image = Image.open(abs_path)
+        image.save(user_filename.name)
+        image.close()
     
     def load_dot(self):
         global count, img
         file_name =  filedialog.askopenfilename(initialdir = ".",title = "Select file", filetypes=[("dot files","*.dot")])
 
+        # Activate buttons and disable "previous" if set
+        self.menu.entryconfig(2, state=tk.DISABLED)
+        self.menu.entryconfig(3, state=tk.NORMAL)
+        self.menu.entryconfig(4, state=tk.NORMAL)
         count = 0
 
         self.tmp_dir = tempfile.TemporaryDirectory(dir = ".")
@@ -166,9 +171,6 @@ class MainCanva(tk.Tk):
         img = ImageTk.PhotoImage(Image.open(self.first_image))
         self.myimg = self.canvas.create_image((0, 0), image=img, anchor="nw")
         self.canvas.itemconfig(self.myimg, image = img)
-        self.menu.entryconfig(2, state=tk.DISABLED)
-        self.menu.entryconfig(3, state=tk.NORMAL)
-        self.menu.entryconfig(4, state=tk.NORMAL)
 
     def close_app(self):
         self.destroy()
