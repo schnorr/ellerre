@@ -7,9 +7,7 @@ from tkinter import filedialog
 
 # TO-DO 
 # [ ] Ajustar img resizing
-# [X] Carregar documento dot via menu
-# [ ] Verificar retorno das caixas de dialogo
-# [ ] Verificar arquivo em create_tmp_dot
+# [ ] Verificar se arquivo é válido em create_tmp_dot
 # [ ] Testar com todos os casos
 
 count = 0
@@ -50,41 +48,46 @@ class MainCanva(tk.Tk):
 
         tk.Tk.__init__(self, *args, **kwargs)
         self.title('EllErre - Animation')
-
-
         self.menu = tk.Menu(self)
         self.config(menu=self.menu)
 
-        # To create a menu
+        # Create the menu
         fileMenu = tk.Menu(self.menu)
         fileMenu.add_command(label="Load .dot File",  command=self.load_dot)
         fileMenu.add_command(label="Save current image", command=self.save_image)
         fileMenu.add_command(label="Exit", command=self.close_app)
         self.menu.add_cascade(label="File", menu=fileMenu)
         self.menu.add_command(label="Previous", command=self.on_click_previous, state=tk.DISABLED)
-        self.menu.add_command(label="Next", command=self.on_click_next)
-        self.menu.add_command(label="Reset", command=self.on_click_reset)
-
-        # Create temporary images
-        file_name = sys.argv[1]
-        self.tmp_dir = tempfile.TemporaryDirectory(dir = ".")
-
-        create_tmp_dots(file_name, self.tmp_dir.name)
-        create_images(self.tmp_dir.name)
+        self.menu.add_command(label="Next", command=self.on_click_next, state=tk.DISABLED)
+        self.menu.add_command(label="Reset", command=self.on_click_reset, state=tk.DISABLED)
 
         # Create canva
         self.canvas = tk.Canvas(self, bg='white')
+        # Create a temporary file to store the step by step images
+        self.tmp_dir = tempfile.TemporaryDirectory(dir = ".")
 
         # Need to define it based on the maximum size of the image
         self.canvas.config(width=1150, height=600)
         self.canvas.pack(fill=tk.BOTH, expand=1)
-        self.canvas.bind("<Configure>", self.resize)
-        self.first_image = self.tmp_dir.name + "/0-out.png"
-        self.img = ImageTk.PhotoImage(Image.open(self.first_image))
+        self.myimg = None
 
-        # Load first image
-        # self.img = tk.PhotoImage(file=self.first_image)
-        self.myimg = self.canvas.create_image((0, 0), image=self.img, anchor="nw")
+        # Read input file through command line
+        if(len(sys.argv) > 1):
+            file_name = sys.argv[1] 
+
+            # Create dot files and images
+            create_tmp_dots(file_name, self.tmp_dir.name)
+            create_images(self.tmp_dir.name)
+            self.menu.entryconfig(3, state=tk.NORMAL)
+            self.menu.entryconfig(4, state=tk.NORMAL)
+
+            # Resize canva based on the input image    
+            self.canvas.bind("<Configure>", self.resize)
+            self.first_image = self.tmp_dir.name + "/0-out.png"
+            self.img = ImageTk.PhotoImage(Image.open(self.first_image))
+
+            # Load first image
+            self.myimg = self.canvas.create_image((0, 0), image=self.img, anchor="nw")
 
         # Open the canva
         self.mainloop()
@@ -151,15 +154,21 @@ class MainCanva(tk.Tk):
     
     def load_dot(self):
         global count, img
-        file_name =  filedialog.askopenfilename(initialdir = ".",title = "Select file",filetypes = (("dot files","*.dot"),("all files","*.*")))
+        file_name =  filedialog.askopenfilename(initialdir = ".",title = "Select file", filetypes=[("dot files","*.dot")])
+
         count = 0
+
         self.tmp_dir = tempfile.TemporaryDirectory(dir = ".")
         create_tmp_dots(file_name, self.tmp_dir.name)
         create_images(self.tmp_dir.name)
         self.first_image = self.tmp_dir.name + "/0-out.png"
+
         img = ImageTk.PhotoImage(Image.open(self.first_image))
+        self.myimg = self.canvas.create_image((0, 0), image=img, anchor="nw")
         self.canvas.itemconfig(self.myimg, image = img)
         self.menu.entryconfig(2, state=tk.DISABLED)
+        self.menu.entryconfig(3, state=tk.NORMAL)
+        self.menu.entryconfig(4, state=tk.NORMAL)
 
     def close_app(self):
         self.destroy()
