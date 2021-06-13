@@ -4,11 +4,10 @@ import os,sys
 from re import search
 import tempfile
 from PIL import Image, ImageTk
- 
+from tkinter import filedialog
+
 count = 0
 
-# TO-DO Pintar os estados de branco ao inves de gerar arquivo apenas com parte dos steps
-# It didn't go very well
 def create_tmp_dots(file_name, tmp_dir):
     write = True
     step=0
@@ -37,9 +36,9 @@ def create_images(tmp_dir):
         id = id + 1
 
 # TO-DO 
-# [X] Ajustar botões
 # [ ] Ajustar img resizing
-# [ ] Marcador para mostrar os steps
+# [ ] Salvar imagem atual
+# [ ] Carregar documento dot
 # [ ] Testar com todos os casos
 class MainCanva(tk.Tk):
     
@@ -55,7 +54,7 @@ class MainCanva(tk.Tk):
         # To create a menu
         fileMenu = tk.Menu(self.menu)
         fileMenu.add_command(label="Load .dot File")
-        fileMenu.add_command(label="Save current image")
+        fileMenu.add_command(label="Save current image", command=self.save_image)
         fileMenu.add_command(label="Exit", command=self.close_app)
         self.menu.add_cascade(label="File", menu=fileMenu)
         self.menu.add_command(label="Previous", command=self.on_click_previous, state=tk.DISABLED)
@@ -133,6 +132,18 @@ class MainCanva(tk.Tk):
         )
         self.img = ImageTk.PhotoImage(img)
         self.canvas.itemconfig(self.myimg, image=self.img)
+
+    def save_image(self):
+
+        global count
+        filename = self.tmp_dir.name + '/' + str(count) + '-out.png'
+        user_filename = filedialog.asksaveasfile(mode = 'w', defaultextension=".png", initialfile = str(count) + '-out.png')
+
+        if user_filename != None:
+            abs_path = os.path.abspath(filename)
+            image = Image.open(abs_path)
+            image.save(user_filename.name)
+            image.close()
 
     def close_app(self):
         self.destroy()
