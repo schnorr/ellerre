@@ -126,7 +126,7 @@ void Parser::createTransitionStates(State* state)
     }
     State* new_state = new State(kernel);
 
-    /*** ANA Start ***/
+    /*** New Start ***/
     // Check wheter we are looking for a new state
     bool write_state=true;
     for(State* st : this->states) { 
@@ -134,40 +134,35 @@ void Parser::createTransitionStates(State* state)
         write_state = false;
       }
     }
-    /*** ANA End ***/
+    /*** New End ***/
 
     new_state = createState(new_state);
     std::pair<Symbol*, State*> transition = std::make_pair(s, new_state);
     state->transitions.insert(transition);
 
-    /*** ANA Start ***/
+    /*** New Start ***/
     // If is a new state, print it with the kernel and transition
     if(write_state){
-      std::cout << "New state:" << new_state->id << std::endl;
       generateDotFileStep(this->type, step, new_state->id, false);
       step++;
     }else{
-      std::cout << "Greater current state:" << state->id << std::endl;
-      if(state->id > new_state->id){
-        generateDotFileStep(this->type, step, new_state->id, false);
-        step++; 
-      }else if(state->id == new_state->id){
+      if(state->id >= new_state->id){
         generateDotFileStep(this->type, step, new_state->id, true);
         step++; 
       }
     }
-    /*** ANA End ***/
+    /*** New End ***/
     
     new_state->setItemSet(closure(new_state->kernel));
     
-    /*** ANA Start ***/
+    /*** New Start ***/
     std::set<Item*> my_item_set = closure(new_state->kernel);
     // If we are looking for a new state and it has a closure, next step
     if(my_item_set.size() && write_state){
       generateDotFileStep(this->type, step, new_state->id, true);
       step++; 
     }
-    /*** ANA End ***/
+    /*** New End ***/
   }
 }
 

@@ -1,5 +1,5 @@
-import tkinter as tk
 import os,sys
+import tkinter as tk
 from re import search
 import tempfile
 from PIL import Image, ImageTk
@@ -7,8 +7,8 @@ from tkinter import filedialog
 
 # TO-DO 
 # [ ] Verificar se arquivo é válido em create_tmp_dot
-# [ ] Fazer para LALR1
 # [ ] Remover arquivos repetidos (steps repetidos)
+# [ ] Fazer para LALR1
 
 count = 0
 
@@ -47,7 +47,7 @@ class MainCanva(tk.Tk):
     def __init__(self, *args, **kwargs):
 
         tk.Tk.__init__(self, *args, **kwargs)
-        self.title('EllErre - Animation')
+        self.title('EllErre - Animation for LR0 and LR1')
         self.menu = tk.Menu(self)
         self.config(menu=self.menu)
 
