@@ -559,6 +559,18 @@ exercícios (com gramáticas alternativas) e verificar sua solução
 (confirmando se a classe das gramáticas fornecidas).
 
 * EllErre web app
+
 Alternatively, you can also use: [[https://ellerre.herokuapp.com/][https://ellerre.herokuapp.com/]]
 
+* EllErre step-by-step visualization for LR0 and LR1
 
+The LR0 and LR1 execution generates a file "LR0-step.dot" or "LR1-step.dot", 
+which is used by the Python script to the step-by-step visualization.
+
+It was created with Python 3.7.5. 
+
+Too launch the Python script you can either input the step .dot file 
+or load it using the GUI menu
+#+begin_src shell :results output :exports both
+python runanimation.py ./build/LR0-step.dot
+#+end_src

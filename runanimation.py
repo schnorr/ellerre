@@ -47,7 +47,7 @@ class MainCanva(tk.Tk):
     def __init__(self, *args, **kwargs):
 
         tk.Tk.__init__(self, *args, **kwargs)
-        self.title('EllErre - Animation for LR0 and LR1')
+        self.title('EllErre - Step-by-step visualization for LR0 and LR1')
         self.menu = tk.Menu(self)
         self.config(menu=self.menu)
 
