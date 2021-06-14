@@ -7,7 +7,8 @@ from tkinter import filedialog
 
 # TO-DO 
 # [ ] Verificar se arquivo é válido em create_tmp_dot
-# [ ] Testar com todos os casos
+# [ ] Fazer para LALR1
+# [ ] Remover arquivos repetidos (steps repetidos)
 
 count = 0
 
@@ -103,6 +104,7 @@ class MainCanva(tk.Tk):
         if(count > 0):
             img = tk.PhotoImage(file=filename)
             self.menu.entryconfig(2, state=tk.NORMAL)
+            self.menu.entryconfig(3, state=tk.NORMAL)
         else:
             img = tk.PhotoImage(file=filename)
             self.menu.entryconfig(2, state=tk.DISABLED)
