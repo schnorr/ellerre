@@ -10,8 +10,9 @@ EllErre is designed to be an LR automata generator, with the following algorithm
 + [X] LR(1) automata
 + [X] LALR(1) automata
 + [X] GraphViz automata representation
-+ [ ] Step by Step GraphViz automata representation
 + [X] Mark initial and end states in the automata
++ [X] Step by Step GraphViz automata representation for LR0/LR1
++ [ ] Step by Step GraphViz automata representation for LALR1
 + [ ] Detect shift/reduce and reduce/reduce conflicts
 + [ ] LR Analysis for a given input
 
@@ -564,13 +565,22 @@ Alternatively, you can also use: [[https://ellerre.herokuapp.com/][https://eller
 
 * EllErre step-by-step visualization for LR0 and LR1
 
-The LR0 and LR1 execution generates a file "LR0-step.dot" or "LR1-step.dot", 
-which is used by the Python script to the step-by-step visualization.
+The LR0 and LR1 execution generate a file "LR0-step.dot" or
+"LR1-step.dot", which is used by the Python script for the
+step-by-step visualization. It was created with Python 3.7.5.
 
-It was created with Python 3.7.5. 
+To launch the Python script, you can input the step .dot file or load
+it using the GUI menu. You can also save the generated images step by
+step using the menu -> File option.
 
-Too launch the Python script you can either input the step .dot file 
-or load it using the GUI menu
 #+begin_src shell :results output :exports both
 python runanimation.py ./build/LR0-step.dot
+#+end_src
+
+The program renders the step files using the .dot type, with positions
+set automatically. You can use fixed nodes position by passing the =fdp=
+argument to the execution, as follows.
+
+#+begin_src shell :results output :exports both
+python runanimation.py ./build/LR0-step.dot fdp
 #+end_src
