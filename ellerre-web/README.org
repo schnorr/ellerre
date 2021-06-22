@@ -1,0 +1,91 @@
+#+STARTUP: overview indent
+#+LANGUAGE: en/pt
+#+TITLE: EllErre Web
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+
+* EllErre web - deploy to Heroku 
+
+Heroku is a platform as a service (PaaS) that enables users to build,
+run, and operate applications in the cloud.  It runs Linux
+environments with Ubuntu OS. *I only could build the EllErre code
+during deploy for Heroku. The best approach would be to use a Docker
+container.
+
+Useful links:
+- https://steve-condylios.medium.com/how-to-move-your-r-shiny-app-on-to-the-web-using-heroku-fd54b7d2ad88
+- https://www.xavierriley.co.uk/compiling-packages-from-source-on-heroku-using-buildpacks/
+- https://devcenter.heroku.com/articles/stack-packages
+  
+1. After creating the Heroku app in my dashboard, I added the R
+   buildpack using the Heroku Command Line Interface (CLI)
+   #+begin_src shell :results output :exports both
+   heroku stack:set heroku-18 
+   heroku create --stack heroku-18 --buildpack https://github.com/virtualstaticvoid/heroku-buildpack-r.git
+   #+end_src
+
+   To check the Heroku environment:
+   #+begin_src shell :results output :exports both
+   heroku ps:exec
+   heroku run bash
+   #+end_src
+2. Install the buildpacks so I can use the dependences needed. Heroku
+   provides a list of packages:
+   https://devcenter.heroku.com/articles/stack-packages. We only need
+   to install Flex.
+
+   Another solution is to install the =buildpack-apt= package to install
+   all files listed in a file called =Aptfile= during the deploy.
+
+   #+begin_src shell :results output :exports both
+   heroku buildpacks:add --index 1 https://github.com/heroku/heroku-buildpack-apt.git  
+   heroku buildpacks:add https://github.com/weibeld/heroku-buildpack-run.git 
+   #+end_src
+
+   #+begin_src shell :results output :exports both
+   cat Aptfile
+   #+end_src
+
+   #+RESULTS:
+   : flex
+   : libcgraph6
+   : libgvc6
+   : graphviz
+3. I created a script to clone the EllErre code inside the Heroku dyno
+   and build there:
+
+   #+begin_src shell :results output :exports both
+   cat buildpack-run.sh
+   #+end_src
+
+   #+RESULTS:
+   #+begin_example
+   uname -a
+   #export LIBRARY_PATH="$BUILD_DIR/.apt/usr/lib/x86_64-linux-gnu:$BUILD_DIRR/lib/R/lib:$BUILD_DIR/tcltk/lib:$LIBRARY_PATH"
+   #export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/app/.apt/usr/lib/x86_64-linux-gnu
+   echo $HOME
+   echo $LD_LIBRARY_PATH
+   rm -rf ellerre/
+   git clone git://github.com/schnorr/ellerre.git
+   mkdir -p ellerre/build
+   cd ellerre/build
+   cmake -DBUILD_SHARED_LIBS=OFF -DCMAKE_INSTALL_PREFIX:PATH=/app/.apt/usr ..
+   make
+
+   #+end_example
+4. Deploy using git and check new files using the heroku bash command
+   #+begin_src shell :results output :exports both
+   git push heroku master
+   #+end_src
+
+* Shiny                                                            :noexport:
+Sometimes can be a warning message complaining that the last line of
+the file doesn't end with an End Of Line (EOL):
+https://stackoverflow.com/questions/5990654/incomplete-final-line-warning-when-trying-to-read-a-csv-file-into-r
+#+begin_src shell :results output :exports both
+Warning in read.table(file = file, header = header, sep = sep, quote = quote,  :
+  incomplete final line found by readTableHeader on '/tmp/RtmpaRzO7L/1efe62be8e7724a912db6f3f/0.ee'
+#+end_src
+
+Customizing the page:
+https://shiny.rstudio.com/tutorial/written-tutorial/lesson2/
