@@ -559,9 +559,100 @@ análise sintática da disciplina estão corretos, bem como propor novos
 exercícios (com gramáticas alternativas) e verificar sua solução
 (confirmando se a classe das gramáticas fornecidas).
 
+* Plano - Ana                                                      :noexport:
+A disciplina de Compiladores (INF01147) apresenta a funcionalidade de
+  um compilador em nível teórico e prático. São apresentadas análise
+  léxica, sintática e semântica da linguagem, a geração de código
+  intermediário, geração de código de máquina e múltiplos passes de
+  otimização. Como atividade proposta, os alunos devem projetar e
+  implementar um compilador para uma linguagem de programação
+  simples. Para isso, a compreensão e práticas sobre a criação de
+  autômatos é essencial.
+
+  A ferramenta EllErre foi desenvolvida pelo professor Lucas Mello
+  Schnorr e Marcelo Cogo Miletto para a geração de autômatos de forma
+  automatizada. EllErre foi criada para fins pedagógicos a ser utilizada
+  por alunos de disciplinas de Compiladores, para que possam avaliar
+  práticas da disciplina de forma autônoma e automática, ao invés de
+  verificações manuais de suas soluções. Atualmente, a ferramenta
+  suporta a geração de autômatos LR: LR(0)/SLR(1), LR(1) e LALR(1), o
+  cálculo dos conjuntos primeiro e sequência, e representação visual do
+  autômato usando GraphViz. O repositório oficial da ferramenta está no
+  GitHub em: https://github.com/schnorr/ellerre/.
+
+  O plano de atuação na Graduação da mestranda Ana Luisa Veroneze
+  Solórzano é implementar novas funcionalidades para a ferramenta
+  EllErre. Dentre as atividades a serem realizadas estão:
+  - A geração passo-a-passo da representação do autômato utilizando a
+    ferramenta de visualização GraphViz, contendo explicações textuais
+    em cada etapa
+  - A marcação dos estados iniciais e finais do autômato
+  - A detecção de conflitos empilha/reduz e reduz/reduz
+  - Análise LR de uma entrada utilizando um autômato gerado
+  - Geração de uma interface web para avaliação de um autômato gerado
+    sem a necessidade de instalar a ferramenta localmente
+
+  A extensão da ferramenta EllErre se dará diretamente sobre o seu
+  repositório oficial (link acima), mediante commits diretos na branch
+  de desenvolvimento principal. As respostas para as soluções devem (1)
+  ser apresentadas de maneira textual de maneira legível por outro
+  programa de computador; e (2) ser documentadas a ponto de permitir uso
+  autônomo pelos alunos de graduação.
+* Relatório - Ana                                                  :noexport:
+
+Relatório da disciplina de Atividade Didática I (CMP410) realizada em
+2020/2 na disciplina da graduação de Compiladores (INF01147),
+ministrada pelo professor Lucas Mello Schnor. A proposta consistiu na
+continuação do desenvolvimento da ferramenta EllErre
+(https://github.com/schnorr/ellerre) anteriorment desenvolvida pelo
+professor Lucas Mello Schnorr e Marcelo Cogo Miletto para a geração de
+autômatos de forma automatizada. A ferramenta tem fins pedagógicos
+para auxiliar a correção de exercícios de anaálise sintática da
+disciplina de Compiladores.
+
+Dentre as atividades que consistiam o plano de atuação, foram
+realizados:
+- A marcação dos estados iniciais e finais do autômato
+- Geração de uma interface web para avaliação de um autômato gerado
+  sem a necessidade de instalar a ferramenta localmente, disponível
+  em: https://ellerre.herokuapp.com/. A aplicação foi criada
+  utilizando o pacote Shiny para a linguagem de programação R e está
+  hospedada na plataforma em nuvem Heroku (https://www.heroku.com/).
+  O usuário pode submeter um arquivo contendo a definição da
+  gramática, como no programa executado pela linha de comando, ou
+  inserir textualmente na caixa de texto a sua gramática. O usuário
+  também pode acessar as visualizações dos autômatos e fazer download
+  das imagens e/ou dos arquivos contendo a gramática .
+- A visualização passo-a-passo da representação do autômato LR0 e LR1
+  utilizando as imagens dos autômatos geradas com a ferramenta de
+  visualização GraphViz. A script foi implementado usando a linguagem
+  Python
+- Aplicação de um formulário de feedback sobre o uso do EllErre
+  localmente e na sua versão web. O formulário foi anônimo e enviado
+  para a turma responder voluntariamente. Apenas uma pessoa respondeu,
+  por isso não foi possível realizar uma avaliação representativa para
+  a turma. O formulário está acessível em:
+  https://forms.gle/a6vLFzN6VPaE5nTL8
+- Início de escrita de artigo sobre o uso da ferramenta EllErre como
+  apoio à disciplina de Compiladores.
+
+
+Instruções sobre o uso da ferramenta web, instalação de bibliotecas
+extras, bem como da aplicação para visualização da criação dos
+autômatos LR0 e LR1 passo-a-passo estão detalhadas no arquivo
+README.org do repositório oficial da ferramenta:
+https://github.com/schnorr/ellerre. Assim, os estudantes podem usar a
+ferramenta sem depender de outros materiais de consulta.
 * EllErre web app
 
-Alternatively, you can also use: [[https://ellerre.herokuapp.com/][https://ellerre.herokuapp.com/]]
+Alternatively, you can use: [[https://ellerre.herokuapp.com/][https://ellerre.herokuapp.com/]]
+
+There, you can input a .dot file that defines a grammar or textually
+input your grammar, separating each line by a ";" . You can also
+download the visualizations generated.
+
+The application was created using the Shiny package for R, and the
+source code is available in: [[./ellerre-web]]
 
 * EllErre step-by-step visualization for LR0 and LR1
 
@@ -569,12 +660,24 @@ The LR0 and LR1 execution generate a file "LR0-step.dot" or
 "LR1-step.dot", which is used by the Python script for the
 step-by-step visualization. It was created with Python 3.7.5.
 
+Install the Python libraries needed (suggestion to use a conda
+environment):
+#+begin_src shell :results output :exports both
+conda create --name ellerre-env python=3.7.3
+conda activate ellerre-env
+
+sudo apt-get install graphviz graphviz-dev
+pip install pygraphviz
+pip install tk
+pip install Pillow
+#+end_src
+
 To launch the Python script, you can input the step .dot file or load
 it using the GUI menu. You can also save the generated images step by
 step using the menu -> File option.
 
 #+begin_src shell :results output :exports both
-python runanimation.py ./build/LR0-step.dot
+python run-steps.py build/LR0-steps.dot
 #+end_src
 
 The program renders the step files using the .dot type, with positions
@@ -582,5 +685,21 @@ set automatically. You can use fixed nodes position by passing the =fdp=
 argument to the execution, as follows.
 
 #+begin_src shell :results output :exports both
-python runanimation.py ./build/LR0-step.dot fdp
+python run-steps.py build/LR0-steps.dot fdp
 #+end_src
+
+* Citation
+If you use the EllErre information, please cite as:
+
+#+begin_example
+@software{ellerre,
+title = {EllErre: an LR automata generator},
+author = {Schnorr, L. M. and Miletto, M. C. and Solórzano A. L. V.},
+year = 2020,
+url = {https://github.com/schnorr/ellerre}
+}
+#+end_example
+
+[Software] L. M. Schnorr, M. C. Miletto, and A. L. V. Solórzano,
+EllErre: an LR automata generator, 2020. URL:
+https://github.com/schnorr/ellerre
