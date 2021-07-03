@@ -56,7 +56,7 @@ public:
   void create_automata(void);
   void expandStates(void);
   void generateDotFile(std::string outFile);
-  
+  void generateDotFileStep(std::string outFile, int step, int myid, bool closure);
   // Abtract methods that can be overriden
   virtual void print_automata(void);
 

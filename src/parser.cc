@@ -16,6 +16,8 @@
 */
 #include "parser.h"
 
+int step = 0 ;
+
 Parser::Parser()
 {
 }
@@ -123,10 +125,44 @@ void Parser::createTransitionStates(State* state)
       }   
     }
     State* new_state = new State(kernel);
+
+    /*** New Start ***/
+    // Check wheter we are looking for a new state
+    bool write_state=true;
+    for(State* st : this->states) { 
+      if (new_state->haveSameKernel(st)){
+        write_state = false;
+      }
+    }
+    /*** New End ***/
+
     new_state = createState(new_state);
-    new_state->setItemSet(closure(new_state->kernel));
     std::pair<Symbol*, State*> transition = std::make_pair(s, new_state);
     state->transitions.insert(transition);
+
+    /*** New Start ***/
+    // If is a new state, print it with the kernel and transition
+    if(write_state){
+      generateDotFileStep(this->type, step, new_state->id, false);
+      step++;
+    }else{
+      if(state->id >= new_state->id){
+        generateDotFileStep(this->type, step, new_state->id, true);
+        step++; 
+      }
+    }
+    /*** New End ***/
+    
+    new_state->setItemSet(closure(new_state->kernel));
+    
+    /*** New Start ***/
+    std::set<Item*> my_item_set = closure(new_state->kernel);
+    // If we are looking for a new state and it has a closure, next step
+    if(my_item_set.size() && write_state){
+      generateDotFileStep(this->type, step, new_state->id, true);
+      step++; 
+    }
+    /*** New End ***/
   }
 }
 
@@ -238,10 +274,26 @@ void Parser::create_automata(void)
   std::set<Item*> kernel = {start}; 
   std::set<Item*> items_set = closure(kernel);
 
+  // Remove steps file if it exists
+  std::string dotFileName;
+  dotFileName.append(this->type);
+  dotFileName.append("-steps.dot");
+  remove(dotFileName.c_str());
+
   // Create the first state with its id, kernel and item_set
   State* starting_state = new State(0, kernel, items_set);
-  createTransitionStates(starting_state);
   this->states.insert(starting_state);
+
+  // Write first state step 
+  generateDotFileStep(this->type, step, 0, false);
+  step++;
+  // If the state has a closure 
+  if(items_set.size()){
+    generateDotFileStep(this->type, step, 0, true);
+    step++;
+  }
+
+  createTransitionStates(starting_state);
   
   // while new states appear in this->states
   while(change) {
@@ -260,6 +312,7 @@ void Parser::create_automata(void)
         this->states.insert(ts.second);
       }
     }
+    last_size = this->states.size();
     if(last_size != this->states.size())
       change = true;
   }
@@ -318,7 +371,7 @@ void Parser::generateDotFile(std::string outFile)
 
   // Insert initial state mark:
   dotFile << "nowhere [style=invis,shape=point]\n";
-  dotFile << "nowhere -> state" << (*it)->id << "[ penwidth = 3 fontsize = 22 fontcolor = \"black\"];\n";
+  dotFile << "nowhere -> state0 [ penwidth = 3 fontsize = 22 fontcolor = \"black\"];\n";
 
   //Print other states:
   for(; it != this->states.end(); it++){
@@ -331,3 +384,68 @@ void Parser::generateDotFile(std::string outFile)
   dotFile << "}";
   dotFile.close();
 }
+
+/*! Generates one .dot file per automata creation step, this files can be
+    processed by a python script using GraphViz to generate a visual animation
+    representing of the automata
+*/
+void Parser::generateDotFileStep(std::string outFile, int step, int myid, bool closure)
+{
+  int port = 0;
+  std::ofstream dotFile;
+
+  dotFile.open(outFile + "-steps.dot", std::ios_base::app);
+  dotFile << "\ndigraph g { graph [fontsize=30 labelloc=\"t\" label=\"\" splines=true overlap=false rankdir = \"LR\" step=" << step << "]; ratio = auto; ratio = fill; fixedsize=true; size=\"12.0,6.24!\"; margin=0; \n\n";
+
+  std::set<State*>::iterator it = this->states.begin();
+  
+  // create the automata states
+  for(int j=0; j < this->states.size(); j++){
+    port = 0; // port for node connections
+
+    // Insert final state mark:
+    if((*it)->id == 1){
+      dotFile << "\t\"state" << (*it)->id << "\" [ style = \"filled\" penwidth = 1 fillcolor = \"#D3D3D3\" fontname = \"Courier New\" shape = \"Mrecord\" label = <<table border=\"0\" cellborder=\"0\" cellpadding=\"3\" bgcolor=\"#D3D3D3\">\n";
+    }
+    else{
+      dotFile << "\t\"state" << (*it)->id << "\" [ style = \"filled\" penwidth = 1 fillcolor = \"white\" fontname = \"Courier New\" shape = \"Mrecord\" label = <<table border=\"0\" cellborder=\"0\" cellpadding=\"3\" bgcolor=\"white\">\n";
+    }
+    // set the state identificator
+    dotFile << "\t\t<tr><td bgcolor=\"black\" align=\"center\" colspan=\"2\"><font color=\"white\">State #" << (*it)->id << "</font></td></tr>\n";
+
+    // add kernel items of the state
+    for(Item* i : (*it)->kernel) {
+      dotFile << "\t\t<tr><td align=\"left\" port=\"r" << port << "\"><font color=\"black\" face=\"bold\">" << *i << "</font></td></tr>\n";
+      port++;
+    }
+    // add production items of the state
+    if(((*it)->id == myid) && !closure){
+      //
+    }else{
+      for(Item* i : (*it)->item_set) {
+        dotFile << "\t\t<tr><td align=\"left\" port=\"r" << port << "\"><font color=\"gray25\" face=\"bold\">" << *i << "</font></td></tr>\n";
+        port++;
+      }
+    }
+
+    // close table tag
+    dotFile << "\t</table>>];\n\n";
+    it++;
+  }
+
+  it = this->states.begin();
+  // Insert initial state mark:
+  dotFile << "nowhere [style=invis,shape=point]\n";
+  dotFile << "nowhere -> state0 [ penwidth = 3 fontsize = 22 fontcolor = \"black\" color = \"black\"];\n";
+
+  //Print other states:
+  for(; it != this->states.end(); it++){
+    for(std::pair<Symbol*, State* > t : (*it)->transitions){
+      // t.first, t.second.
+      dotFile << "state" << (*it)->id << " -> state" << t.second->id << "[ penwidth = 3 fontsize = 22 fontcolor = \"black\" color = \"black\" label = \"" << t.first->str << "\" ];\n";
+    }
+  }
+
+  dotFile << "}\n\n";
+  dotFile.close();
+} 
