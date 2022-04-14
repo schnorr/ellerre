@@ -1,0 +1,4 @@
+S => X Y Z ;
+X => a X b | ;
+Y => c Y Z c X | d ;
+Z => e Z Y e | f ;
