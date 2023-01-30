@@ -25,7 +25,7 @@ LALR(1) automatas for a given grammar.
 
 #+begin_src shell :results output
 sudo apt-get install git cmake build-essential flex bison libfl-dev;
-git clone git://github.com/schnorr/ellerre.git ; mkdir -p ellerre/b ; cd ellerre/b ; cmake .. ; make
+git clone https://github.com/schnorr/ellerre.git ; mkdir -p ellerre/b ; cd ellerre/b ; cmake .. ; make
 #+end_src
 
 - If you want to visualize the automatas with graphviz
