@@ -55,7 +55,36 @@ DollarSymbol::DollarSymbol ()
 std::ostream &operator<< (std::ostream &output, const Symbol &symbol)
 {
 //  output << "{"<<symbol.str << "," << symbol.terminal<<"}";
-  output << symbol.str;
+  char *str = symbol.str;
+  while (*str != '\0') {
+      switch (*str) {
+          case '<':
+              output << "&lt;";
+              break;
+          case '>':
+              output << "&gt;";
+              break;
+          case '&':
+              output << "&amp;";
+              break;
+          case '\\':
+              output << "\\\\";
+              break;
+          case '"':
+              output << "&quot;";
+              break;
+          case '{':
+              output << "&#123;";
+              break;
+          case '}':
+              output << "&#125;";
+              break;
+          default:
+              output << *str;
+              break;
+      }
+      str++;
+  }
   return output;
 }
 

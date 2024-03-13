@@ -377,7 +377,7 @@ void Parser::generateDotFile(std::string outFile)
   for(; it != this->states.end(); it++){
     for(std::pair<Symbol*, State* > t : (*it)->transitions){
       // t.first, t.second.
-      dotFile << "state" << (*it)->id << " -> state" << t.second->id << "[ penwidth = 3 fontsize = 22 fontcolor = \"black\" label = \"" << t.first->str << "\" ];\n";
+      dotFile << "state" << (*it)->id << " -> state" << t.second->id << "[ penwidth = 3 fontsize = 22 fontcolor = \"black\" label = \"" << *t.first << "\" ];\n";
     }
   }
 
@@ -442,7 +442,7 @@ void Parser::generateDotFileStep(std::string outFile, int step, int myid, bool c
   for(; it != this->states.end(); it++){
     for(std::pair<Symbol*, State* > t : (*it)->transitions){
       // t.first, t.second.
-      dotFile << "state" << (*it)->id << " -> state" << t.second->id << "[ penwidth = 3 fontsize = 22 fontcolor = \"black\" color = \"black\" label = \"" << t.first->str << "\" ];\n";
+      dotFile << "state" << (*it)->id << " -> state" << t.second->id << "[ penwidth = 3 fontsize = 22 fontcolor = \"black\" color = \"black\" label = \"" << *t.first << "\" ];\n";
     }
   }
 
