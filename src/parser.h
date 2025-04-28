@@ -35,7 +35,7 @@ public:
 public:
   Parser();
   Parser(Grammar* grammar);
-  ~Parser();
+  virtual ~Parser();
   
   void setType(std::string type);
   void clearItems();
