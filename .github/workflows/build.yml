@@ -1,0 +1,46 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        host: [ubuntu-latest, macos-latest]
+      fail-fast: false
+    runs-on: ${{matrix.host}}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: "recursive"
+
+      - name: Configure Linux host
+        if: ${{runner.os == 'Linux'}}
+        run: sudo apt install flex bison libfl-dev -y
+
+      - name: Configure macOS host
+        if: ${{runner.os == 'macOS'}}
+        run: |
+          brew install flex bison
+          
+          # The version of BISON that ships with Xcode is too old, so we
+          # need to use brew to install it and override the PATH variable.
+          PATH=$(brew --prefix bison)/bin:$PATH
+          echo "PATH=$PATH" >> $GITHUB_ENV
+
+          # Same case for FLEX.
+          LIB=$(brew --prefix flex)/lib:$LIB
+          echo "LIB=$LIB" >> $GITHUB_ENV
+
+      - name: Configure CMake
+        run: cmake -B build -DCMAKE_BUILD_TYPE=Release
+
+      - name: Build project
+        run: cmake --build build --config Release -j
