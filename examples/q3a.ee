@@ -1,0 +1,3 @@
+S => i | L a;
+L => L x E | i b E;
+E => S;

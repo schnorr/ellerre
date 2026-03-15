@@ -1,0 +1,5 @@
+A => z X ;
+X => x B y X | ;
+B => b C | ;
+C => b L ;
+L => w z | ;

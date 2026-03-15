@@ -1,0 +1,2 @@
+S => A a | b A | b c | b d ;
+A => d ;
