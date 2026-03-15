@@ -1,0 +1,98 @@
+Grammar with 6 rules and 8 symbols (3 non-terminals):
+F' ⇒ F 
+F ⇒ n Y 
+Y ⇒ e 
+Y ⇒ = - Z 
+Z ⇒ a - e 
+Z ⇒ e 
+
+LR0 item set:
+F' ⇒ • F 
+F' ⇒ F • 
+F ⇒ • n Y 
+F ⇒ n • Y 
+F ⇒ n Y • 
+Y ⇒ • e 
+Y ⇒ e • 
+Y ⇒ • = - Z 
+Y ⇒ = • - Z 
+Y ⇒ = - • Z 
+Y ⇒ = - Z • 
+Z ⇒ • a - e 
+Z ⇒ a • - e 
+Z ⇒ a - • e 
+Z ⇒ a - e • 
+Z ⇒ • e 
+Z ⇒ e • 
+
+LR0 automata:
+State 0:
+F' ⇒ • F 
+---------------
+F ⇒ • n Y 
+Transitions: 
+F ---> 1
+n ---> 2
+
+State 1:
+F' ⇒ F • 
+---------------
+
+State 2:
+F ⇒ n • Y 
+---------------
+Y ⇒ • e 
+Y ⇒ • = - Z 
+Transitions: 
+= ---> 3
+Y ---> 4
+e ---> 5
+
+State 3:
+Y ⇒ = • - Z 
+---------------
+Transitions: 
+- ---> 6
+
+State 4:
+F ⇒ n Y • 
+---------------
+
+State 5:
+Y ⇒ e • 
+---------------
+
+State 6:
+Y ⇒ = - • Z 
+---------------
+Z ⇒ • a - e 
+Z ⇒ • e 
+Transitions: 
+e ---> 7
+a ---> 8
+Z ---> 9
+
+State 7:
+Z ⇒ e • 
+---------------
+
+State 8:
+Z ⇒ a • - e 
+---------------
+Transitions: 
+- ---> 10
+
+State 9:
+Y ⇒ = - Z • 
+---------------
+
+State 10:
+Z ⇒ a - • e 
+---------------
+Transitions: 
+e ---> 11
+
+State 11:
+Z ⇒ a - e • 
+---------------
+

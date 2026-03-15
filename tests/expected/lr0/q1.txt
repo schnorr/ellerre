@@ -1,0 +1,53 @@
+Grammar with 3 rules and 3 symbols (1 non-terminals):
+B' ⇒ B 
+B ⇒ B tique taque 
+B ⇒ tique taque 
+
+LR0 item set:
+B' ⇒ • B 
+B' ⇒ B • 
+B ⇒ • B tique taque 
+B ⇒ B • tique taque 
+B ⇒ B tique • taque 
+B ⇒ B tique taque • 
+B ⇒ • tique taque 
+B ⇒ tique • taque 
+B ⇒ tique taque • 
+
+LR0 automata:
+State 0:
+B' ⇒ • B 
+---------------
+B ⇒ • B tique taque 
+B ⇒ • tique taque 
+Transitions: 
+B ---> 1
+tique ---> 2
+
+State 1:
+B' ⇒ B • 
+B ⇒ B • tique taque 
+---------------
+Transitions: 
+tique ---> 3
+
+State 2:
+B ⇒ tique • taque 
+---------------
+Transitions: 
+taque ---> 4
+
+State 3:
+B ⇒ B tique • taque 
+---------------
+Transitions: 
+taque ---> 5
+
+State 4:
+B ⇒ tique taque • 
+---------------
+
+State 5:
+B ⇒ B tique taque • 
+---------------
+

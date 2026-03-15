@@ -1,0 +1,68 @@
+Grammar with 3 rules and 4 symbols (1 non-terminals):
+A' ⇒ A 
+A ⇒ ( A ) 
+A ⇒ a 
+
+First set: 
+A -- ( a 
+A' -- ( a 
+
+Follow set: 
+A -- $ ) 
+A' -- $ 
+
+LALR1 item set:
+A' ⇒ • A , $
+A' ⇒ A • , $
+A ⇒ • ( A ) , $
+A ⇒ • ( A ) , )
+A ⇒ ( • A ) , $
+A ⇒ ( • A ) , )
+A ⇒ ( A • ) , $
+A ⇒ ( A • ) , )
+A ⇒ ( A ) • , $
+A ⇒ ( A ) • , )
+A ⇒ • a , $
+A ⇒ • a , )
+A ⇒ a • , $
+A ⇒ a • , )
+
+LALR1 automata:
+State 0:
+A' ⇒ • A , $ 
+---------------
+A ⇒ • ( A ) , $ 
+A ⇒ • a , $ 
+Transitions: 
+A ---> 1
+( ---> 2
+a ---> 3
+
+State 1:
+A' ⇒ A • , $ 
+---------------
+
+State 2:
+A ⇒ ( • A ) , $ ) 
+---------------
+A ⇒ • ( A ) , ) 
+A ⇒ • a , ) 
+Transitions: 
+A ---> 4
+( ---> 2
+a ---> 3
+
+State 3:
+A ⇒ a • , $ ) 
+---------------
+
+State 4:
+A ⇒ ( A • ) , $ ) 
+---------------
+Transitions: 
+) ---> 5
+
+State 5:
+A ⇒ ( A ) • , $ ) 
+---------------
+

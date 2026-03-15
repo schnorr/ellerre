@@ -1,0 +1,154 @@
+Grammar with 5 rules and 6 symbols (2 non-terminals):
+S' ⇒ S 
+S ⇒ a ( L ) 
+S ⇒ a 
+L ⇒ S , L 
+L ⇒ S 
+
+First set: 
+S -- a 
+L -- a 
+S' -- a 
+
+Follow set: 
+S -- $ ) , 
+L -- ) 
+S' -- $ 
+
+LR1 item set:
+S' ⇒ • S , $
+S' ⇒ S • , $
+S ⇒ • a ( L ) , $
+S ⇒ • a ( L ) , )
+S ⇒ • a ( L ) , ,
+S ⇒ a • ( L ) , $
+S ⇒ a • ( L ) , )
+S ⇒ a • ( L ) , ,
+S ⇒ a ( • L ) , $
+S ⇒ a ( • L ) , )
+S ⇒ a ( • L ) , ,
+S ⇒ a ( L • ) , $
+S ⇒ a ( L • ) , )
+S ⇒ a ( L • ) , ,
+S ⇒ a ( L ) • , $
+S ⇒ a ( L ) • , )
+S ⇒ a ( L ) • , ,
+S ⇒ • a , $
+S ⇒ • a , )
+S ⇒ • a , ,
+S ⇒ a • , $
+S ⇒ a • , )
+S ⇒ a • , ,
+L ⇒ • S , L , )
+L ⇒ S • , L , )
+L ⇒ S , • L , )
+L ⇒ S , L • , )
+L ⇒ • S , )
+L ⇒ S • , )
+
+LR1 automata:
+State 1:
+S' ⇒ S • , $
+---------------
+
+State 2:
+S ⇒ a • ( L ) , $
+S ⇒ a • , $
+---------------
+Transitions: 
+( ---> 3
+
+State 0:
+S' ⇒ • S , $
+---------------
+S ⇒ • a ( L ) , $
+S ⇒ • a , $
+Transitions: 
+S ---> 1
+a ---> 2
+
+State 3:
+S ⇒ a ( • L ) , $
+---------------
+S ⇒ • a ( L ) , )
+S ⇒ • a ( L ) , ,
+S ⇒ • a , )
+S ⇒ • a , ,
+L ⇒ • S , L , )
+L ⇒ • S , )
+Transitions: 
+S ---> 4
+a ---> 5
+L ---> 6
+
+State 4:
+L ⇒ S • , L , )
+L ⇒ S • , )
+---------------
+Transitions: 
+, ---> 7
+
+State 5:
+S ⇒ a • ( L ) , )
+S ⇒ a • ( L ) , ,
+S ⇒ a • , )
+S ⇒ a • , ,
+---------------
+Transitions: 
+( ---> 8
+
+State 6:
+S ⇒ a ( L • ) , $
+---------------
+Transitions: 
+) ---> 9
+
+State 7:
+L ⇒ S , • L , )
+---------------
+S ⇒ • a ( L ) , )
+S ⇒ • a ( L ) , ,
+S ⇒ • a , )
+S ⇒ • a , ,
+L ⇒ • S , L , )
+L ⇒ • S , )
+Transitions: 
+S ---> 4
+a ---> 5
+L ---> 10
+
+State 8:
+S ⇒ a ( • L ) , )
+S ⇒ a ( • L ) , ,
+---------------
+S ⇒ • a ( L ) , )
+S ⇒ • a ( L ) , ,
+S ⇒ • a , )
+S ⇒ • a , ,
+L ⇒ • S , L , )
+L ⇒ • S , )
+Transitions: 
+S ---> 4
+a ---> 5
+L ---> 11
+
+State 9:
+S ⇒ a ( L ) • , $
+---------------
+
+State 10:
+L ⇒ S , L • , )
+---------------
+
+State 11:
+S ⇒ a ( L • ) , )
+S ⇒ a ( L • ) , ,
+---------------
+Transitions: 
+) ---> 12
+
+State 12:
+S ⇒ a ( L ) • , )
+S ⇒ a ( L ) • , ,
+---------------
+

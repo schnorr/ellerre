@@ -1,0 +1,16 @@
+Grammar with 5 rules and 5 symbols (3 non-terminals):
+S ⇒ A B 
+A ⇒ A a 
+A ⇒ a 
+B ⇒ B b 
+B ⇒ b 
+
+First sets:
+S -- a 
+A -- a 
+B -- b 
+
+Follow sets:
+S -- $ 
+A -- a b 
+B -- $ b 

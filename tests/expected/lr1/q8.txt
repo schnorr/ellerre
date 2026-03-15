@@ -1,0 +1,219 @@
+Grammar with 5 rules and 4 symbols (2 non-terminals):
+S' ⇒ S 
+S ⇒ A S 
+S ⇒ b 
+A ⇒ S A 
+A ⇒ a 
+
+First set: 
+S -- b a 
+A -- b a 
+S' -- b a 
+
+Follow set: 
+S -- $ b a 
+A -- b a 
+S' -- $ 
+
+LR1 item set:
+S' ⇒ • S , $
+S' ⇒ S • , $
+S ⇒ • A S , $
+S ⇒ • A S , b
+S ⇒ • A S , a
+S ⇒ A • S , $
+S ⇒ A • S , b
+S ⇒ A • S , a
+S ⇒ A S • , $
+S ⇒ A S • , b
+S ⇒ A S • , a
+S ⇒ • b , $
+S ⇒ • b , b
+S ⇒ • b , a
+S ⇒ b • , $
+S ⇒ b • , b
+S ⇒ b • , a
+A ⇒ • S A , b
+A ⇒ • S A , a
+A ⇒ S • A , b
+A ⇒ S • A , a
+A ⇒ S A • , b
+A ⇒ S A • , a
+A ⇒ • a , b
+A ⇒ • a , a
+A ⇒ a • , b
+A ⇒ a • , a
+
+LR1 automata:
+State 0:
+S' ⇒ • S , $
+---------------
+S ⇒ • A S , $
+S ⇒ • A S , b
+S ⇒ • A S , a
+S ⇒ • b , $
+S ⇒ • b , b
+S ⇒ • b , a
+A ⇒ • S A , b
+A ⇒ • S A , a
+A ⇒ • a , b
+A ⇒ • a , a
+Transitions: 
+S ---> 1
+A ---> 2
+b ---> 3
+a ---> 4
+
+State 1:
+S' ⇒ S • , $
+A ⇒ S • A , b
+A ⇒ S • A , a
+---------------
+S ⇒ • A S , b
+S ⇒ • A S , a
+S ⇒ • b , b
+S ⇒ • b , a
+A ⇒ • S A , b
+A ⇒ • S A , a
+A ⇒ • a , b
+A ⇒ • a , a
+Transitions: 
+S ---> 5
+A ---> 6
+b ---> 7
+a ---> 4
+
+State 2:
+S ⇒ A • S , $
+S ⇒ A • S , b
+S ⇒ A • S , a
+---------------
+S ⇒ • A S , $
+S ⇒ • A S , b
+S ⇒ • A S , a
+S ⇒ • b , $
+S ⇒ • b , b
+S ⇒ • b , a
+A ⇒ • S A , b
+A ⇒ • S A , a
+A ⇒ • a , b
+A ⇒ • a , a
+Transitions: 
+S ---> 8
+A ---> 2
+b ---> 3
+a ---> 4
+
+State 3:
+S ⇒ b • , $
+S ⇒ b • , b
+S ⇒ b • , a
+---------------
+
+State 4:
+A ⇒ a • , b
+A ⇒ a • , a
+---------------
+
+State 5:
+A ⇒ S • A , b
+A ⇒ S • A , a
+---------------
+S ⇒ • A S , b
+S ⇒ • A S , a
+S ⇒ • b , b
+S ⇒ • b , a
+A ⇒ • S A , b
+A ⇒ • S A , a
+A ⇒ • a , b
+A ⇒ • a , a
+Transitions: 
+S ---> 5
+A ---> 6
+b ---> 7
+a ---> 4
+
+State 6:
+S ⇒ A • S , b
+S ⇒ A • S , a
+A ⇒ S A • , b
+A ⇒ S A • , a
+---------------
+S ⇒ • A S , b
+S ⇒ • A S , a
+S ⇒ • b , b
+S ⇒ • b , a
+A ⇒ • S A , b
+A ⇒ • S A , a
+A ⇒ • a , b
+A ⇒ • a , a
+Transitions: 
+S ---> 9
+A ---> 10
+b ---> 7
+a ---> 4
+
+State 7:
+S ⇒ b • , b
+S ⇒ b • , a
+---------------
+
+State 8:
+S ⇒ A S • , $
+S ⇒ A S • , b
+S ⇒ A S • , a
+A ⇒ S • A , b
+A ⇒ S • A , a
+---------------
+S ⇒ • A S , b
+S ⇒ • A S , a
+S ⇒ • b , b
+S ⇒ • b , a
+A ⇒ • S A , b
+A ⇒ • S A , a
+A ⇒ • a , b
+A ⇒ • a , a
+Transitions: 
+S ---> 5
+A ---> 6
+b ---> 7
+a ---> 4
+
+State 9:
+S ⇒ A S • , b
+S ⇒ A S • , a
+A ⇒ S • A , b
+A ⇒ S • A , a
+---------------
+S ⇒ • A S , b
+S ⇒ • A S , a
+S ⇒ • b , b
+S ⇒ • b , a
+A ⇒ • S A , b
+A ⇒ • S A , a
+A ⇒ • a , b
+A ⇒ • a , a
+Transitions: 
+S ---> 5
+A ---> 6
+b ---> 7
+a ---> 4
+
+State 10:
+S ⇒ A • S , b
+S ⇒ A • S , a
+---------------
+S ⇒ • A S , b
+S ⇒ • A S , a
+S ⇒ • b , b
+S ⇒ • b , a
+A ⇒ • S A , b
+A ⇒ • S A , a
+A ⇒ • a , b
+A ⇒ • a , a
+Transitions: 
+S ---> 9
+A ---> 10
+b ---> 7
+a ---> 4
+

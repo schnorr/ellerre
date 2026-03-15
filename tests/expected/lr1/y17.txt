@@ -1,0 +1,95 @@
+Grammar with 6 rules and 6 symbols (2 non-terminals):
+S' ⇒ S 
+S ⇒ A a 
+S ⇒ b A 
+S ⇒ b c 
+S ⇒ b d 
+A ⇒ d 
+
+First set: 
+S -- b d 
+A -- d 
+S' -- b d 
+
+Follow set: 
+S -- $ 
+A -- $ a 
+S' -- $ 
+
+LR1 item set:
+S' ⇒ • S , $
+S' ⇒ S • , $
+S ⇒ • A a , $
+S ⇒ A • a , $
+S ⇒ A a • , $
+S ⇒ • b A , $
+S ⇒ b • A , $
+S ⇒ b A • , $
+S ⇒ • b c , $
+S ⇒ b • c , $
+S ⇒ b c • , $
+S ⇒ • b d , $
+S ⇒ b • d , $
+S ⇒ b d • , $
+A ⇒ • d , $
+A ⇒ • d , a
+A ⇒ d • , $
+A ⇒ d • , a
+
+LR1 automata:
+State 0:
+S' ⇒ • S , $
+---------------
+S ⇒ • A a , $
+S ⇒ • b A , $
+S ⇒ • b c , $
+S ⇒ • b d , $
+A ⇒ • d , a
+Transitions: 
+S ---> 1
+A ---> 2
+b ---> 3
+d ---> 4
+
+State 1:
+S' ⇒ S • , $
+---------------
+
+State 2:
+S ⇒ A • a , $
+---------------
+Transitions: 
+a ---> 5
+
+State 3:
+S ⇒ b • A , $
+S ⇒ b • c , $
+S ⇒ b • d , $
+---------------
+A ⇒ • d , $
+Transitions: 
+A ---> 6
+c ---> 7
+d ---> 8
+
+State 4:
+A ⇒ d • , a
+---------------
+
+State 5:
+S ⇒ A a • , $
+---------------
+
+State 6:
+S ⇒ b A • , $
+---------------
+
+State 7:
+S ⇒ b c • , $
+---------------
+
+State 8:
+S ⇒ b d • , $
+A ⇒ d • , $
+---------------
+

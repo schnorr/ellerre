@@ -1,0 +1,20 @@
+Grammar with 7 rules and 8 symbols (4 non-terminals):
+S ⇒ S ( A ) S 
+S ⇒ ε 
+A ⇒ B C 
+A ⇒ ε 
+B ⇒ b 
+C ⇒ c 
+C ⇒ ε 
+
+First sets:
+S -- ε ( 
+A -- ε b 
+B -- b 
+C -- ε c 
+
+Follow sets:
+S -- $ ( 
+A -- ) 
+B -- ) c 
+C -- ) 

@@ -1,0 +1,5 @@
+K => A x | B y | Q ;
+Q => w C ;
+C => A y | B x ;
+A => f ;
+B => f ;

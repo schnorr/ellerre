@@ -1,0 +1,12 @@
+Grammar with 3 rules and 4 symbols (2 non-terminals):
+S ⇒ A A b 
+A ⇒ a A 
+A ⇒ b 
+
+First sets:
+S -- b a 
+A -- b a 
+
+Follow sets:
+S -- $ 
+A -- b a 

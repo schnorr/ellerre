@@ -1,0 +1,174 @@
+Grammar with 8 rules and 10 symbols (4 non-terminals):
+S' ⇒ S 
+S ⇒ X Y Z 
+X ⇒ a X b 
+X ⇒ ε 
+Y ⇒ c Y Z c X 
+Y ⇒ d 
+Z ⇒ e Z Y e 
+Z ⇒ f 
+
+LR0 item set:
+S' ⇒ • S 
+S' ⇒ S • 
+S ⇒ • X Y Z 
+S ⇒ X • Y Z 
+S ⇒ X Y • Z 
+S ⇒ X Y Z • 
+X ⇒ • a X b 
+X ⇒ a • X b 
+X ⇒ a X • b 
+X ⇒ a X b • 
+X ⇒ • 
+Y ⇒ • c Y Z c X 
+Y ⇒ c • Y Z c X 
+Y ⇒ c Y • Z c X 
+Y ⇒ c Y Z • c X 
+Y ⇒ c Y Z c • X 
+Y ⇒ c Y Z c X • 
+Y ⇒ • d 
+Y ⇒ d • 
+Z ⇒ • e Z Y e 
+Z ⇒ e • Z Y e 
+Z ⇒ e Z • Y e 
+Z ⇒ e Z Y • e 
+Z ⇒ e Z Y e • 
+Z ⇒ • f 
+Z ⇒ f • 
+
+LR0 automata:
+State 0:
+S' ⇒ • S 
+---------------
+S ⇒ • X Y Z 
+X ⇒ • a X b 
+X ⇒ • 
+Transitions: 
+S ---> 1
+X ---> 2
+a ---> 3
+
+State 1:
+S' ⇒ S • 
+---------------
+
+State 2:
+S ⇒ X • Y Z 
+---------------
+Y ⇒ • c Y Z c X 
+Y ⇒ • d 
+Transitions: 
+Y ---> 4
+c ---> 5
+d ---> 6
+
+State 3:
+X ⇒ a • X b 
+---------------
+X ⇒ • a X b 
+X ⇒ • 
+Transitions: 
+X ---> 7
+a ---> 3
+
+State 4:
+S ⇒ X Y • Z 
+---------------
+Z ⇒ • e Z Y e 
+Z ⇒ • f 
+Transitions: 
+Z ---> 8
+e ---> 9
+f ---> 10
+
+State 5:
+Y ⇒ c • Y Z c X 
+---------------
+Y ⇒ • c Y Z c X 
+Y ⇒ • d 
+Transitions: 
+Y ---> 11
+c ---> 5
+d ---> 6
+
+State 6:
+Y ⇒ d • 
+---------------
+
+State 7:
+X ⇒ a X • b 
+---------------
+Transitions: 
+b ---> 12
+
+State 8:
+S ⇒ X Y Z • 
+---------------
+
+State 9:
+Z ⇒ e • Z Y e 
+---------------
+Z ⇒ • e Z Y e 
+Z ⇒ • f 
+Transitions: 
+Z ---> 13
+e ---> 9
+f ---> 10
+
+State 10:
+Z ⇒ f • 
+---------------
+
+State 11:
+Y ⇒ c Y • Z c X 
+---------------
+Z ⇒ • e Z Y e 
+Z ⇒ • f 
+Transitions: 
+Z ---> 14
+e ---> 9
+f ---> 10
+
+State 12:
+X ⇒ a X b • 
+---------------
+
+State 13:
+Z ⇒ e Z • Y e 
+---------------
+Y ⇒ • c Y Z c X 
+Y ⇒ • d 
+Transitions: 
+Y ---> 15
+c ---> 5
+d ---> 6
+
+State 14:
+Y ⇒ c Y Z • c X 
+---------------
+Transitions: 
+c ---> 16
+
+State 15:
+Z ⇒ e Z Y • e 
+---------------
+Transitions: 
+e ---> 17
+
+State 16:
+Y ⇒ c Y Z c • X 
+---------------
+X ⇒ • a X b 
+X ⇒ • 
+Transitions: 
+X ---> 18
+a ---> 3
+
+State 17:
+Z ⇒ e Z Y e • 
+---------------
+
+State 18:
+Y ⇒ c Y Z c X • 
+---------------
+

@@ -1,0 +1,23 @@
+Grammar with 8 rules and 10 symbols (5 non-terminals):
+A ⇒ z X 
+X ⇒ x B y X 
+X ⇒ ε 
+B ⇒ b C 
+B ⇒ ε 
+C ⇒ b L 
+L ⇒ w z 
+L ⇒ ε 
+
+First sets:
+A -- z 
+X -- ε x 
+B -- ε b 
+C -- b 
+L -- ε w 
+
+Follow sets:
+A -- $ 
+X -- $ 
+B -- y 
+C -- y 
+L -- y 

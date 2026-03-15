@@ -1,0 +1,142 @@
+Grammar with 13 rules and 8 symbols (4 non-terminals):
+S' ⇒ S 
+S ⇒ A B 
+A ⇒ a 
+A ⇒ b 
+A ⇒ c C a 
+A ⇒ C 
+B ⇒ a 
+B ⇒ b 
+B ⇒ ε 
+C ⇒ b 
+C ⇒ c 
+C ⇒ d 
+C ⇒ ε 
+
+LR0 item set:
+S' ⇒ • S 
+S' ⇒ S • 
+S ⇒ • A B 
+S ⇒ A • B 
+S ⇒ A B • 
+A ⇒ • a 
+A ⇒ a • 
+A ⇒ • b 
+A ⇒ b • 
+A ⇒ • c C a 
+A ⇒ c • C a 
+A ⇒ c C • a 
+A ⇒ c C a • 
+A ⇒ • C 
+A ⇒ C • 
+B ⇒ • a 
+B ⇒ a • 
+B ⇒ • b 
+B ⇒ b • 
+B ⇒ • 
+C ⇒ • b 
+C ⇒ b • 
+C ⇒ • c 
+C ⇒ c • 
+C ⇒ • d 
+C ⇒ d • 
+C ⇒ • 
+
+LR0 automata:
+State 0:
+S' ⇒ • S 
+---------------
+S ⇒ • A B 
+A ⇒ • a 
+A ⇒ • b 
+A ⇒ • c C a 
+A ⇒ • C 
+C ⇒ • b 
+C ⇒ • c 
+C ⇒ • d 
+C ⇒ • 
+Transitions: 
+S ---> 1
+A ---> 2
+b ---> 3
+d ---> 4
+a ---> 5
+c ---> 6
+C ---> 7
+
+State 1:
+S' ⇒ S • 
+---------------
+
+State 2:
+S ⇒ A • B 
+---------------
+B ⇒ • a 
+B ⇒ • b 
+B ⇒ • 
+Transitions: 
+b ---> 8
+B ---> 9
+a ---> 10
+
+State 3:
+A ⇒ b • 
+C ⇒ b • 
+---------------
+
+State 4:
+C ⇒ d • 
+---------------
+
+State 5:
+A ⇒ a • 
+---------------
+
+State 6:
+A ⇒ c • C a 
+C ⇒ c • 
+---------------
+C ⇒ • b 
+C ⇒ • c 
+C ⇒ • d 
+C ⇒ • 
+Transitions: 
+b ---> 11
+d ---> 4
+c ---> 12
+C ---> 13
+
+State 7:
+A ⇒ C • 
+---------------
+
+State 8:
+B ⇒ b • 
+---------------
+
+State 9:
+S ⇒ A B • 
+---------------
+
+State 10:
+B ⇒ a • 
+---------------
+
+State 11:
+C ⇒ b • 
+---------------
+
+State 12:
+C ⇒ c • 
+---------------
+
+State 13:
+A ⇒ c C • a 
+---------------
+Transitions: 
+a ---> 14
+
+State 14:
+A ⇒ c C a • 
+---------------
+

@@ -1,0 +1,178 @@
+Grammar with 6 rules and 7 symbols (3 non-terminals):
+S' ⇒ S 
+S ⇒ i 
+S ⇒ L a 
+L ⇒ L x E 
+L ⇒ i b E 
+E ⇒ S 
+
+First set: 
+S -- i 
+L -- i 
+E -- i 
+S' -- i 
+
+Follow set: 
+S -- $ x a 
+L -- x a 
+E -- x a 
+S' -- $ 
+
+LR1 item set:
+S' ⇒ • S , $
+S' ⇒ S • , $
+S ⇒ • i , $
+S ⇒ • i , x
+S ⇒ • i , a
+S ⇒ i • , $
+S ⇒ i • , x
+S ⇒ i • , a
+S ⇒ • L a , $
+S ⇒ • L a , x
+S ⇒ • L a , a
+S ⇒ L • a , $
+S ⇒ L • a , x
+S ⇒ L • a , a
+S ⇒ L a • , $
+S ⇒ L a • , x
+S ⇒ L a • , a
+L ⇒ • L x E , x
+L ⇒ • L x E , a
+L ⇒ L • x E , x
+L ⇒ L • x E , a
+L ⇒ L x • E , x
+L ⇒ L x • E , a
+L ⇒ L x E • , x
+L ⇒ L x E • , a
+L ⇒ • i b E , x
+L ⇒ • i b E , a
+L ⇒ i • b E , x
+L ⇒ i • b E , a
+L ⇒ i b • E , x
+L ⇒ i b • E , a
+L ⇒ i b E • , x
+L ⇒ i b E • , a
+E ⇒ • S , x
+E ⇒ • S , a
+E ⇒ S • , x
+E ⇒ S • , a
+
+LR1 automata:
+State 1:
+S' ⇒ S • , $
+---------------
+
+State 2:
+S ⇒ i • , $
+L ⇒ i • b E , x
+L ⇒ i • b E , a
+---------------
+Transitions: 
+b ---> 4
+
+State 3:
+S ⇒ L • a , $
+L ⇒ L • x E , x
+L ⇒ L • x E , a
+---------------
+Transitions: 
+x ---> 9
+a ---> 10
+
+State 4:
+L ⇒ i b • E , x
+L ⇒ i b • E , a
+---------------
+S ⇒ • i , x
+S ⇒ • i , a
+S ⇒ • L a , x
+S ⇒ • L a , a
+L ⇒ • L x E , x
+L ⇒ • L x E , a
+L ⇒ • i b E , x
+L ⇒ • i b E , a
+E ⇒ • S , x
+E ⇒ • S , a
+Transitions: 
+S ---> 5
+i ---> 6
+L ---> 7
+E ---> 8
+
+State 0:
+S' ⇒ • S , $
+---------------
+S ⇒ • i , $
+S ⇒ • L a , $
+L ⇒ • L x E , x
+L ⇒ • L x E , a
+L ⇒ • i b E , x
+L ⇒ • i b E , a
+Transitions: 
+S ---> 1
+i ---> 2
+L ---> 3
+
+State 5:
+E ⇒ S • , x
+E ⇒ S • , a
+---------------
+
+State 6:
+S ⇒ i • , x
+S ⇒ i • , a
+L ⇒ i • b E , x
+L ⇒ i • b E , a
+---------------
+Transitions: 
+b ---> 4
+
+State 7:
+S ⇒ L • a , x
+S ⇒ L • a , a
+L ⇒ L • x E , x
+L ⇒ L • x E , a
+---------------
+Transitions: 
+x ---> 9
+a ---> 12
+
+State 8:
+L ⇒ i b E • , x
+L ⇒ i b E • , a
+---------------
+
+State 9:
+L ⇒ L x • E , x
+L ⇒ L x • E , a
+---------------
+S ⇒ • i , x
+S ⇒ • i , a
+S ⇒ • L a , x
+S ⇒ • L a , a
+L ⇒ • L x E , x
+L ⇒ • L x E , a
+L ⇒ • i b E , x
+L ⇒ • i b E , a
+E ⇒ • S , x
+E ⇒ • S , a
+Transitions: 
+S ---> 5
+i ---> 6
+L ---> 7
+E ---> 11
+
+State 10:
+S ⇒ L a • , $
+---------------
+
+State 11:
+L ⇒ L x E • , x
+L ⇒ L x E • , a
+---------------
+
+State 12:
+S ⇒ L a • , x
+S ⇒ L a • , a
+---------------
+

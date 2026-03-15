@@ -1,0 +1,235 @@
+Grammar with 5 rules and 8 symbols (2 non-terminals):
+S' ⇒ S 
+S ⇒ I 
+S ⇒ s 
+I ⇒ i ( t ) S e S 
+I ⇒ i ( t ) S 
+
+First set: 
+S -- i s 
+I -- i 
+S' -- i s 
+
+Follow set: 
+S -- $ e 
+I -- $ e 
+S' -- $ 
+
+LR1 item set:
+S' ⇒ • S , $
+S' ⇒ S • , $
+S ⇒ • I , $
+S ⇒ • I , e
+S ⇒ I • , $
+S ⇒ I • , e
+S ⇒ • s , $
+S ⇒ • s , e
+S ⇒ s • , $
+S ⇒ s • , e
+I ⇒ • i ( t ) S e S , $
+I ⇒ • i ( t ) S e S , e
+I ⇒ i • ( t ) S e S , $
+I ⇒ i • ( t ) S e S , e
+I ⇒ i ( • t ) S e S , $
+I ⇒ i ( • t ) S e S , e
+I ⇒ i ( t • ) S e S , $
+I ⇒ i ( t • ) S e S , e
+I ⇒ i ( t ) • S e S , $
+I ⇒ i ( t ) • S e S , e
+I ⇒ i ( t ) S • e S , $
+I ⇒ i ( t ) S • e S , e
+I ⇒ i ( t ) S e • S , $
+I ⇒ i ( t ) S e • S , e
+I ⇒ i ( t ) S e S • , $
+I ⇒ i ( t ) S e S • , e
+I ⇒ • i ( t ) S , $
+I ⇒ • i ( t ) S , e
+I ⇒ i • ( t ) S , $
+I ⇒ i • ( t ) S , e
+I ⇒ i ( • t ) S , $
+I ⇒ i ( • t ) S , e
+I ⇒ i ( t • ) S , $
+I ⇒ i ( t • ) S , e
+I ⇒ i ( t ) • S , $
+I ⇒ i ( t ) • S , e
+I ⇒ i ( t ) S • , $
+I ⇒ i ( t ) S • , e
+
+LR1 automata:
+State 1:
+S' ⇒ S • , $
+---------------
+
+State 2:
+S ⇒ I • , $
+---------------
+
+State 3:
+I ⇒ i • ( t ) S e S , $
+I ⇒ i • ( t ) S , $
+---------------
+Transitions: 
+( ---> 5
+
+State 0:
+S' ⇒ • S , $
+---------------
+S ⇒ • I , $
+S ⇒ • s , $
+I ⇒ • i ( t ) S e S , $
+I ⇒ • i ( t ) S , $
+Transitions: 
+S ---> 1
+I ---> 2
+i ---> 3
+s ---> 4
+
+State 4:
+S ⇒ s • , $
+---------------
+
+State 5:
+I ⇒ i ( • t ) S e S , $
+I ⇒ i ( • t ) S , $
+---------------
+Transitions: 
+t ---> 6
+
+State 6:
+I ⇒ i ( t • ) S e S , $
+I ⇒ i ( t • ) S , $
+---------------
+Transitions: 
+) ---> 7
+
+State 7:
+I ⇒ i ( t ) • S e S , $
+I ⇒ i ( t ) • S , $
+---------------
+S ⇒ • I , $
+S ⇒ • I , e
+S ⇒ • s , $
+S ⇒ • s , e
+I ⇒ • i ( t ) S e S , $
+I ⇒ • i ( t ) S e S , e
+I ⇒ • i ( t ) S , $
+I ⇒ • i ( t ) S , e
+Transitions: 
+S ---> 8
+I ---> 9
+i ---> 10
+s ---> 11
+
+State 8:
+I ⇒ i ( t ) S • e S , $
+I ⇒ i ( t ) S • , $
+---------------
+Transitions: 
+e ---> 12
+
+State 9:
+S ⇒ I • , $
+S ⇒ I • , e
+---------------
+
+State 10:
+I ⇒ i • ( t ) S e S , $
+I ⇒ i • ( t ) S e S , e
+I ⇒ i • ( t ) S , $
+I ⇒ i • ( t ) S , e
+---------------
+Transitions: 
+( ---> 13
+
+State 11:
+S ⇒ s • , $
+S ⇒ s • , e
+---------------
+
+State 12:
+I ⇒ i ( t ) S e • S , $
+---------------
+S ⇒ • I , $
+S ⇒ • s , $
+I ⇒ • i ( t ) S e S , $
+I ⇒ • i ( t ) S , $
+Transitions: 
+S ---> 14
+I ---> 2
+i ---> 3
+s ---> 4
+
+State 13:
+I ⇒ i ( • t ) S e S , $
+I ⇒ i ( • t ) S e S , e
+I ⇒ i ( • t ) S , $
+I ⇒ i ( • t ) S , e
+---------------
+Transitions: 
+t ---> 15
+
+State 14:
+I ⇒ i ( t ) S e S • , $
+---------------
+
+State 15:
+I ⇒ i ( t • ) S e S , $
+I ⇒ i ( t • ) S e S , e
+I ⇒ i ( t • ) S , $
+I ⇒ i ( t • ) S , e
+---------------
+Transitions: 
+) ---> 16
+
+State 16:
+I ⇒ i ( t ) • S e S , $
+I ⇒ i ( t ) • S e S , e
+I ⇒ i ( t ) • S , $
+I ⇒ i ( t ) • S , e
+---------------
+S ⇒ • I , $
+S ⇒ • I , e
+S ⇒ • s , $
+S ⇒ • s , e
+I ⇒ • i ( t ) S e S , $
+I ⇒ • i ( t ) S e S , e
+I ⇒ • i ( t ) S , $
+I ⇒ • i ( t ) S , e
+Transitions: 
+S ---> 17
+I ---> 9
+i ---> 10
+s ---> 11
+
+State 17:
+I ⇒ i ( t ) S • e S , $
+I ⇒ i ( t ) S • e S , e
+I ⇒ i ( t ) S • , $
+I ⇒ i ( t ) S • , e
+---------------
+Transitions: 
+e ---> 18
+
+State 18:
+I ⇒ i ( t ) S e • S , $
+I ⇒ i ( t ) S e • S , e
+---------------
+S ⇒ • I , $
+S ⇒ • I , e
+S ⇒ • s , $
+S ⇒ • s , e
+I ⇒ • i ( t ) S e S , $
+I ⇒ • i ( t ) S e S , e
+I ⇒ • i ( t ) S , $
+I ⇒ • i ( t ) S , e
+Transitions: 
+S ---> 19
+I ---> 9
+i ---> 10
+s ---> 11
+
+State 19:
+I ⇒ i ( t ) S e S • , $
+I ⇒ i ( t ) S e S • , e
+---------------
+

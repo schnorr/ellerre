@@ -1,0 +1,103 @@
+Grammar with 6 rules and 7 symbols (3 non-terminals):
+S' ⇒ S 
+S ⇒ i 
+S ⇒ L a 
+L ⇒ L x E 
+L ⇒ i b E 
+E ⇒ S 
+
+LR0 item set:
+S' ⇒ • S 
+S' ⇒ S • 
+S ⇒ • i 
+S ⇒ i • 
+S ⇒ • L a 
+S ⇒ L • a 
+S ⇒ L a • 
+L ⇒ • L x E 
+L ⇒ L • x E 
+L ⇒ L x • E 
+L ⇒ L x E • 
+L ⇒ • i b E 
+L ⇒ i • b E 
+L ⇒ i b • E 
+L ⇒ i b E • 
+E ⇒ • S 
+E ⇒ S • 
+
+LR0 automata:
+State 0:
+S' ⇒ • S 
+---------------
+S ⇒ • i 
+S ⇒ • L a 
+L ⇒ • L x E 
+L ⇒ • i b E 
+Transitions: 
+S ---> 1
+i ---> 2
+L ---> 3
+
+State 1:
+S' ⇒ S • 
+---------------
+
+State 2:
+S ⇒ i • 
+L ⇒ i • b E 
+---------------
+Transitions: 
+b ---> 4
+
+State 3:
+S ⇒ L • a 
+L ⇒ L • x E 
+---------------
+Transitions: 
+x ---> 5
+a ---> 6
+
+State 4:
+L ⇒ i b • E 
+---------------
+S ⇒ • i 
+S ⇒ • L a 
+L ⇒ • L x E 
+L ⇒ • i b E 
+E ⇒ • S 
+Transitions: 
+S ---> 7
+i ---> 2
+L ---> 3
+E ---> 8
+
+State 5:
+L ⇒ L x • E 
+---------------
+S ⇒ • i 
+S ⇒ • L a 
+L ⇒ • L x E 
+L ⇒ • i b E 
+E ⇒ • S 
+Transitions: 
+S ---> 7
+i ---> 2
+L ---> 3
+E ---> 9
+
+State 6:
+S ⇒ L a • 
+---------------
+
+State 7:
+E ⇒ S • 
+---------------
+
+State 8:
+L ⇒ i b E • 
+---------------
+
+State 9:
+L ⇒ L x E • 
+---------------
+

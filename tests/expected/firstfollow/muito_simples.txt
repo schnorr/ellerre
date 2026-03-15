@@ -1,0 +1,15 @@
+Grammar with 4 rules and 7 symbols (3 non-terminals):
+S ⇒ a A c 
+S ⇒ a B d 
+A ⇒ z 
+B ⇒ z 
+
+First sets:
+S -- a 
+A -- z 
+B -- z 
+
+Follow sets:
+S -- $ 
+A -- c 
+B -- d 

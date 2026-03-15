@@ -1,0 +1,13 @@
+Grammar with 4 rules and 4 symbols (2 non-terminals):
+Lista ⇒ Lista Par 
+Lista ⇒ Par 
+Par ⇒ ( Par ) 
+Par ⇒ ( ) 
+
+First sets:
+Lista -- ( 
+Par -- ( 
+
+Follow sets:
+Lista -- $ ( 
+Par -- $ ( ) 

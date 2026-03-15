@@ -1,0 +1,114 @@
+Grammar with 5 rules and 8 symbols (2 non-terminals):
+S' ⇒ S 
+S ⇒ I 
+S ⇒ s 
+I ⇒ i ( t ) S e S 
+I ⇒ i ( t ) S 
+
+LR0 item set:
+S' ⇒ • S 
+S' ⇒ S • 
+S ⇒ • I 
+S ⇒ I • 
+S ⇒ • s 
+S ⇒ s • 
+I ⇒ • i ( t ) S e S 
+I ⇒ i • ( t ) S e S 
+I ⇒ i ( • t ) S e S 
+I ⇒ i ( t • ) S e S 
+I ⇒ i ( t ) • S e S 
+I ⇒ i ( t ) S • e S 
+I ⇒ i ( t ) S e • S 
+I ⇒ i ( t ) S e S • 
+I ⇒ • i ( t ) S 
+I ⇒ i • ( t ) S 
+I ⇒ i ( • t ) S 
+I ⇒ i ( t • ) S 
+I ⇒ i ( t ) • S 
+I ⇒ i ( t ) S • 
+
+LR0 automata:
+State 0:
+S' ⇒ • S 
+---------------
+S ⇒ • I 
+S ⇒ • s 
+I ⇒ • i ( t ) S e S 
+I ⇒ • i ( t ) S 
+Transitions: 
+S ---> 1
+I ---> 2
+i ---> 3
+s ---> 4
+
+State 1:
+S' ⇒ S • 
+---------------
+
+State 2:
+S ⇒ I • 
+---------------
+
+State 3:
+I ⇒ i • ( t ) S e S 
+I ⇒ i • ( t ) S 
+---------------
+Transitions: 
+( ---> 5
+
+State 4:
+S ⇒ s • 
+---------------
+
+State 5:
+I ⇒ i ( • t ) S e S 
+I ⇒ i ( • t ) S 
+---------------
+Transitions: 
+t ---> 6
+
+State 6:
+I ⇒ i ( t • ) S e S 
+I ⇒ i ( t • ) S 
+---------------
+Transitions: 
+) ---> 7
+
+State 7:
+I ⇒ i ( t ) • S e S 
+I ⇒ i ( t ) • S 
+---------------
+S ⇒ • I 
+S ⇒ • s 
+I ⇒ • i ( t ) S e S 
+I ⇒ • i ( t ) S 
+Transitions: 
+S ---> 8
+I ---> 2
+i ---> 3
+s ---> 4
+
+State 8:
+I ⇒ i ( t ) S • e S 
+I ⇒ i ( t ) S • 
+---------------
+Transitions: 
+e ---> 9
+
+State 9:
+I ⇒ i ( t ) S e • S 
+---------------
+S ⇒ • I 
+S ⇒ • s 
+I ⇒ • i ( t ) S e S 
+I ⇒ • i ( t ) S 
+Transitions: 
+S ---> 10
+I ---> 2
+i ---> 3
+s ---> 4
+
+State 10:
+I ⇒ i ( t ) S e S • 
+---------------
+

@@ -1,0 +1,123 @@
+Grammar with 5 rules and 6 symbols (2 non-terminals):
+E' ⇒ E 
+E ⇒ E - T 
+E ⇒ T 
+T ⇒ n 
+T ⇒ ( E ) 
+
+First set: 
+E -- n ( 
+T -- n ( 
+E' -- n ( 
+
+Follow set: 
+E -- $ - ) 
+T -- $ - ) 
+E' -- $ 
+
+LALR1 item set:
+E' ⇒ • E , $
+E' ⇒ E • , $
+E ⇒ • E - T , $
+E ⇒ • E - T , -
+E ⇒ • E - T , )
+E ⇒ E • - T , $
+E ⇒ E • - T , -
+E ⇒ E • - T , )
+E ⇒ E - • T , $
+E ⇒ E - • T , -
+E ⇒ E - • T , )
+E ⇒ E - T • , $
+E ⇒ E - T • , -
+E ⇒ E - T • , )
+E ⇒ • T , $
+E ⇒ • T , -
+E ⇒ • T , )
+E ⇒ T • , $
+E ⇒ T • , -
+E ⇒ T • , )
+T ⇒ • n , $
+T ⇒ • n , -
+T ⇒ • n , )
+T ⇒ n • , $
+T ⇒ n • , -
+T ⇒ n • , )
+T ⇒ • ( E ) , $
+T ⇒ • ( E ) , -
+T ⇒ • ( E ) , )
+T ⇒ ( • E ) , $
+T ⇒ ( • E ) , -
+T ⇒ ( • E ) , )
+T ⇒ ( E • ) , $
+T ⇒ ( E • ) , -
+T ⇒ ( E • ) , )
+T ⇒ ( E ) • , $
+T ⇒ ( E ) • , -
+T ⇒ ( E ) • , )
+
+LALR1 automata:
+State 0:
+E' ⇒ • E , $ 
+---------------
+E ⇒ • E - T , $ - 
+E ⇒ • T , $ - 
+T ⇒ • n , $ - 
+T ⇒ • ( E ) , $ - 
+Transitions: 
+E ---> 1
+T ---> 2
+n ---> 3
+( ---> 4
+
+State 1:
+E' ⇒ E • , $ E ⇒ E • - T , $ - 
+---------------
+Transitions: 
+- ---> 5
+
+State 2:
+E ⇒ T • , $ - ) 
+---------------
+
+State 3:
+T ⇒ n • , $ - ) 
+---------------
+
+State 4:
+T ⇒ ( • E ) , $ - ) 
+---------------
+E ⇒ • E - T , - ) 
+E ⇒ • T , - ) 
+T ⇒ • n , - ) 
+T ⇒ • ( E ) , - ) 
+Transitions: 
+E ---> 6
+T ---> 2
+n ---> 3
+( ---> 4
+
+State 5:
+E ⇒ E - • T , $ - ) 
+---------------
+T ⇒ • n , $ - ) 
+T ⇒ • ( E ) , $ - ) 
+Transitions: 
+T ---> 7
+n ---> 3
+( ---> 4
+
+State 6:
+E ⇒ E • - T , - ) T ⇒ ( E • ) , $ - ) 
+---------------
+Transitions: 
+- ---> 5
+) ---> 8
+
+State 7:
+E ⇒ E - T • , $ - ) 
+---------------
+
+State 8:
+T ⇒ ( E ) • , $ - ) 
+---------------
+

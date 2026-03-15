@@ -1,0 +1,148 @@
+Grammar with 9 rules and 10 symbols (5 non-terminals):
+S' ⇒ S 
+S ⇒ u B D z 
+B ⇒ B v 
+B ⇒ ε 
+D ⇒ E F 
+E ⇒ y 
+E ⇒ ε 
+F ⇒ x 
+F ⇒ ε 
+
+First set: 
+S -- u 
+D -- ε y x 
+B -- ε v 
+E -- ε y 
+F -- ε x 
+S' -- u 
+
+Follow set: 
+S -- $ 
+D -- z 
+B -- z v y x 
+E -- z x 
+F -- z 
+S' -- $ 
+
+LR1 item set:
+S' ⇒ • S , $
+S' ⇒ S • , $
+S ⇒ • u B D z , $
+S ⇒ u • B D z , $
+S ⇒ u B • D z , $
+S ⇒ u B D • z , $
+S ⇒ u B D z • , $
+B ⇒ • B v , z
+B ⇒ • B v , v
+B ⇒ • B v , y
+B ⇒ • B v , x
+B ⇒ B • v , z
+B ⇒ B • v , v
+B ⇒ B • v , y
+B ⇒ B • v , x
+B ⇒ B v • , z
+B ⇒ B v • , v
+B ⇒ B v • , y
+B ⇒ B v • , x
+B ⇒ • , z
+B ⇒ • , v
+B ⇒ • , y
+B ⇒ • , x
+D ⇒ • E F , z
+D ⇒ E • F , z
+D ⇒ E F • , z
+E ⇒ • y , z
+E ⇒ • y , x
+E ⇒ y • , z
+E ⇒ y • , x
+E ⇒ • , z
+E ⇒ • , x
+F ⇒ • x , z
+F ⇒ x • , z
+F ⇒ • , z
+
+LR1 automata:
+State 1:
+S' ⇒ S • , $
+---------------
+
+State 2:
+S ⇒ u • B D z , $
+---------------
+B ⇒ • B v , z
+B ⇒ • B v , v
+B ⇒ • B v , y
+B ⇒ • B v , x
+B ⇒ • , z
+B ⇒ • , v
+B ⇒ • , y
+B ⇒ • , x
+Transitions: 
+B ---> 3
+
+State 3:
+S ⇒ u B • D z , $
+B ⇒ B • v , z
+B ⇒ B • v , v
+B ⇒ B • v , y
+B ⇒ B • v , x
+---------------
+D ⇒ • E F , z
+E ⇒ • y , z
+E ⇒ • y , x
+E ⇒ • , z
+E ⇒ • , x
+Transitions: 
+D ---> 4
+v ---> 5
+E ---> 6
+y ---> 7
+
+State 0:
+S' ⇒ • S , $
+---------------
+S ⇒ • u B D z , $
+Transitions: 
+S ---> 1
+u ---> 2
+
+State 4:
+S ⇒ u B D • z , $
+---------------
+Transitions: 
+z ---> 8
+
+State 5:
+B ⇒ B v • , z
+B ⇒ B v • , v
+B ⇒ B v • , y
+B ⇒ B v • , x
+---------------
+
+State 6:
+D ⇒ E • F , z
+---------------
+F ⇒ • x , z
+F ⇒ • , z
+Transitions: 
+F ---> 9
+x ---> 10
+
+State 7:
+E ⇒ y • , z
+E ⇒ y • , x
+---------------
+
+State 8:
+S ⇒ u B D z • , $
+---------------
+
+State 9:
+D ⇒ E F • , z
+---------------
+
+State 10:
+F ⇒ x • , z
+---------------
+

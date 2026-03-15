@@ -1,0 +1,127 @@
+Grammar with 8 rules and 9 symbols (4 non-terminals):
+A' ⇒ A 
+A ⇒ A x B y 
+A ⇒ z 
+B ⇒ b C 
+B ⇒ ε 
+C ⇒ b X 
+X ⇒ ε 
+X ⇒ w z 
+
+First set: 
+A -- z 
+B -- ε b 
+X -- ε w 
+C -- b 
+A' -- z 
+
+Follow set: 
+A -- $ x 
+B -- y 
+X -- y 
+C -- y 
+A' -- $ 
+
+LALR1 item set:
+A' ⇒ • A , $
+A' ⇒ A • , $
+A ⇒ • A x B y , $
+A ⇒ • A x B y , x
+A ⇒ A • x B y , $
+A ⇒ A • x B y , x
+A ⇒ A x • B y , $
+A ⇒ A x • B y , x
+A ⇒ A x B • y , $
+A ⇒ A x B • y , x
+A ⇒ A x B y • , $
+A ⇒ A x B y • , x
+A ⇒ • z , $
+A ⇒ • z , x
+A ⇒ z • , $
+A ⇒ z • , x
+B ⇒ • b C , y
+B ⇒ b • C , y
+B ⇒ b C • , y
+B ⇒ • , y
+C ⇒ • b X , y
+C ⇒ b • X , y
+C ⇒ b X • , y
+X ⇒ • , y
+X ⇒ • w z , y
+X ⇒ w • z , y
+X ⇒ w z • , y
+
+LALR1 automata:
+State 0:
+A' ⇒ • A , $ 
+---------------
+A ⇒ • A x B y , $ x 
+A ⇒ • z , $ x 
+Transitions: 
+A ---> 1
+z ---> 2
+
+State 1:
+A' ⇒ A • , $ A ⇒ A • x B y , $ x 
+---------------
+Transitions: 
+x ---> 3
+
+State 2:
+A ⇒ z • , $ x 
+---------------
+
+State 3:
+A ⇒ A x • B y , $ x 
+---------------
+B ⇒ • b C , y 
+B ⇒ • , y 
+Transitions: 
+B ---> 4
+b ---> 5
+
+State 4:
+A ⇒ A x B • y , $ x 
+---------------
+Transitions: 
+y ---> 6
+
+State 5:
+B ⇒ b • C , y 
+---------------
+C ⇒ • b X , y 
+Transitions: 
+b ---> 7
+C ---> 8
+
+State 6:
+A ⇒ A x B y • , $ x 
+---------------
+
+State 7:
+C ⇒ b • X , y 
+---------------
+X ⇒ • , y 
+X ⇒ • w z , y 
+Transitions: 
+X ---> 9
+w ---> 10
+
+State 8:
+B ⇒ b C • , y 
+---------------
+
+State 9:
+C ⇒ b X • , y 
+---------------
+
+State 10:
+X ⇒ w • z , y 
+---------------
+Transitions: 
+z ---> 11
+
+State 11:
+X ⇒ w z • , y 
+---------------
+

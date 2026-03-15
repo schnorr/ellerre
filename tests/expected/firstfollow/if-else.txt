@@ -1,0 +1,13 @@
+Grammar with 4 rules and 8 symbols (2 non-terminals):
+S ⇒ I 
+S ⇒ s 
+I ⇒ i ( t ) S e S 
+I ⇒ i ( t ) S 
+
+First sets:
+S -- i s 
+I -- i 
+
+Follow sets:
+S -- $ e 
+I -- $ e 

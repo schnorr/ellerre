@@ -1,0 +1,16 @@
+Grammar with 5 rules and 8 symbols (3 non-terminals):
+X ⇒ [ L ] 
+X ⇒ a 
+L ⇒ L g S 
+L ⇒ S 
+S ⇒ s 
+
+First sets:
+X -- [ a 
+L -- s 
+S -- s 
+
+Follow sets:
+X -- $ 
+L -- ] g 
+S -- ] g 

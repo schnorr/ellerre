@@ -1,0 +1,17 @@
+Grammar with 6 rules and 7 symbols (3 non-terminals):
+I ⇒ A 
+I ⇒ B 
+A ⇒ ( A ) 
+A ⇒ a 
+B ⇒ ( B ) 
+B ⇒ b 
+
+First sets:
+I -- ( a b 
+A -- ( a 
+B -- ( b 
+
+Follow sets:
+I -- $ 
+A -- $ ) 
+B -- $ ) 

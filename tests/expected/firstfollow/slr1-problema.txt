@@ -1,0 +1,16 @@
+Grammar with 5 rules and 6 symbols (3 non-terminals):
+S ⇒ id 
+S ⇒ V = E 
+V ⇒ id 
+E ⇒ V 
+E ⇒ n 
+
+First sets:
+S -- id 
+E -- id n 
+V -- id 
+
+Follow sets:
+S -- $ 
+E -- $ 
+V -- $ = 

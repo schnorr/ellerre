@@ -1,0 +1,249 @@
+Grammar with 7 rules and 7 symbols (3 non-terminals):
+S' ⇒ S 
+S ⇒ E 
+E ⇒ T 
+E ⇒ ( E ) 
+T ⇒ n 
+T ⇒ + T 
+T ⇒ T + n 
+
+First set: 
+S -- ( n + 
+E -- ( n + 
+T -- n + 
+S' -- ( n + 
+
+Follow set: 
+S -- $ 
+E -- $ ) 
+T -- $ ) + 
+S' -- $ 
+
+LR1 item set:
+S' ⇒ • S , $
+S' ⇒ S • , $
+S ⇒ • E , $
+S ⇒ E • , $
+E ⇒ • T , $
+E ⇒ • T , )
+E ⇒ T • , $
+E ⇒ T • , )
+E ⇒ • ( E ) , $
+E ⇒ • ( E ) , )
+E ⇒ ( • E ) , $
+E ⇒ ( • E ) , )
+E ⇒ ( E • ) , $
+E ⇒ ( E • ) , )
+E ⇒ ( E ) • , $
+E ⇒ ( E ) • , )
+T ⇒ • n , $
+T ⇒ • n , )
+T ⇒ • n , +
+T ⇒ n • , $
+T ⇒ n • , )
+T ⇒ n • , +
+T ⇒ • + T , $
+T ⇒ • + T , )
+T ⇒ • + T , +
+T ⇒ + • T , $
+T ⇒ + • T , )
+T ⇒ + • T , +
+T ⇒ + T • , $
+T ⇒ + T • , )
+T ⇒ + T • , +
+T ⇒ • T + n , $
+T ⇒ • T + n , )
+T ⇒ • T + n , +
+T ⇒ T • + n , $
+T ⇒ T • + n , )
+T ⇒ T • + n , +
+T ⇒ T + • n , $
+T ⇒ T + • n , )
+T ⇒ T + • n , +
+T ⇒ T + n • , $
+T ⇒ T + n • , )
+T ⇒ T + n • , +
+
+LR1 automata:
+State 1:
+S' ⇒ S • , $
+---------------
+
+State 2:
+S ⇒ E • , $
+---------------
+
+State 3:
+E ⇒ ( • E ) , $
+---------------
+E ⇒ • T , )
+E ⇒ • ( E ) , )
+T ⇒ • n , )
+T ⇒ • n , +
+T ⇒ • + T , )
+T ⇒ • + T , +
+T ⇒ • T + n , )
+T ⇒ • T + n , +
+Transitions: 
+E ---> 7
+( ---> 8
+T ---> 9
+n ---> 10
++ ---> 11
+
+State 0:
+S' ⇒ • S , $
+---------------
+S ⇒ • E , $
+E ⇒ • T , $
+E ⇒ • ( E ) , $
+T ⇒ • n , $
+T ⇒ • n , +
+T ⇒ • + T , $
+T ⇒ • + T , +
+T ⇒ • T + n , $
+T ⇒ • T + n , +
+Transitions: 
+S ---> 1
+E ---> 2
+( ---> 3
+T ---> 4
+n ---> 5
++ ---> 6
+
+State 4:
+E ⇒ T • , $
+T ⇒ T • + n , $
+T ⇒ T • + n , +
+---------------
+Transitions: 
++ ---> 16
+
+State 5:
+T ⇒ n • , $
+T ⇒ n • , +
+---------------
+
+State 6:
+T ⇒ + • T , $
+T ⇒ + • T , +
+---------------
+T ⇒ • n , $
+T ⇒ • n , +
+T ⇒ • + T , $
+T ⇒ • + T , +
+T ⇒ • T + n , $
+T ⇒ • T + n , +
+Transitions: 
+T ---> 17
+n ---> 5
++ ---> 6
+
+State 7:
+E ⇒ ( E • ) , $
+---------------
+Transitions: 
+) ---> 12
+
+State 8:
+E ⇒ ( • E ) , )
+---------------
+E ⇒ • T , )
+E ⇒ • ( E ) , )
+T ⇒ • n , )
+T ⇒ • n , +
+T ⇒ • + T , )
+T ⇒ • + T , +
+T ⇒ • T + n , )
+T ⇒ • T + n , +
+Transitions: 
+E ---> 13
+( ---> 8
+T ---> 9
+n ---> 10
++ ---> 11
+
+State 9:
+E ⇒ T • , )
+T ⇒ T • + n , )
+T ⇒ T • + n , +
+---------------
+Transitions: 
++ ---> 14
+
+State 10:
+T ⇒ n • , )
+T ⇒ n • , +
+---------------
+
+State 11:
+T ⇒ + • T , )
+T ⇒ + • T , +
+---------------
+T ⇒ • n , )
+T ⇒ • n , +
+T ⇒ • + T , )
+T ⇒ • + T , +
+T ⇒ • T + n , )
+T ⇒ • T + n , +
+Transitions: 
+T ---> 15
+n ---> 10
++ ---> 11
+
+State 12:
+E ⇒ ( E ) • , $
+---------------
+
+State 13:
+E ⇒ ( E • ) , )
+---------------
+Transitions: 
+) ---> 19
+
+State 14:
+T ⇒ T + • n , )
+T ⇒ T + • n , +
+---------------
+Transitions: 
+n ---> 20
+
+State 15:
+T ⇒ + T • , )
+T ⇒ + T • , +
+T ⇒ T • + n , )
+T ⇒ T • + n , +
+---------------
+Transitions: 
++ ---> 14
+
+State 16:
+T ⇒ T + • n , $
+T ⇒ T + • n , +
+---------------
+Transitions: 
+n ---> 18
+
+State 17:
+T ⇒ + T • , $
+T ⇒ + T • , +
+T ⇒ T • + n , $
+T ⇒ T • + n , +
+---------------
+Transitions: 
++ ---> 16
+
+State 18:
+T ⇒ T + n • , $
+T ⇒ T + n • , +
+---------------
+
+State 19:
+E ⇒ ( E ) • , )
+---------------
+
+State 20:
+T ⇒ T + n • , )
+T ⇒ T + n • , +
+---------------
+

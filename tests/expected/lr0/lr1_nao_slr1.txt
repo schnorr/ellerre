@@ -1,0 +1,109 @@
+Grammar with 7 rules and 7 symbols (3 non-terminals):
+S' ⇒ S 
+S ⇒ L = R 
+S ⇒ R 
+L ⇒ * R 
+L ⇒ id 
+R ⇒ L 
+R ⇒ r 
+
+LR0 item set:
+S' ⇒ • S 
+S' ⇒ S • 
+S ⇒ • L = R 
+S ⇒ L • = R 
+S ⇒ L = • R 
+S ⇒ L = R • 
+S ⇒ • R 
+S ⇒ R • 
+L ⇒ • * R 
+L ⇒ * • R 
+L ⇒ * R • 
+L ⇒ • id 
+L ⇒ id • 
+R ⇒ • L 
+R ⇒ L • 
+R ⇒ • r 
+R ⇒ r • 
+
+LR0 automata:
+State 0:
+S' ⇒ • S 
+---------------
+S ⇒ • L = R 
+S ⇒ • R 
+L ⇒ • * R 
+L ⇒ • id 
+R ⇒ • L 
+R ⇒ • r 
+Transitions: 
+S ---> 1
+L ---> 2
+R ---> 3
+* ---> 4
+id ---> 5
+r ---> 6
+
+State 1:
+S' ⇒ S • 
+---------------
+
+State 2:
+S ⇒ L • = R 
+R ⇒ L • 
+---------------
+Transitions: 
+= ---> 7
+
+State 3:
+S ⇒ R • 
+---------------
+
+State 4:
+L ⇒ * • R 
+---------------
+L ⇒ • * R 
+L ⇒ • id 
+R ⇒ • L 
+R ⇒ • r 
+Transitions: 
+L ---> 8
+R ---> 9
+* ---> 4
+id ---> 5
+r ---> 6
+
+State 5:
+L ⇒ id • 
+---------------
+
+State 6:
+R ⇒ r • 
+---------------
+
+State 7:
+S ⇒ L = • R 
+---------------
+L ⇒ • * R 
+L ⇒ • id 
+R ⇒ • L 
+R ⇒ • r 
+Transitions: 
+L ---> 8
+R ---> 10
+* ---> 4
+id ---> 5
+r ---> 6
+
+State 8:
+R ⇒ L • 
+---------------
+
+State 9:
+L ⇒ * R • 
+---------------
+
+State 10:
+S ⇒ L = R • 
+---------------
+

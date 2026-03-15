@@ -1,0 +1,171 @@
+Grammar with 7 rules and 7 symbols (3 non-terminals):
+S' ⇒ S 
+S ⇒ L = R 
+S ⇒ R 
+L ⇒ * R 
+L ⇒ id 
+R ⇒ L 
+R ⇒ r 
+
+First set: 
+S -- * id r 
+L -- * id 
+R -- * id r 
+S' -- * id r 
+
+Follow set: 
+S -- $ 
+L -- $ = 
+R -- $ = 
+S' -- $ 
+
+LR1 item set:
+S' ⇒ • S , $
+S' ⇒ S • , $
+S ⇒ • L = R , $
+S ⇒ L • = R , $
+S ⇒ L = • R , $
+S ⇒ L = R • , $
+S ⇒ • R , $
+S ⇒ R • , $
+L ⇒ • * R , $
+L ⇒ • * R , =
+L ⇒ * • R , $
+L ⇒ * • R , =
+L ⇒ * R • , $
+L ⇒ * R • , =
+L ⇒ • id , $
+L ⇒ • id , =
+L ⇒ id • , $
+L ⇒ id • , =
+R ⇒ • L , $
+R ⇒ • L , =
+R ⇒ L • , $
+R ⇒ L • , =
+R ⇒ • r , $
+R ⇒ • r , =
+R ⇒ r • , $
+R ⇒ r • , =
+
+LR1 automata:
+State 1:
+S' ⇒ S • , $
+---------------
+
+State 0:
+S' ⇒ • S , $
+---------------
+S ⇒ • L = R , $
+S ⇒ • R , $
+L ⇒ • * R , $
+L ⇒ • * R , =
+L ⇒ • id , $
+L ⇒ • id , =
+R ⇒ • L , $
+R ⇒ • r , $
+Transitions: 
+S ---> 1
+L ---> 2
+R ---> 3
+* ---> 4
+id ---> 5
+r ---> 6
+
+State 2:
+S ⇒ L • = R , $
+R ⇒ L • , $
+---------------
+Transitions: 
+= ---> 7
+
+State 3:
+S ⇒ R • , $
+---------------
+
+State 4:
+L ⇒ * • R , $
+L ⇒ * • R , =
+---------------
+L ⇒ • * R , $
+L ⇒ • * R , =
+L ⇒ • id , $
+L ⇒ • id , =
+R ⇒ • L , $
+R ⇒ • L , =
+R ⇒ • r , $
+R ⇒ • r , =
+Transitions: 
+L ---> 8
+R ---> 9
+* ---> 4
+id ---> 5
+r ---> 10
+
+State 5:
+L ⇒ id • , $
+L ⇒ id • , =
+---------------
+
+State 6:
+R ⇒ r • , $
+---------------
+
+State 7:
+S ⇒ L = • R , $
+---------------
+L ⇒ • * R , $
+L ⇒ • id , $
+R ⇒ • L , $
+R ⇒ • r , $
+Transitions: 
+L ---> 11
+R ---> 12
+* ---> 13
+id ---> 14
+r ---> 6
+
+State 8:
+R ⇒ L • , $
+R ⇒ L • , =
+---------------
+
+State 9:
+L ⇒ * R • , $
+L ⇒ * R • , =
+---------------
+
+State 10:
+R ⇒ r • , $
+R ⇒ r • , =
+---------------
+
+State 11:
+R ⇒ L • , $
+---------------
+
+State 12:
+S ⇒ L = R • , $
+---------------
+
+State 13:
+L ⇒ * • R , $
+---------------
+L ⇒ • * R , $
+L ⇒ • id , $
+R ⇒ • L , $
+R ⇒ • r , $
+Transitions: 
+L ---> 11
+R ---> 15
+* ---> 13
+id ---> 14
+r ---> 6
+
+State 14:
+L ⇒ id • , $
+---------------
+
+State 15:
+L ⇒ * R • , $
+---------------
+

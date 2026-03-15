@@ -1,0 +1,106 @@
+Grammar with 5 rules and 4 symbols (2 non-terminals):
+Lista' ⇒ Lista 
+Lista ⇒ Lista Par 
+Lista ⇒ Par 
+Par ⇒ ( Par ) 
+Par ⇒ ( ) 
+
+First set: 
+Lista -- ( 
+Par -- ( 
+Lista' -- ( 
+
+Follow set: 
+Lista -- $ ( 
+Par -- $ ( ) 
+Lista' -- $ 
+
+LALR1 item set:
+Lista' ⇒ • Lista , $
+Lista' ⇒ Lista • , $
+Lista ⇒ • Lista Par , $
+Lista ⇒ • Lista Par , (
+Lista ⇒ Lista • Par , $
+Lista ⇒ Lista • Par , (
+Lista ⇒ Lista Par • , $
+Lista ⇒ Lista Par • , (
+Lista ⇒ • Par , $
+Lista ⇒ • Par , (
+Lista ⇒ Par • , $
+Lista ⇒ Par • , (
+Par ⇒ • ( Par ) , $
+Par ⇒ • ( Par ) , (
+Par ⇒ • ( Par ) , )
+Par ⇒ ( • Par ) , $
+Par ⇒ ( • Par ) , (
+Par ⇒ ( • Par ) , )
+Par ⇒ ( Par • ) , $
+Par ⇒ ( Par • ) , (
+Par ⇒ ( Par • ) , )
+Par ⇒ ( Par ) • , $
+Par ⇒ ( Par ) • , (
+Par ⇒ ( Par ) • , )
+Par ⇒ • ( ) , $
+Par ⇒ • ( ) , (
+Par ⇒ • ( ) , )
+Par ⇒ ( • ) , $
+Par ⇒ ( • ) , (
+Par ⇒ ( • ) , )
+Par ⇒ ( ) • , $
+Par ⇒ ( ) • , (
+Par ⇒ ( ) • , )
+
+LALR1 automata:
+State 0:
+Lista' ⇒ • Lista , $ 
+---------------
+Lista ⇒ • Lista Par , $ ( 
+Lista ⇒ • Par , $ ( 
+Par ⇒ • ( Par ) , $ ( 
+Par ⇒ • ( ) , $ ( 
+Transitions: 
+Lista ---> 1
+( ---> 2
+Par ---> 3
+
+State 1:
+Lista' ⇒ Lista • , $ Lista ⇒ Lista • Par , $ ( 
+---------------
+Par ⇒ • ( Par ) , $ ( 
+Par ⇒ • ( ) , $ ( 
+Transitions: 
+( ---> 2
+Par ---> 4
+
+State 2:
+Par ⇒ ( • Par ) , $ ( ) Par ⇒ ( • ) , $ ( ) 
+---------------
+Par ⇒ • ( Par ) , ) 
+Par ⇒ • ( ) , ) 
+Transitions: 
+( ---> 2
+Par ---> 5
+) ---> 6
+
+State 3:
+Lista ⇒ Par • , $ ( 
+---------------
+
+State 4:
+Lista ⇒ Lista Par • , $ ( 
+---------------
+
+State 5:
+Par ⇒ ( Par • ) , $ ( ) 
+---------------
+Transitions: 
+) ---> 7
+
+State 6:
+Par ⇒ ( ) • , $ ( ) 
+---------------
+
+State 7:
+Par ⇒ ( Par ) • , $ ( ) 
+---------------
+

@@ -1,0 +1,9 @@
+Grammar with 2 rules and 2 symbols (1 non-terminals):
+A ⇒ A a 
+A ⇒ ε 
+
+First sets:
+A -- ε a 
+
+Follow sets:
+A -- $ a 

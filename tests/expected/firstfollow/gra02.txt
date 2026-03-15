@@ -1,0 +1,25 @@
+Grammar with 12 rules and 8 symbols (4 non-terminals):
+S ⇒ A B 
+A ⇒ a 
+A ⇒ b 
+A ⇒ c C a 
+A ⇒ C 
+B ⇒ a 
+B ⇒ b 
+B ⇒ ε 
+C ⇒ b 
+C ⇒ c 
+C ⇒ d 
+C ⇒ ε 
+
+First sets:
+S -- ε b d a c 
+A -- ε b d a c 
+B -- ε b a 
+C -- ε b d c 
+
+Follow sets:
+S -- $ 
+A -- $ b a 
+B -- $ 
+C -- $ b a 

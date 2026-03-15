@@ -1,0 +1,9 @@
+Grammar with 2 rules and 3 symbols (1 non-terminals):
+B ⇒ B tique taque 
+B ⇒ tique taque 
+
+First sets:
+B -- tique 
+
+Follow sets:
+B -- $ tique 

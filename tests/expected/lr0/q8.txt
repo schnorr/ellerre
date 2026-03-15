@@ -1,0 +1,111 @@
+Grammar with 5 rules and 4 symbols (2 non-terminals):
+S' ⇒ S 
+S ⇒ A S 
+S ⇒ b 
+A ⇒ S A 
+A ⇒ a 
+
+LR0 item set:
+S' ⇒ • S 
+S' ⇒ S • 
+S ⇒ • A S 
+S ⇒ A • S 
+S ⇒ A S • 
+S ⇒ • b 
+S ⇒ b • 
+A ⇒ • S A 
+A ⇒ S • A 
+A ⇒ S A • 
+A ⇒ • a 
+A ⇒ a • 
+
+LR0 automata:
+State 0:
+S' ⇒ • S 
+---------------
+S ⇒ • A S 
+S ⇒ • b 
+A ⇒ • S A 
+A ⇒ • a 
+Transitions: 
+S ---> 1
+A ---> 2
+b ---> 3
+a ---> 4
+
+State 1:
+S' ⇒ S • 
+A ⇒ S • A 
+---------------
+S ⇒ • A S 
+S ⇒ • b 
+A ⇒ • S A 
+A ⇒ • a 
+Transitions: 
+S ---> 5
+A ---> 6
+b ---> 3
+a ---> 4
+
+State 2:
+S ⇒ A • S 
+---------------
+S ⇒ • A S 
+S ⇒ • b 
+A ⇒ • S A 
+A ⇒ • a 
+Transitions: 
+S ---> 7
+A ---> 2
+b ---> 3
+a ---> 4
+
+State 3:
+S ⇒ b • 
+---------------
+
+State 4:
+A ⇒ a • 
+---------------
+
+State 5:
+A ⇒ S • A 
+---------------
+S ⇒ • A S 
+S ⇒ • b 
+A ⇒ • S A 
+A ⇒ • a 
+Transitions: 
+S ---> 5
+A ---> 6
+b ---> 3
+a ---> 4
+
+State 6:
+S ⇒ A • S 
+A ⇒ S A • 
+---------------
+S ⇒ • A S 
+S ⇒ • b 
+A ⇒ • S A 
+A ⇒ • a 
+Transitions: 
+S ---> 7
+A ---> 2
+b ---> 3
+a ---> 4
+
+State 7:
+S ⇒ A S • 
+A ⇒ S • A 
+---------------
+S ⇒ • A S 
+S ⇒ • b 
+A ⇒ • S A 
+A ⇒ • a 
+Transitions: 
+S ---> 5
+A ---> 6
+b ---> 3
+a ---> 4
+

@@ -1,0 +1,15 @@
+Grammar with 4 rules and 5 symbols (3 non-terminals):
+S ⇒ E 
+E ⇒ T 
+E ⇒ T + E 
+T ⇒ id 
+
+First sets:
+S -- id 
+E -- id 
+T -- id 
+
+Follow sets:
+S -- $ 
+E -- $ 
+T -- $ + 

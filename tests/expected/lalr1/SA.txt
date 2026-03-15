@@ -1,0 +1,69 @@
+Grammar with 5 rules and 4 symbols (2 non-terminals):
+S' ⇒ S 
+S ⇒ A 
+S ⇒ ε 
+A ⇒ p A 
+A ⇒ a 
+
+First set: 
+S -- ε p a 
+A -- p a 
+S' -- ε p a 
+
+Follow set: 
+S -- $ 
+A -- $ 
+S' -- $ 
+
+LALR1 item set:
+S' ⇒ • S , $
+S' ⇒ S • , $
+S ⇒ • A , $
+S ⇒ A • , $
+S ⇒ • , $
+A ⇒ • p A , $
+A ⇒ p • A , $
+A ⇒ p A • , $
+A ⇒ • a , $
+A ⇒ a • , $
+
+LALR1 automata:
+State 0:
+S' ⇒ • S , $ 
+---------------
+S ⇒ • A , $ 
+S ⇒ • , $ 
+A ⇒ • p A , $ 
+A ⇒ • a , $ 
+Transitions: 
+S ---> 1
+A ---> 2
+p ---> 3
+a ---> 4
+
+State 1:
+S' ⇒ S • , $ 
+---------------
+
+State 2:
+S ⇒ A • , $ 
+---------------
+
+State 3:
+A ⇒ p • A , $ 
+---------------
+A ⇒ • p A , $ 
+A ⇒ • a , $ 
+Transitions: 
+A ---> 5
+p ---> 3
+a ---> 4
+
+State 4:
+A ⇒ a • , $ 
+---------------
+
+State 5:
+A ⇒ p A • , $ 
+---------------
+

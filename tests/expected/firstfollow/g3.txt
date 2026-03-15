@@ -1,0 +1,9 @@
+Grammar with 2 rules and 3 symbols (1 non-terminals):
+S ⇒ ( S ) 
+S ⇒ ε 
+
+First sets:
+S -- ε ( 
+
+Follow sets:
+S -- $ ) 

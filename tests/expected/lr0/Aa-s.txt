@@ -1,0 +1,33 @@
+Grammar with 3 rules and 2 symbols (1 non-terminals):
+A' ⇒ A 
+A ⇒ A a 
+A ⇒ ε 
+
+LR0 item set:
+A' ⇒ • A 
+A' ⇒ A • 
+A ⇒ • A a 
+A ⇒ A • a 
+A ⇒ A a • 
+A ⇒ • 
+
+LR0 automata:
+State 0:
+A' ⇒ • A 
+---------------
+A ⇒ • A a 
+A ⇒ • 
+Transitions: 
+A ---> 1
+
+State 1:
+A' ⇒ A • 
+A ⇒ A • a 
+---------------
+Transitions: 
+a ---> 2
+
+State 2:
+A ⇒ A a • 
+---------------
+

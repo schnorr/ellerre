@@ -1,0 +1,17 @@
+Grammar with 6 rules and 7 symbols (3 non-terminals):
+S ⇒ E 
+E ⇒ T 
+E ⇒ ( E ) 
+T ⇒ n 
+T ⇒ + T 
+T ⇒ T + n 
+
+First sets:
+S -- ( n + 
+E -- ( n + 
+T -- n + 
+
+Follow sets:
+S -- $ 
+E -- $ ) 
+T -- $ ) + 

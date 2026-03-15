@@ -1,0 +1,88 @@
+Grammar with 6 rules and 8 symbols (3 non-terminals):
+X' ⇒ X 
+X ⇒ [ L ] 
+X ⇒ a 
+L ⇒ L g S 
+L ⇒ S 
+S ⇒ s 
+
+LR0 item set:
+X' ⇒ • X 
+X' ⇒ X • 
+X ⇒ • [ L ] 
+X ⇒ [ • L ] 
+X ⇒ [ L • ] 
+X ⇒ [ L ] • 
+X ⇒ • a 
+X ⇒ a • 
+L ⇒ • L g S 
+L ⇒ L • g S 
+L ⇒ L g • S 
+L ⇒ L g S • 
+L ⇒ • S 
+L ⇒ S • 
+S ⇒ • s 
+S ⇒ s • 
+
+LR0 automata:
+State 0:
+X' ⇒ • X 
+---------------
+X ⇒ • [ L ] 
+X ⇒ • a 
+Transitions: 
+X ---> 1
+[ ---> 2
+a ---> 3
+
+State 1:
+X' ⇒ X • 
+---------------
+
+State 2:
+X ⇒ [ • L ] 
+---------------
+L ⇒ • L g S 
+L ⇒ • S 
+S ⇒ • s 
+Transitions: 
+L ---> 4
+s ---> 5
+S ---> 6
+
+State 3:
+X ⇒ a • 
+---------------
+
+State 4:
+X ⇒ [ L • ] 
+L ⇒ L • g S 
+---------------
+Transitions: 
+] ---> 7
+g ---> 8
+
+State 5:
+S ⇒ s • 
+---------------
+
+State 6:
+L ⇒ S • 
+---------------
+
+State 7:
+X ⇒ [ L ] • 
+---------------
+
+State 8:
+L ⇒ L g • S 
+---------------
+S ⇒ • s 
+Transitions: 
+s ---> 5
+S ---> 9
+
+State 9:
+L ⇒ L g S • 
+---------------
+

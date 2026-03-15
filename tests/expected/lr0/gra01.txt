@@ -1,0 +1,67 @@
+Grammar with 3 rules and 5 symbols (1 non-terminals):
+F' ⇒ F 
+F ⇒ [ a ] 
+F ⇒ [ a ] - F 
+
+LR0 item set:
+F' ⇒ • F 
+F' ⇒ F • 
+F ⇒ • [ a ] 
+F ⇒ [ • a ] 
+F ⇒ [ a • ] 
+F ⇒ [ a ] • 
+F ⇒ • [ a ] - F 
+F ⇒ [ • a ] - F 
+F ⇒ [ a • ] - F 
+F ⇒ [ a ] • - F 
+F ⇒ [ a ] - • F 
+F ⇒ [ a ] - F • 
+
+LR0 automata:
+State 0:
+F' ⇒ • F 
+---------------
+F ⇒ • [ a ] 
+F ⇒ • [ a ] - F 
+Transitions: 
+F ---> 1
+[ ---> 2
+
+State 1:
+F' ⇒ F • 
+---------------
+
+State 2:
+F ⇒ [ • a ] 
+F ⇒ [ • a ] - F 
+---------------
+Transitions: 
+a ---> 3
+
+State 3:
+F ⇒ [ a • ] 
+F ⇒ [ a • ] - F 
+---------------
+Transitions: 
+] ---> 4
+
+State 4:
+F ⇒ [ a ] • 
+F ⇒ [ a ] • - F 
+---------------
+Transitions: 
+- ---> 5
+
+State 5:
+F ⇒ [ a ] - • F 
+---------------
+F ⇒ • [ a ] 
+F ⇒ • [ a ] - F 
+Transitions: 
+F ---> 6
+[ ---> 2
+
+State 6:
+F ⇒ [ a ] - F • 
+---------------
+

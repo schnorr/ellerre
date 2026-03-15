@@ -1,0 +1,26 @@
+Grammar with 9 rules and 12 symbols (6 non-terminals):
+S ⇒ u B D z 
+B ⇒ w X 
+X ⇒ v X 
+X ⇒ ε 
+D ⇒ E F 
+E ⇒ y 
+E ⇒ ε 
+F ⇒ x 
+F ⇒ ε 
+
+First sets:
+S -- u 
+D -- ε y x 
+B -- w 
+X -- ε v 
+E -- ε y 
+F -- ε x 
+
+Follow sets:
+S -- $ 
+D -- z 
+B -- z y x 
+X -- z y x 
+E -- z x 
+F -- z 

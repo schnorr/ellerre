@@ -1,0 +1,17 @@
+Grammar with 6 rules and 8 symbols (3 non-terminals):
+E ⇒ E + T 
+E ⇒ T 
+T ⇒ T * F 
+T ⇒ F 
+F ⇒ ( E ) 
+F ⇒ id 
+
+First sets:
+E -- ( id 
+T -- ( id 
+F -- ( id 
+
+Follow sets:
+E -- $ + ) 
+T -- $ + * ) 
+F -- $ + * ) 

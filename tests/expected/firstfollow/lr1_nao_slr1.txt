@@ -1,0 +1,17 @@
+Grammar with 6 rules and 7 symbols (3 non-terminals):
+S ⇒ L = R 
+S ⇒ R 
+L ⇒ * R 
+L ⇒ id 
+R ⇒ L 
+R ⇒ r 
+
+First sets:
+S -- * id r 
+L -- * id 
+R -- * id r 
+
+Follow sets:
+S -- $ 
+L -- $ = 
+R -- $ = 
