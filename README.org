@@ -645,14 +645,11 @@ https://github.com/schnorr/ellerre. Assim, os estudantes podem usar a
 ferramenta sem depender de outros materiais de consulta.
 * EllErre web app
 
-Alternatively, you can use: [[https://ellerre.herokuapp.com/][https://ellerre.herokuapp.com/]]
-
-There, you can input a .dot file that defines a grammar or textually
-input your grammar, separating each line by a ";" . You can also
-download the visualizations generated.
-
 The application was created using the Shiny package for R, and the
-source code is available in: [[./ellerre-web]]
+source code is available in: [[./ellerre-web]]. Once started, you can
+input a .dot file that defines a grammar or textually input your
+grammar, separating each line by a ";" . You can also download the
+visualizations generate.d
 
 * EllErre step-by-step visualization for LR0 and LR1
 
