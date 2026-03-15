@@ -1,0 +1,180 @@
+Grammar with 13 rules and 8 symbols (4 non-terminals):
+S' ⇒ S 
+S ⇒ A B 
+A ⇒ a 
+A ⇒ b 
+A ⇒ c C a 
+A ⇒ C 
+B ⇒ a 
+B ⇒ b 
+B ⇒ ε 
+C ⇒ b 
+C ⇒ c 
+C ⇒ d 
+C ⇒ ε 
+
+First set: 
+S -- ε b d a c 
+A -- ε b d a c 
+B -- ε b a 
+C -- ε b d c 
+S' -- ε b d a c 
+
+Follow set: 
+S -- $ 
+A -- $ b a 
+B -- $ 
+C -- $ b a 
+S' -- $ 
+
+LALR1 item set:
+S' ⇒ • S , $
+S' ⇒ S • , $
+S ⇒ • A B , $
+S ⇒ A • B , $
+S ⇒ A B • , $
+A ⇒ • a , $
+A ⇒ • a , b
+A ⇒ • a , a
+A ⇒ a • , $
+A ⇒ a • , b
+A ⇒ a • , a
+A ⇒ • b , $
+A ⇒ • b , b
+A ⇒ • b , a
+A ⇒ b • , $
+A ⇒ b • , b
+A ⇒ b • , a
+A ⇒ • c C a , $
+A ⇒ • c C a , b
+A ⇒ • c C a , a
+A ⇒ c • C a , $
+A ⇒ c • C a , b
+A ⇒ c • C a , a
+A ⇒ c C • a , $
+A ⇒ c C • a , b
+A ⇒ c C • a , a
+A ⇒ c C a • , $
+A ⇒ c C a • , b
+A ⇒ c C a • , a
+A ⇒ • C , $
+A ⇒ • C , b
+A ⇒ • C , a
+A ⇒ C • , $
+A ⇒ C • , b
+A ⇒ C • , a
+B ⇒ • a , $
+B ⇒ a • , $
+B ⇒ • b , $
+B ⇒ b • , $
+B ⇒ • , $
+C ⇒ • b , $
+C ⇒ • b , b
+C ⇒ • b , a
+C ⇒ b • , $
+C ⇒ b • , b
+C ⇒ b • , a
+C ⇒ • c , $
+C ⇒ • c , b
+C ⇒ • c , a
+C ⇒ c • , $
+C ⇒ c • , b
+C ⇒ c • , a
+C ⇒ • d , $
+C ⇒ • d , b
+C ⇒ • d , a
+C ⇒ d • , $
+C ⇒ d • , b
+C ⇒ d • , a
+C ⇒ • , $
+C ⇒ • , b
+C ⇒ • , a
+
+LALR1 automata:
+State 0:
+S' ⇒ • S , $ 
+---------------
+S ⇒ • A B , $ 
+A ⇒ • a , $ b a 
+A ⇒ • b , $ b a 
+A ⇒ • c C a , $ b a 
+A ⇒ • C , $ b a 
+C ⇒ • b , $ b a 
+C ⇒ • c , $ b a 
+C ⇒ • d , $ b a 
+C ⇒ • , $ b a 
+Transitions: 
+S ---> 1
+A ---> 2
+b ---> 3
+d ---> 4
+a ---> 5
+c ---> 6
+C ---> 7
+
+State 1:
+S' ⇒ S • , $ 
+---------------
+
+State 2:
+S ⇒ A • B , $ 
+---------------
+B ⇒ • a , $ 
+B ⇒ • b , $ 
+B ⇒ • , $ 
+Transitions: 
+b ---> 8
+B ---> 9
+a ---> 10
+
+State 3:
+A ⇒ b • , $ b a C ⇒ b • , $ b a 
+---------------
+
+State 4:
+C ⇒ d • , $ b a 
+---------------
+
+State 5:
+A ⇒ a • , $ b a 
+---------------
+
+State 6:
+A ⇒ c • C a , $ b a C ⇒ c • , $ b a 
+---------------
+C ⇒ • b , a 
+C ⇒ • c , a 
+C ⇒ • d , a 
+C ⇒ • , a 
+Transitions: 
+b ---> 3
+d ---> 4
+c ---> 6
+C ---> 11
+
+State 7:
+A ⇒ C • , $ b a 
+---------------
+
+State 8:
+B ⇒ b • , $ 
+---------------
+
+State 9:
+S ⇒ A B • , $ 
+---------------
+
+State 10:
+B ⇒ a • , $ 
+---------------
+
+State 11:
+A ⇒ c C • a , $ b a 
+---------------
+Transitions: 
+a ---> 12
+
+State 12:
+A ⇒ c C a • , $ b a 
+---------------
+

@@ -1,0 +1,13 @@
+Grammar with 4 rules and 7 symbols (2 non-terminals):
+F ⇒ n = A - e 
+F ⇒ n e 
+A ⇒ - a 
+A ⇒ ε 
+
+First sets:
+F -- n 
+A -- ε - 
+
+Follow sets:
+F -- $ 
+A -- - 

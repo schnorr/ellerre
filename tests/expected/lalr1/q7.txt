@@ -1,0 +1,90 @@
+Grammar with 4 rules and 4 symbols (1 non-terminals):
+S' ⇒ S 
+S ⇒ i S e S 
+S ⇒ i S 
+S ⇒ a 
+
+First set: 
+S -- i a 
+S' -- i a 
+
+Follow set: 
+S -- $ e 
+S' -- $ 
+
+LALR1 item set:
+S' ⇒ • S , $
+S' ⇒ S • , $
+S ⇒ • i S e S , $
+S ⇒ • i S e S , e
+S ⇒ i • S e S , $
+S ⇒ i • S e S , e
+S ⇒ i S • e S , $
+S ⇒ i S • e S , e
+S ⇒ i S e • S , $
+S ⇒ i S e • S , e
+S ⇒ i S e S • , $
+S ⇒ i S e S • , e
+S ⇒ • i S , $
+S ⇒ • i S , e
+S ⇒ i • S , $
+S ⇒ i • S , e
+S ⇒ i S • , $
+S ⇒ i S • , e
+S ⇒ • a , $
+S ⇒ • a , e
+S ⇒ a • , $
+S ⇒ a • , e
+
+LALR1 automata:
+State 0:
+S' ⇒ • S , $ 
+---------------
+S ⇒ • i S e S , $ 
+S ⇒ • i S , $ 
+S ⇒ • a , $ 
+Transitions: 
+S ---> 1
+i ---> 2
+a ---> 3
+
+State 1:
+S' ⇒ S • , $ 
+---------------
+
+State 2:
+S ⇒ i • S e S , $ e S ⇒ i • S , $ e 
+---------------
+S ⇒ • i S e S , $ e 
+S ⇒ • i S , $ e 
+S ⇒ • a , $ e 
+Transitions: 
+S ---> 4
+i ---> 2
+a ---> 3
+
+State 3:
+S ⇒ a • , $ e 
+---------------
+
+State 4:
+S ⇒ i S • e S , $ e S ⇒ i S • , $ e 
+---------------
+Transitions: 
+e ---> 5
+
+State 5:
+S ⇒ i S e • S , $ e 
+---------------
+S ⇒ • i S e S , $ e 
+S ⇒ • i S , $ e 
+S ⇒ • a , $ e 
+Transitions: 
+S ---> 6
+i ---> 2
+a ---> 3
+
+State 6:
+S ⇒ i S e S • , $ e 
+---------------
+

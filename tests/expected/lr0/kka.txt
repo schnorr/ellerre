@@ -1,0 +1,119 @@
+Grammar with 10 rules and 11 symbols (6 non-terminals):
+S' ⇒ S 
+S ⇒ u B D z 
+B ⇒ BI 
+BI ⇒ v BI 
+BI ⇒ ε 
+D ⇒ E F 
+E ⇒ y 
+E ⇒ ε 
+F ⇒ x 
+F ⇒ ε 
+
+LR0 item set:
+S' ⇒ • S 
+S' ⇒ S • 
+S ⇒ • u B D z 
+S ⇒ u • B D z 
+S ⇒ u B • D z 
+S ⇒ u B D • z 
+S ⇒ u B D z • 
+B ⇒ • BI 
+B ⇒ BI • 
+BI ⇒ • v BI 
+BI ⇒ v • BI 
+BI ⇒ v BI • 
+BI ⇒ • 
+D ⇒ • E F 
+D ⇒ E • F 
+D ⇒ E F • 
+E ⇒ • y 
+E ⇒ y • 
+E ⇒ • 
+F ⇒ • x 
+F ⇒ x • 
+F ⇒ • 
+
+LR0 automata:
+State 0:
+S' ⇒ • S 
+---------------
+S ⇒ • u B D z 
+Transitions: 
+S ---> 1
+u ---> 2
+
+State 1:
+S' ⇒ S • 
+---------------
+
+State 2:
+S ⇒ u • B D z 
+---------------
+B ⇒ • BI 
+BI ⇒ • v BI 
+BI ⇒ • 
+Transitions: 
+B ---> 3
+v ---> 4
+BI ---> 5
+
+State 3:
+S ⇒ u B • D z 
+---------------
+D ⇒ • E F 
+E ⇒ • y 
+E ⇒ • 
+Transitions: 
+D ---> 6
+E ---> 7
+y ---> 8
+
+State 4:
+BI ⇒ v • BI 
+---------------
+BI ⇒ • v BI 
+BI ⇒ • 
+Transitions: 
+v ---> 4
+BI ---> 9
+
+State 5:
+B ⇒ BI • 
+---------------
+
+State 6:
+S ⇒ u B D • z 
+---------------
+Transitions: 
+z ---> 10
+
+State 7:
+D ⇒ E • F 
+---------------
+F ⇒ • x 
+F ⇒ • 
+Transitions: 
+F ---> 11
+x ---> 12
+
+State 8:
+E ⇒ y • 
+---------------
+
+State 9:
+BI ⇒ v BI • 
+---------------
+
+State 10:
+S ⇒ u B D z • 
+---------------
+
+State 11:
+D ⇒ E F • 
+---------------
+
+State 12:
+F ⇒ x • 
+---------------
+

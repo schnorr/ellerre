@@ -1,0 +1,93 @@
+Grammar with 6 rules and 6 symbols (3 non-terminals):
+S' ⇒ S 
+S ⇒ id 
+S ⇒ V = E 
+V ⇒ id 
+E ⇒ V 
+E ⇒ n 
+
+First set: 
+S -- id 
+E -- id n 
+V -- id 
+S' -- id 
+
+Follow set: 
+S -- $ 
+E -- $ 
+V -- $ = 
+S' -- $ 
+
+LR1 item set:
+S' ⇒ • S , $
+S' ⇒ S • , $
+S ⇒ • id , $
+S ⇒ id • , $
+S ⇒ • V = E , $
+S ⇒ V • = E , $
+S ⇒ V = • E , $
+S ⇒ V = E • , $
+V ⇒ • id , $
+V ⇒ • id , =
+V ⇒ id • , $
+V ⇒ id • , =
+E ⇒ • V , $
+E ⇒ V • , $
+E ⇒ • n , $
+E ⇒ n • , $
+
+LR1 automata:
+State 0:
+S' ⇒ • S , $
+---------------
+S ⇒ • id , $
+S ⇒ • V = E , $
+V ⇒ • id , =
+Transitions: 
+S ---> 1
+id ---> 2
+V ---> 3
+
+State 1:
+S' ⇒ S • , $
+---------------
+
+State 2:
+S ⇒ id • , $
+V ⇒ id • , =
+---------------
+
+State 3:
+S ⇒ V • = E , $
+---------------
+Transitions: 
+= ---> 4
+
+State 4:
+S ⇒ V = • E , $
+---------------
+V ⇒ • id , $
+E ⇒ • V , $
+E ⇒ • n , $
+Transitions: 
+id ---> 5
+E ---> 6
+V ---> 7
+n ---> 8
+
+State 5:
+V ⇒ id • , $
+---------------
+
+State 6:
+S ⇒ V = E • , $
+---------------
+
+State 7:
+E ⇒ V • , $
+---------------
+
+State 8:
+E ⇒ n • , $
+---------------
+

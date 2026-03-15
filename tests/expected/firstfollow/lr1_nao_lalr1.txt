@@ -1,0 +1,23 @@
+Grammar with 8 rules and 9 symbols (5 non-terminals):
+K ⇒ A x 
+K ⇒ B y 
+K ⇒ Q 
+Q ⇒ w C 
+C ⇒ A y 
+C ⇒ B x 
+A ⇒ f 
+B ⇒ f 
+
+First sets:
+K -- w f 
+A -- f 
+Q -- w 
+B -- f 
+C -- f 
+
+Follow sets:
+K -- $ 
+A -- x y 
+Q -- $ 
+B -- x y 
+C -- $ 

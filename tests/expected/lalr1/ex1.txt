@@ -1,0 +1,87 @@
+Grammar with 4 rules and 4 symbols (2 non-terminals):
+S' ⇒ S 
+S ⇒ A A 
+A ⇒ a A 
+A ⇒ b 
+
+First set: 
+S -- b a 
+A -- b a 
+S' -- b a 
+
+Follow set: 
+S -- $ 
+A -- $ b a 
+S' -- $ 
+
+LALR1 item set:
+S' ⇒ • S , $
+S' ⇒ S • , $
+S ⇒ • A A , $
+S ⇒ A • A , $
+S ⇒ A A • , $
+A ⇒ • a A , $
+A ⇒ • a A , b
+A ⇒ • a A , a
+A ⇒ a • A , $
+A ⇒ a • A , b
+A ⇒ a • A , a
+A ⇒ a A • , $
+A ⇒ a A • , b
+A ⇒ a A • , a
+A ⇒ • b , $
+A ⇒ • b , b
+A ⇒ • b , a
+A ⇒ b • , $
+A ⇒ b • , b
+A ⇒ b • , a
+
+LALR1 automata:
+State 0:
+S' ⇒ • S , $ 
+---------------
+S ⇒ • A A , $ 
+A ⇒ • a A , b a 
+A ⇒ • b , b a 
+Transitions: 
+S ---> 1
+A ---> 2
+b ---> 3
+a ---> 4
+
+State 1:
+S' ⇒ S • , $ 
+---------------
+
+State 2:
+S ⇒ A • A , $ 
+---------------
+A ⇒ • a A , $ 
+A ⇒ • b , $ 
+Transitions: 
+A ---> 5
+b ---> 3
+a ---> 4
+
+State 3:
+A ⇒ b • , $ b a 
+---------------
+
+State 4:
+A ⇒ a • A , $ b a 
+---------------
+A ⇒ • a A , $ b a 
+A ⇒ • b , $ b a 
+Transitions: 
+A ---> 6
+b ---> 3
+a ---> 4
+
+State 5:
+S ⇒ A A • , $ 
+---------------
+
+State 6:
+A ⇒ a A • , $ b a 
+---------------
+

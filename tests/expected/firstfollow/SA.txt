@@ -1,0 +1,13 @@
+Grammar with 4 rules and 4 symbols (2 non-terminals):
+S ⇒ A 
+S ⇒ ε 
+A ⇒ p A 
+A ⇒ a 
+
+First sets:
+S -- ε p a 
+A -- p a 
+
+Follow sets:
+S -- $ 
+A -- $ 

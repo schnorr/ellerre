@@ -1,0 +1,79 @@
+Grammar with 3 rules and 3 symbols (1 non-terminals):
+S' ⇒ S 
+S ⇒ ( S ) 
+S ⇒ ε 
+
+First set: 
+S -- ε ( 
+S' -- ε ( 
+
+Follow set: 
+S -- $ ) 
+S' -- $ 
+
+LR1 item set:
+S' ⇒ • S , $
+S' ⇒ S • , $
+S ⇒ • ( S ) , $
+S ⇒ • ( S ) , )
+S ⇒ ( • S ) , $
+S ⇒ ( • S ) , )
+S ⇒ ( S • ) , $
+S ⇒ ( S • ) , )
+S ⇒ ( S ) • , $
+S ⇒ ( S ) • , )
+S ⇒ • , $
+S ⇒ • , )
+
+LR1 automata:
+State 0:
+S' ⇒ • S , $
+---------------
+S ⇒ • ( S ) , $
+S ⇒ • , $
+Transitions: 
+S ---> 1
+( ---> 2
+
+State 1:
+S' ⇒ S • , $
+---------------
+
+State 2:
+S ⇒ ( • S ) , $
+---------------
+S ⇒ • ( S ) , )
+S ⇒ • , )
+Transitions: 
+S ---> 3
+( ---> 4
+
+State 3:
+S ⇒ ( S • ) , $
+---------------
+Transitions: 
+) ---> 5
+
+State 4:
+S ⇒ ( • S ) , )
+---------------
+S ⇒ • ( S ) , )
+S ⇒ • , )
+Transitions: 
+S ---> 6
+( ---> 4
+
+State 5:
+S ⇒ ( S ) • , $
+---------------
+
+State 6:
+S ⇒ ( S • ) , )
+---------------
+Transitions: 
+) ---> 7
+
+State 7:
+S ⇒ ( S ) • , )
+---------------
+

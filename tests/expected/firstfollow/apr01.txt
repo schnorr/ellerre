@@ -1,0 +1,15 @@
+Grammar with 4 rules and 6 symbols (3 non-terminals):
+S ⇒ a B c 
+B ⇒ b 
+B ⇒ b D 
+D ⇒ c 
+
+First sets:
+S -- a 
+B -- b 
+D -- c 
+
+Follow sets:
+S -- $ 
+B -- c 
+D -- c 

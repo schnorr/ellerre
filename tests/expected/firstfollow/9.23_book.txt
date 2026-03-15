@@ -1,0 +1,13 @@
+Grammar with 4 rules and 6 symbols (2 non-terminals):
+E ⇒ E - T 
+E ⇒ T 
+T ⇒ n 
+T ⇒ ( E ) 
+
+First sets:
+E -- n ( 
+T -- n ( 
+
+Follow sets:
+E -- $ - ) 
+T -- $ - ) 

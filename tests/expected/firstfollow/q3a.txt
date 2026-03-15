@@ -1,0 +1,16 @@
+Grammar with 5 rules and 7 symbols (3 non-terminals):
+S ⇒ i 
+S ⇒ L a 
+L ⇒ L x E 
+L ⇒ i b E 
+E ⇒ S 
+
+First sets:
+S -- i 
+L -- i 
+E -- i 
+
+Follow sets:
+S -- $ x a 
+L -- x a 
+E -- x a 

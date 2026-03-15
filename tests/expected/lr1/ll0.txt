@@ -1,0 +1,95 @@
+Grammar with 5 rules and 7 symbols (2 non-terminals):
+F' ⇒ F 
+F ⇒ n = A - e 
+F ⇒ n e 
+A ⇒ - a 
+A ⇒ ε 
+
+First set: 
+F -- n 
+A -- ε - 
+F' -- n 
+
+Follow set: 
+F -- $ 
+A -- - 
+F' -- $ 
+
+LR1 item set:
+F' ⇒ • F , $
+F' ⇒ F • , $
+F ⇒ • n = A - e , $
+F ⇒ n • = A - e , $
+F ⇒ n = • A - e , $
+F ⇒ n = A • - e , $
+F ⇒ n = A - • e , $
+F ⇒ n = A - e • , $
+F ⇒ • n e , $
+F ⇒ n • e , $
+F ⇒ n e • , $
+A ⇒ • - a , -
+A ⇒ - • a , -
+A ⇒ - a • , -
+A ⇒ • , -
+
+LR1 automata:
+State 0:
+F' ⇒ • F , $
+---------------
+F ⇒ • n = A - e , $
+F ⇒ • n e , $
+Transitions: 
+F ---> 1
+n ---> 2
+
+State 1:
+F' ⇒ F • , $
+---------------
+
+State 2:
+F ⇒ n • = A - e , $
+F ⇒ n • e , $
+---------------
+Transitions: 
+= ---> 3
+e ---> 4
+
+State 3:
+F ⇒ n = • A - e , $
+---------------
+A ⇒ • - a , -
+A ⇒ • , -
+Transitions: 
+A ---> 5
+- ---> 6
+
+State 4:
+F ⇒ n e • , $
+---------------
+
+State 5:
+F ⇒ n = A • - e , $
+---------------
+Transitions: 
+- ---> 7
+
+State 6:
+A ⇒ - • a , -
+---------------
+Transitions: 
+a ---> 8
+
+State 7:
+F ⇒ n = A - • e , $
+---------------
+Transitions: 
+e ---> 9
+
+State 8:
+A ⇒ - a • , -
+---------------
+
+State 9:
+F ⇒ n = A - e • , $
+---------------
+

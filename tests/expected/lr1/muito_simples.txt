@@ -1,0 +1,85 @@
+Grammar with 5 rules and 7 symbols (3 non-terminals):
+S' ⇒ S 
+S ⇒ a A c 
+S ⇒ a B d 
+A ⇒ z 
+B ⇒ z 
+
+First set: 
+S -- a 
+A -- z 
+B -- z 
+S' -- a 
+
+Follow set: 
+S -- $ 
+A -- c 
+B -- d 
+S' -- $ 
+
+LR1 item set:
+S' ⇒ • S , $
+S' ⇒ S • , $
+S ⇒ • a A c , $
+S ⇒ a • A c , $
+S ⇒ a A • c , $
+S ⇒ a A c • , $
+S ⇒ • a B d , $
+S ⇒ a • B d , $
+S ⇒ a B • d , $
+S ⇒ a B d • , $
+A ⇒ • z , c
+A ⇒ z • , c
+B ⇒ • z , d
+B ⇒ z • , d
+
+LR1 automata:
+State 0:
+S' ⇒ • S , $
+---------------
+S ⇒ • a A c , $
+S ⇒ • a B d , $
+Transitions: 
+S ---> 1
+a ---> 2
+
+State 1:
+S' ⇒ S • , $
+---------------
+
+State 2:
+S ⇒ a • A c , $
+S ⇒ a • B d , $
+---------------
+A ⇒ • z , c
+B ⇒ • z , d
+Transitions: 
+A ---> 3
+z ---> 4
+B ---> 5
+
+State 3:
+S ⇒ a A • c , $
+---------------
+Transitions: 
+c ---> 6
+
+State 4:
+A ⇒ z • , c
+B ⇒ z • , d
+---------------
+
+State 5:
+S ⇒ a B • d , $
+---------------
+Transitions: 
+d ---> 7
+
+State 6:
+S ⇒ a A c • , $
+---------------
+
+State 7:
+S ⇒ a B d • , $
+---------------
+

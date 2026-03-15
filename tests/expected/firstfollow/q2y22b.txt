@@ -1,0 +1,20 @@
+Grammar with 7 rules and 7 symbols (4 non-terminals):
+A ⇒ z Y 
+Y ⇒ x b K 
+Y ⇒ ε 
+K ⇒ C b Y 
+K ⇒ Y 
+C ⇒ b 
+C ⇒ x z 
+
+First sets:
+A -- z 
+Y -- ε x 
+C -- x b 
+K -- ε x b 
+
+Follow sets:
+A -- $ 
+Y -- $ 
+C -- b 
+K -- $ 

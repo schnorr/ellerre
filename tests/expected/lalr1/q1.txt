@@ -1,0 +1,67 @@
+Grammar with 3 rules and 3 symbols (1 non-terminals):
+B' ⇒ B 
+B ⇒ B tique taque 
+B ⇒ tique taque 
+
+First set: 
+B -- tique 
+B' -- tique 
+
+Follow set: 
+B -- $ tique 
+B' -- $ 
+
+LALR1 item set:
+B' ⇒ • B , $
+B' ⇒ B • , $
+B ⇒ • B tique taque , $
+B ⇒ • B tique taque , tique
+B ⇒ B • tique taque , $
+B ⇒ B • tique taque , tique
+B ⇒ B tique • taque , $
+B ⇒ B tique • taque , tique
+B ⇒ B tique taque • , $
+B ⇒ B tique taque • , tique
+B ⇒ • tique taque , $
+B ⇒ • tique taque , tique
+B ⇒ tique • taque , $
+B ⇒ tique • taque , tique
+B ⇒ tique taque • , $
+B ⇒ tique taque • , tique
+
+LALR1 automata:
+State 0:
+B' ⇒ • B , $ 
+---------------
+B ⇒ • B tique taque , $ tique 
+B ⇒ • tique taque , $ tique 
+Transitions: 
+B ---> 1
+tique ---> 2
+
+State 1:
+B' ⇒ B • , $ B ⇒ B • tique taque , $ tique 
+---------------
+Transitions: 
+tique ---> 3
+
+State 2:
+B ⇒ tique • taque , $ tique 
+---------------
+Transitions: 
+taque ---> 4
+
+State 3:
+B ⇒ B tique • taque , $ tique 
+---------------
+Transitions: 
+taque ---> 5
+
+State 4:
+B ⇒ tique taque • , $ tique 
+---------------
+
+State 5:
+B ⇒ B tique taque • , $ tique 
+---------------
+

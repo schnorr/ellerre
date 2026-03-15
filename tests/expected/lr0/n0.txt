@@ -1,0 +1,107 @@
+Grammar with 8 rules and 9 symbols (4 non-terminals):
+A' ⇒ A 
+A ⇒ A x B y 
+A ⇒ z 
+B ⇒ b C 
+B ⇒ ε 
+C ⇒ b X 
+X ⇒ ε 
+X ⇒ w z 
+
+LR0 item set:
+A' ⇒ • A 
+A' ⇒ A • 
+A ⇒ • A x B y 
+A ⇒ A • x B y 
+A ⇒ A x • B y 
+A ⇒ A x B • y 
+A ⇒ A x B y • 
+A ⇒ • z 
+A ⇒ z • 
+B ⇒ • b C 
+B ⇒ b • C 
+B ⇒ b C • 
+B ⇒ • 
+C ⇒ • b X 
+C ⇒ b • X 
+C ⇒ b X • 
+X ⇒ • 
+X ⇒ • w z 
+X ⇒ w • z 
+X ⇒ w z • 
+
+LR0 automata:
+State 0:
+A' ⇒ • A 
+---------------
+A ⇒ • A x B y 
+A ⇒ • z 
+Transitions: 
+A ---> 1
+z ---> 2
+
+State 1:
+A' ⇒ A • 
+A ⇒ A • x B y 
+---------------
+Transitions: 
+x ---> 3
+
+State 2:
+A ⇒ z • 
+---------------
+
+State 3:
+A ⇒ A x • B y 
+---------------
+B ⇒ • b C 
+B ⇒ • 
+Transitions: 
+B ---> 4
+b ---> 5
+
+State 4:
+A ⇒ A x B • y 
+---------------
+Transitions: 
+y ---> 6
+
+State 5:
+B ⇒ b • C 
+---------------
+C ⇒ • b X 
+Transitions: 
+b ---> 7
+C ---> 8
+
+State 6:
+A ⇒ A x B y • 
+---------------
+
+State 7:
+C ⇒ b • X 
+---------------
+X ⇒ • 
+X ⇒ • w z 
+Transitions: 
+X ---> 9
+w ---> 10
+
+State 8:
+B ⇒ b C • 
+---------------
+
+State 9:
+C ⇒ b X • 
+---------------
+
+State 10:
+X ⇒ w • z 
+---------------
+Transitions: 
+z ---> 11
+
+State 11:
+X ⇒ w z • 
+---------------
+

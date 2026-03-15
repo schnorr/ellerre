@@ -1,0 +1,188 @@
+Grammar with 7 rules and 8 symbols (3 non-terminals):
+E' ⇒ E 
+E ⇒ E + T 
+E ⇒ T 
+T ⇒ T * F 
+T ⇒ F 
+F ⇒ ( E ) 
+F ⇒ id 
+
+First set: 
+E -- ( id 
+T -- ( id 
+F -- ( id 
+E' -- ( id 
+
+Follow set: 
+E -- $ + ) 
+T -- $ + * ) 
+F -- $ + * ) 
+E' -- $ 
+
+LALR1 item set:
+E' ⇒ • E , $
+E' ⇒ E • , $
+E ⇒ • E + T , $
+E ⇒ • E + T , +
+E ⇒ • E + T , )
+E ⇒ E • + T , $
+E ⇒ E • + T , +
+E ⇒ E • + T , )
+E ⇒ E + • T , $
+E ⇒ E + • T , +
+E ⇒ E + • T , )
+E ⇒ E + T • , $
+E ⇒ E + T • , +
+E ⇒ E + T • , )
+E ⇒ • T , $
+E ⇒ • T , +
+E ⇒ • T , )
+E ⇒ T • , $
+E ⇒ T • , +
+E ⇒ T • , )
+T ⇒ • T * F , $
+T ⇒ • T * F , +
+T ⇒ • T * F , *
+T ⇒ • T * F , )
+T ⇒ T • * F , $
+T ⇒ T • * F , +
+T ⇒ T • * F , *
+T ⇒ T • * F , )
+T ⇒ T * • F , $
+T ⇒ T * • F , +
+T ⇒ T * • F , *
+T ⇒ T * • F , )
+T ⇒ T * F • , $
+T ⇒ T * F • , +
+T ⇒ T * F • , *
+T ⇒ T * F • , )
+T ⇒ • F , $
+T ⇒ • F , +
+T ⇒ • F , *
+T ⇒ • F , )
+T ⇒ F • , $
+T ⇒ F • , +
+T ⇒ F • , *
+T ⇒ F • , )
+F ⇒ • ( E ) , $
+F ⇒ • ( E ) , +
+F ⇒ • ( E ) , *
+F ⇒ • ( E ) , )
+F ⇒ ( • E ) , $
+F ⇒ ( • E ) , +
+F ⇒ ( • E ) , *
+F ⇒ ( • E ) , )
+F ⇒ ( E • ) , $
+F ⇒ ( E • ) , +
+F ⇒ ( E • ) , *
+F ⇒ ( E • ) , )
+F ⇒ ( E ) • , $
+F ⇒ ( E ) • , +
+F ⇒ ( E ) • , *
+F ⇒ ( E ) • , )
+F ⇒ • id , $
+F ⇒ • id , +
+F ⇒ • id , *
+F ⇒ • id , )
+F ⇒ id • , $
+F ⇒ id • , +
+F ⇒ id • , *
+F ⇒ id • , )
+
+LALR1 automata:
+State 0:
+E' ⇒ • E , $ 
+---------------
+E ⇒ • E + T , $ + 
+E ⇒ • T , $ + 
+T ⇒ • T * F , $ + * 
+T ⇒ • F , $ + * 
+F ⇒ • ( E ) , $ + * 
+F ⇒ • id , $ + * 
+Transitions: 
+E ---> 1
+T ---> 2
+( ---> 3
+F ---> 4
+id ---> 5
+
+State 1:
+E' ⇒ E • , $ E ⇒ E • + T , $ + 
+---------------
+Transitions: 
++ ---> 6
+
+State 2:
+E ⇒ T • , $ + ) T ⇒ T • * F , $ + * ) 
+---------------
+Transitions: 
+* ---> 7
+
+State 3:
+F ⇒ ( • E ) , $ + * ) 
+---------------
+E ⇒ • E + T , + ) 
+E ⇒ • T , + ) 
+T ⇒ • T * F , + * ) 
+T ⇒ • F , + * ) 
+F ⇒ • ( E ) , + * ) 
+F ⇒ • id , + * ) 
+Transitions: 
+E ---> 8
+T ---> 2
+( ---> 3
+F ---> 4
+id ---> 5
+
+State 4:
+T ⇒ F • , $ + * ) 
+---------------
+
+State 5:
+F ⇒ id • , $ + * ) 
+---------------
+
+State 6:
+E ⇒ E + • T , $ + ) 
+---------------
+T ⇒ • T * F , $ + * ) 
+T ⇒ • F , $ + * ) 
+F ⇒ • ( E ) , $ + * ) 
+F ⇒ • id , $ + * ) 
+Transitions: 
+T ---> 9
+( ---> 3
+F ---> 4
+id ---> 5
+
+State 7:
+T ⇒ T * • F , $ + * ) 
+---------------
+F ⇒ • ( E ) , $ + * ) 
+F ⇒ • id , $ + * ) 
+Transitions: 
+( ---> 3
+F ---> 10
+id ---> 5
+
+State 8:
+E ⇒ E • + T , + ) F ⇒ ( E • ) , $ + * ) 
+---------------
+Transitions: 
++ ---> 6
+) ---> 11
+
+State 9:
+E ⇒ E + T • , $ + ) T ⇒ T • * F , $ + * ) 
+---------------
+Transitions: 
+* ---> 7
+
+State 10:
+T ⇒ T * F • , $ + * ) 
+---------------
+
+State 11:
+F ⇒ ( E ) • , $ + * ) 
+---------------
+

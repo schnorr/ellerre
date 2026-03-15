@@ -1,0 +1,92 @@
+Grammar with 3 rules and 4 symbols (1 non-terminals):
+A' ⇒ A 
+A ⇒ ( A ) 
+A ⇒ a 
+
+First set: 
+A -- ( a 
+A' -- ( a 
+
+Follow set: 
+A -- $ ) 
+A' -- $ 
+
+LR1 item set:
+A' ⇒ • A , $
+A' ⇒ A • , $
+A ⇒ • ( A ) , $
+A ⇒ • ( A ) , )
+A ⇒ ( • A ) , $
+A ⇒ ( • A ) , )
+A ⇒ ( A • ) , $
+A ⇒ ( A • ) , )
+A ⇒ ( A ) • , $
+A ⇒ ( A ) • , )
+A ⇒ • a , $
+A ⇒ • a , )
+A ⇒ a • , $
+A ⇒ a • , )
+
+LR1 automata:
+State 1:
+A' ⇒ A • , $
+---------------
+
+State 0:
+A' ⇒ • A , $
+---------------
+A ⇒ • ( A ) , $
+A ⇒ • a , $
+Transitions: 
+A ---> 1
+( ---> 2
+a ---> 3
+
+State 2:
+A ⇒ ( • A ) , $
+---------------
+A ⇒ • ( A ) , )
+A ⇒ • a , )
+Transitions: 
+A ---> 4
+( ---> 5
+a ---> 6
+
+State 3:
+A ⇒ a • , $
+---------------
+
+State 4:
+A ⇒ ( A • ) , $
+---------------
+Transitions: 
+) ---> 7
+
+State 5:
+A ⇒ ( • A ) , )
+---------------
+A ⇒ • ( A ) , )
+A ⇒ • a , )
+Transitions: 
+A ---> 8
+( ---> 5
+a ---> 6
+
+State 6:
+A ⇒ a • , )
+---------------
+
+State 7:
+A ⇒ ( A ) • , $
+---------------
+
+State 8:
+A ⇒ ( A • ) , )
+---------------
+Transitions: 
+) ---> 9
+
+State 9:
+A ⇒ ( A ) • , )
+---------------
+

@@ -1,0 +1,230 @@
+Grammar with 8 rules and 10 symbols (4 non-terminals):
+S' ⇒ S 
+S ⇒ X Y Z 
+X ⇒ a X b 
+X ⇒ ε 
+Y ⇒ c Y Z c X 
+Y ⇒ d 
+Z ⇒ e Z Y e 
+Z ⇒ f 
+
+First set: 
+S -- a c d 
+X -- ε a 
+Z -- e f 
+Y -- c d 
+S' -- a c d 
+
+Follow set: 
+S -- $ 
+X -- b c d e f 
+Z -- $ c d 
+Y -- e f 
+S' -- $ 
+
+LALR1 item set:
+S' ⇒ • S , $
+S' ⇒ S • , $
+S ⇒ • X Y Z , $
+S ⇒ X • Y Z , $
+S ⇒ X Y • Z , $
+S ⇒ X Y Z • , $
+X ⇒ • a X b , b
+X ⇒ • a X b , c
+X ⇒ • a X b , d
+X ⇒ • a X b , e
+X ⇒ • a X b , f
+X ⇒ a • X b , b
+X ⇒ a • X b , c
+X ⇒ a • X b , d
+X ⇒ a • X b , e
+X ⇒ a • X b , f
+X ⇒ a X • b , b
+X ⇒ a X • b , c
+X ⇒ a X • b , d
+X ⇒ a X • b , e
+X ⇒ a X • b , f
+X ⇒ a X b • , b
+X ⇒ a X b • , c
+X ⇒ a X b • , d
+X ⇒ a X b • , e
+X ⇒ a X b • , f
+X ⇒ • , b
+X ⇒ • , c
+X ⇒ • , d
+X ⇒ • , e
+X ⇒ • , f
+Y ⇒ • c Y Z c X , e
+Y ⇒ • c Y Z c X , f
+Y ⇒ c • Y Z c X , e
+Y ⇒ c • Y Z c X , f
+Y ⇒ c Y • Z c X , e
+Y ⇒ c Y • Z c X , f
+Y ⇒ c Y Z • c X , e
+Y ⇒ c Y Z • c X , f
+Y ⇒ c Y Z c • X , e
+Y ⇒ c Y Z c • X , f
+Y ⇒ c Y Z c X • , e
+Y ⇒ c Y Z c X • , f
+Y ⇒ • d , e
+Y ⇒ • d , f
+Y ⇒ d • , e
+Y ⇒ d • , f
+Z ⇒ • e Z Y e , $
+Z ⇒ • e Z Y e , c
+Z ⇒ • e Z Y e , d
+Z ⇒ e • Z Y e , $
+Z ⇒ e • Z Y e , c
+Z ⇒ e • Z Y e , d
+Z ⇒ e Z • Y e , $
+Z ⇒ e Z • Y e , c
+Z ⇒ e Z • Y e , d
+Z ⇒ e Z Y • e , $
+Z ⇒ e Z Y • e , c
+Z ⇒ e Z Y • e , d
+Z ⇒ e Z Y e • , $
+Z ⇒ e Z Y e • , c
+Z ⇒ e Z Y e • , d
+Z ⇒ • f , $
+Z ⇒ • f , c
+Z ⇒ • f , d
+Z ⇒ f • , $
+Z ⇒ f • , c
+Z ⇒ f • , d
+
+LALR1 automata:
+State 0:
+S' ⇒ • S , $ 
+---------------
+S ⇒ • X Y Z , $ 
+X ⇒ • a X b , c d 
+X ⇒ • , c d 
+Transitions: 
+S ---> 1
+X ---> 2
+a ---> 3
+
+State 1:
+S' ⇒ S • , $ 
+---------------
+
+State 2:
+S ⇒ X • Y Z , $ 
+---------------
+Y ⇒ • c Y Z c X , e f 
+Y ⇒ • d , e f 
+Transitions: 
+Y ---> 4
+c ---> 5
+d ---> 6
+
+State 3:
+X ⇒ a • X b , b c d e f 
+---------------
+X ⇒ • a X b , b 
+X ⇒ • , b 
+Transitions: 
+X ---> 7
+a ---> 3
+
+State 4:
+S ⇒ X Y • Z , $ 
+---------------
+Z ⇒ • e Z Y e , $ 
+Z ⇒ • f , $ 
+Transitions: 
+Z ---> 8
+e ---> 9
+f ---> 10
+
+State 5:
+Y ⇒ c • Y Z c X , e f 
+---------------
+Y ⇒ • c Y Z c X , e f 
+Y ⇒ • d , e f 
+Transitions: 
+Y ---> 11
+c ---> 5
+d ---> 6
+
+State 6:
+Y ⇒ d • , e f 
+---------------
+
+State 7:
+X ⇒ a X • b , b c d e f 
+---------------
+Transitions: 
+b ---> 12
+
+State 8:
+S ⇒ X Y Z • , $ 
+---------------
+
+State 9:
+Z ⇒ e • Z Y e , $ c d 
+---------------
+Z ⇒ • e Z Y e , c d 
+Z ⇒ • f , c d 
+Transitions: 
+Z ---> 13
+e ---> 9
+f ---> 10
+
+State 10:
+Z ⇒ f • , $ c d 
+---------------
+
+State 11:
+Y ⇒ c Y • Z c X , e f 
+---------------
+Z ⇒ • e Z Y e , c 
+Z ⇒ • f , c 
+Transitions: 
+Z ---> 14
+e ---> 9
+f ---> 10
+
+State 12:
+X ⇒ a X b • , b c d e f 
+---------------
+
+State 13:
+Z ⇒ e Z • Y e , $ c d 
+---------------
+Y ⇒ • c Y Z c X , e 
+Y ⇒ • d , e 
+Transitions: 
+Y ---> 15
+c ---> 5
+d ---> 6
+
+State 14:
+Y ⇒ c Y Z • c X , e f 
+---------------
+Transitions: 
+c ---> 16
+
+State 15:
+Z ⇒ e Z Y • e , $ c d 
+---------------
+Transitions: 
+e ---> 17
+
+State 16:
+Y ⇒ c Y Z c • X , e f 
+---------------
+X ⇒ • a X b , e f 
+X ⇒ • , e f 
+Transitions: 
+X ---> 18
+a ---> 3
+
+State 17:
+Z ⇒ e Z Y e • , $ c d 
+---------------
+
+State 18:
+Y ⇒ c Y Z c X • , e f 
+---------------
+

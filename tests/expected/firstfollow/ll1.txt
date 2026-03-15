@@ -1,0 +1,16 @@
+Grammar with 5 rules and 8 symbols (3 non-terminals):
+F ⇒ n Y 
+Y ⇒ = A - e 
+Y ⇒ e 
+A ⇒ - a 
+A ⇒ ε 
+
+First sets:
+F -- n 
+Y -- e = 
+A -- ε - 
+
+Follow sets:
+F -- $ 
+Y -- $ 
+A -- - 

@@ -1,0 +1,148 @@
+Grammar with 6 rules and 6 symbols (3 non-terminals):
+S' ⇒ S 
+S ⇒ L = R 
+S ⇒ R 
+L ⇒ * R 
+L ⇒ x 
+R ⇒ L 
+
+First set: 
+S -- * x 
+L -- * x 
+R -- * x 
+S' -- * x 
+
+Follow set: 
+S -- $ 
+L -- $ = 
+R -- $ = 
+S' -- $ 
+
+LR1 item set:
+S' ⇒ • S , $
+S' ⇒ S • , $
+S ⇒ • L = R , $
+S ⇒ L • = R , $
+S ⇒ L = • R , $
+S ⇒ L = R • , $
+S ⇒ • R , $
+S ⇒ R • , $
+L ⇒ • * R , $
+L ⇒ • * R , =
+L ⇒ * • R , $
+L ⇒ * • R , =
+L ⇒ * R • , $
+L ⇒ * R • , =
+L ⇒ • x , $
+L ⇒ • x , =
+L ⇒ x • , $
+L ⇒ x • , =
+R ⇒ • L , $
+R ⇒ • L , =
+R ⇒ L • , $
+R ⇒ L • , =
+
+LR1 automata:
+State 0:
+S' ⇒ • S , $
+---------------
+S ⇒ • L = R , $
+S ⇒ • R , $
+L ⇒ • * R , $
+L ⇒ • * R , =
+L ⇒ • x , $
+L ⇒ • x , =
+R ⇒ • L , $
+Transitions: 
+S ---> 1
+L ---> 2
+R ---> 3
+* ---> 4
+x ---> 5
+
+State 1:
+S' ⇒ S • , $
+---------------
+
+State 2:
+S ⇒ L • = R , $
+R ⇒ L • , $
+---------------
+Transitions: 
+= ---> 6
+
+State 3:
+S ⇒ R • , $
+---------------
+
+State 4:
+L ⇒ * • R , $
+L ⇒ * • R , =
+---------------
+L ⇒ • * R , $
+L ⇒ • * R , =
+L ⇒ • x , $
+L ⇒ • x , =
+R ⇒ • L , $
+R ⇒ • L , =
+Transitions: 
+L ---> 7
+R ---> 8
+* ---> 4
+x ---> 5
+
+State 5:
+L ⇒ x • , $
+L ⇒ x • , =
+---------------
+
+State 6:
+S ⇒ L = • R , $
+---------------
+L ⇒ • * R , $
+L ⇒ • x , $
+R ⇒ • L , $
+Transitions: 
+L ---> 9
+R ---> 10
+* ---> 11
+x ---> 12
+
+State 7:
+R ⇒ L • , $
+R ⇒ L • , =
+---------------
+
+State 8:
+L ⇒ * R • , $
+L ⇒ * R • , =
+---------------
+
+State 9:
+R ⇒ L • , $
+---------------
+
+State 10:
+S ⇒ L = R • , $
+---------------
+
+State 11:
+L ⇒ * • R , $
+---------------
+L ⇒ • * R , $
+L ⇒ • x , $
+R ⇒ • L , $
+Transitions: 
+L ---> 9
+R ---> 13
+* ---> 11
+x ---> 12
+
+State 12:
+L ⇒ x • , $
+---------------
+
+State 13:
+L ⇒ * R • , $
+---------------
+

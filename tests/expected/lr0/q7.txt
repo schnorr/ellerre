@@ -1,0 +1,74 @@
+Grammar with 4 rules and 4 symbols (1 non-terminals):
+S' ⇒ S 
+S ⇒ i S e S 
+S ⇒ i S 
+S ⇒ a 
+
+LR0 item set:
+S' ⇒ • S 
+S' ⇒ S • 
+S ⇒ • i S e S 
+S ⇒ i • S e S 
+S ⇒ i S • e S 
+S ⇒ i S e • S 
+S ⇒ i S e S • 
+S ⇒ • i S 
+S ⇒ i • S 
+S ⇒ i S • 
+S ⇒ • a 
+S ⇒ a • 
+
+LR0 automata:
+State 0:
+S' ⇒ • S 
+---------------
+S ⇒ • i S e S 
+S ⇒ • i S 
+S ⇒ • a 
+Transitions: 
+S ---> 1
+i ---> 2
+a ---> 3
+
+State 1:
+S' ⇒ S • 
+---------------
+
+State 2:
+S ⇒ i • S e S 
+S ⇒ i • S 
+---------------
+S ⇒ • i S e S 
+S ⇒ • i S 
+S ⇒ • a 
+Transitions: 
+S ---> 4
+i ---> 2
+a ---> 3
+
+State 3:
+S ⇒ a • 
+---------------
+
+State 4:
+S ⇒ i S • e S 
+S ⇒ i S • 
+---------------
+Transitions: 
+e ---> 5
+
+State 5:
+S ⇒ i S e • S 
+---------------
+S ⇒ • i S e S 
+S ⇒ • i S 
+S ⇒ • a 
+Transitions: 
+S ---> 6
+i ---> 2
+a ---> 3
+
+State 6:
+S ⇒ i S e S • 
+---------------
+

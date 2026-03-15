@@ -1,0 +1,125 @@
+Grammar with 7 rules and 7 symbols (3 non-terminals):
+I' ⇒ I 
+I ⇒ A 
+I ⇒ B 
+A ⇒ ( A ) 
+A ⇒ a 
+B ⇒ ( B ) 
+B ⇒ b 
+
+First set: 
+I -- ( a b 
+A -- ( a 
+B -- ( b 
+I' -- ( a b 
+
+Follow set: 
+I -- $ 
+A -- $ ) 
+B -- $ ) 
+I' -- $ 
+
+LALR1 item set:
+I' ⇒ • I , $
+I' ⇒ I • , $
+I ⇒ • A , $
+I ⇒ A • , $
+I ⇒ • B , $
+I ⇒ B • , $
+A ⇒ • ( A ) , $
+A ⇒ • ( A ) , )
+A ⇒ ( • A ) , $
+A ⇒ ( • A ) , )
+A ⇒ ( A • ) , $
+A ⇒ ( A • ) , )
+A ⇒ ( A ) • , $
+A ⇒ ( A ) • , )
+A ⇒ • a , $
+A ⇒ • a , )
+A ⇒ a • , $
+A ⇒ a • , )
+B ⇒ • ( B ) , $
+B ⇒ • ( B ) , )
+B ⇒ ( • B ) , $
+B ⇒ ( • B ) , )
+B ⇒ ( B • ) , $
+B ⇒ ( B • ) , )
+B ⇒ ( B ) • , $
+B ⇒ ( B ) • , )
+B ⇒ • b , $
+B ⇒ • b , )
+B ⇒ b • , $
+B ⇒ b • , )
+
+LALR1 automata:
+State 0:
+I' ⇒ • I , $ 
+---------------
+I ⇒ • A , $ 
+I ⇒ • B , $ 
+A ⇒ • ( A ) , $ 
+A ⇒ • a , $ 
+B ⇒ • ( B ) , $ 
+B ⇒ • b , $ 
+Transitions: 
+I ---> 1
+A ---> 2
+( ---> 3
+B ---> 4
+a ---> 5
+b ---> 6
+
+State 1:
+I' ⇒ I • , $ 
+---------------
+
+State 2:
+I ⇒ A • , $ 
+---------------
+
+State 3:
+A ⇒ ( • A ) , $ ) B ⇒ ( • B ) , $ ) 
+---------------
+A ⇒ • ( A ) , ) 
+A ⇒ • a , ) 
+B ⇒ • ( B ) , ) 
+B ⇒ • b , ) 
+Transitions: 
+A ---> 7
+( ---> 3
+B ---> 8
+a ---> 5
+b ---> 6
+
+State 4:
+I ⇒ B • , $ 
+---------------
+
+State 5:
+A ⇒ a • , $ ) 
+---------------
+
+State 6:
+B ⇒ b • , $ ) 
+---------------
+
+State 7:
+A ⇒ ( A • ) , $ ) 
+---------------
+Transitions: 
+) ---> 9
+
+State 8:
+B ⇒ ( B • ) , $ ) 
+---------------
+Transitions: 
+) ---> 10
+
+State 9:
+A ⇒ ( A ) • , $ ) 
+---------------
+
+State 10:
+B ⇒ ( B ) • , $ ) 
+---------------
+

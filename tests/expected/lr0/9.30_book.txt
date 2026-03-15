@@ -1,0 +1,62 @@
+Grammar with 5 rules and 6 symbols (3 non-terminals):
+S' ⇒ S 
+S ⇒ A B c 
+A ⇒ a 
+B ⇒ b 
+B ⇒ ε 
+
+LR0 item set:
+S' ⇒ • S 
+S' ⇒ S • 
+S ⇒ • A B c 
+S ⇒ A • B c 
+S ⇒ A B • c 
+S ⇒ A B c • 
+A ⇒ • a 
+A ⇒ a • 
+B ⇒ • b 
+B ⇒ b • 
+B ⇒ • 
+
+LR0 automata:
+State 0:
+S' ⇒ • S 
+---------------
+S ⇒ • A B c 
+A ⇒ • a 
+Transitions: 
+S ---> 1
+A ---> 2
+a ---> 3
+
+State 1:
+S' ⇒ S • 
+---------------
+
+State 2:
+S ⇒ A • B c 
+---------------
+B ⇒ • b 
+B ⇒ • 
+Transitions: 
+B ---> 4
+b ---> 5
+
+State 3:
+A ⇒ a • 
+---------------
+
+State 4:
+S ⇒ A B • c 
+---------------
+Transitions: 
+c ---> 6
+
+State 5:
+B ⇒ b • 
+---------------
+
+State 6:
+S ⇒ A B c • 
+---------------
+

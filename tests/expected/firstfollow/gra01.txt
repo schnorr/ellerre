@@ -1,0 +1,9 @@
+Grammar with 2 rules and 5 symbols (1 non-terminals):
+F ⇒ [ a ] 
+F ⇒ [ a ] - F 
+
+First sets:
+F -- [ 
+
+Follow sets:
+F -- $ 

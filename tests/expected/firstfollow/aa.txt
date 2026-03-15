@@ -1,0 +1,9 @@
+Grammar with 2 rules and 4 symbols (1 non-terminals):
+A ⇒ ( A ) 
+A ⇒ a 
+
+First sets:
+A -- ( a 
+
+Follow sets:
+A -- $ ) 
