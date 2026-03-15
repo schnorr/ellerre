@@ -78,16 +78,32 @@ bool State::haveSameKernel(State* s2)
 
 bool State::haveSameKernelItems(State* s2)
 {
-  // check if all kernel rules of this->kernel are in s2->kernel
+  // Collect unique item cores (rule+dot, ignoring lookaheads) from each kernel
+  std::vector<Item*> cores1, cores2;
+
   for (Item* i: this->kernel) {
-    bool isIn = false;
-    
-    for(Item* i2: s2->kernel) {
-      if(i->isBodyEqual(i2))
-        isIn = true;
-    }
-    if(!isIn)
-      return false;
+    bool already = false;
+    for (Item* j: cores1)
+      if (i->isBodyEqual(j)) { already = true; break; }
+    if (!already) cores1.push_back(i);
+  }
+
+  for (Item* i: s2->kernel) {
+    bool already = false;
+    for (Item* j: cores2)
+      if (i->isBodyEqual(j)) { already = true; break; }
+    if (!already) cores2.push_back(i);
+  }
+
+  // The kernels represent the same LR(0) core iff they have the same unique cores
+  if (cores1.size() != cores2.size())
+    return false;
+
+  for (Item* i: cores1) {
+    bool found = false;
+    for (Item* j: cores2)
+      if (i->isBodyEqual(j)) { found = true; break; }
+    if (!found) return false;
   }
   return true;
 }
