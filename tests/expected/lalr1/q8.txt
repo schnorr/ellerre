@@ -66,8 +66,8 @@ S ⇒ • b , b a
 A ⇒ • S A , b a 
 A ⇒ • a , b a 
 Transitions: 
-S ---> 1
-A ---> 5
+S ---> 5
+A ---> 6
 b ---> 3
 a ---> 4
 
@@ -79,7 +79,7 @@ S ⇒ • b , $ b a
 A ⇒ • S A , b a 
 A ⇒ • a , b a 
 Transitions: 
-S ---> 6
+S ---> 7
 A ---> 2
 b ---> 3
 a ---> 4
@@ -93,6 +93,19 @@ A ⇒ a • , b a
 ---------------
 
 State 5:
+A ⇒ S • A , b a 
+---------------
+S ⇒ • A S , b a 
+S ⇒ • b , b a 
+A ⇒ • S A , b a 
+A ⇒ • a , b a 
+Transitions: 
+S ---> 5
+A ---> 6
+b ---> 3
+a ---> 4
+
+State 6:
 S ⇒ A • S , b a A ⇒ S A • , b a 
 ---------------
 S ⇒ • A S , b a 
@@ -100,12 +113,12 @@ S ⇒ • b , b a
 A ⇒ • S A , b a 
 A ⇒ • a , b a 
 Transitions: 
-S ---> 6
+S ---> 7
 A ---> 2
 b ---> 3
 a ---> 4
 
-State 6:
+State 7:
 S ⇒ A S • , $ b a A ⇒ S • A , b a 
 ---------------
 S ⇒ • A S , b a 
@@ -113,8 +126,8 @@ S ⇒ • b , b a
 A ⇒ • S A , b a 
 A ⇒ • a , b a 
 Transitions: 
-S ---> 1
-A ---> 5
+S ---> 5
+A ---> 6
 b ---> 3
 a ---> 4
 
